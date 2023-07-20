@@ -7,14 +7,14 @@ PROJECT_NAME = @DOXYGEN_PROJECT_NAME@
 PROJECT_NUMBER = @DOXYGEN_PROJECT_VERSION@
 
 # Add sources
-INPUT = @SIM_EDITOR_SOURCE_DIR@/docs/pages @SIM_EDITOR_SOURCE_DIR@/include/sim_editor/
+INPUT = @PROJECT_SOURCE_DIR@/docs/pages @PROJECT_SOURCE_DIR@/include/
 EXTRACT_ALL = YES
 RECURSIVE = YES
 OUTPUT_DIRECTORY = @DOXYGEN_OUTPUT_DIRECTORY@
 
 # set relative include paths
 FULL_PATH_NAMES = YES
-STRIP_FROM_PATH = "@SIM_EDITOR_SOURCE_DIR@/include"
+STRIP_FROM_PATH = "@PROJECT_SOURCE_DIR@/include"
 
 # We use m.css to generate the html documentation, so we only need XML output
 GENERATE_XML = YES
