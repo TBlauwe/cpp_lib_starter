@@ -82,7 +82,4 @@ Replace `<baseline>` and `<comparison>` with `.json` files obtained when running
 
 * **[Doctest](https://github.com/doctest/doctest)**
 * **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
-* **[Flecs](https://github.com/SanderMertens/flecs)**
-* **[fmt](https://github.com/fmtlib/fmt)**
-* **[effolkronium/random](https://github.com/effolkronium/random)**
 * **[Google Benchmark](https://github.com/google/benchmark)**
