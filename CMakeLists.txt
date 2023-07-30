@@ -121,7 +121,7 @@ target_compile_options(my_lib PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>
 target_compile_options(my_lib PUBLIC $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->) # being a cross-platform target, we enforce standards conformance on MSVC
 
 if(${MYLIB_MASTER_PROJECT})
-  target_set_compile_warnings_cxx(my_lib)
+  target_set_compile_warnings_cxx(TARGET my_lib SCOPE PRIVATE)
 endif()
 
 outdent()
