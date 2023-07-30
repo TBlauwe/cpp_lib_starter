@@ -1,6 +1,6 @@
 # Cpp library starter project
 
-Opitionated adn simple template I use for my libraries and as a learning process.
+Opitionated and simple template I use for my libraries and as a learning process.
 
 ## Features
 * Tests build with **[Doctest](https://github.com/doctest/doctest)**
