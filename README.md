@@ -14,7 +14,7 @@ Opitionated adn simple template I use for my libraries and as a learning process
 Download the source code and replace the following identifiers :
 
 * `my_lib` : cmake target, folder name
-* `MY_LIB` : cmake project name and cmake variables prefix
+* `MYLIB` : cmake project name and cmake variables prefix
 * `ml` : namespace, only in source files.
 
 Set `CPM_SOURCE_CACHE` to an adequate location. It is a **[CPM](https://github.com/cpm-cmake/)** options 
