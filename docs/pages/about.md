@@ -38,7 +38,7 @@ Now, replace the following identifiers :
 * `my_lib_header` : in `include/my_lib`
 
 @m_div{m-note m-warning}
-  @m_div{m-big}Warning@m_enddiv
+  @m_div{m-text m-big}Warning@m_enddiv
   Make sure that `#include <my_lib/my_lib_header.hpp>` directives are also replaced !
 @m_enddiv
 
@@ -66,12 +66,12 @@ We provide 10 configurations :
 @ce
 
 @m_div{m-note m-info}
-	@m_div{m-big}Note 1@m_enddiv
+	@m_div{m-text m-big}Note 1@m_enddiv
 	`Clang-cl` refers to the clang toolchain provided by [Visual Studio 2022](https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170)
 @m_enddiv
 
 @m_div{m-note m-info}
-	@m_div{m-big}Note 2@m_enddiv
+	@m_div{m-text m-big}Note 2@m_enddiv
 	Each configuration name has to be different from each other, hence why we have `x64-release-gnu` and `x64-release-gcc`.
 @m_enddiv
 
@@ -82,7 +82,7 @@ Thanks to the structure of the file, you can easily add other configurations, by
 @ce
 
 @m_div{m-note m-warning}
-  @m_div{m-big}Warning@m_enddiv
+  @m_div{m-text m-big}Warning@m_enddiv
   Some configurations may not work if some binaries and libraries are not in your `PATH`. 
   For example, by default with Visual Studio 2022, all windows specific configurations works but `GCC`.
   Vice-versa, only `GCC` works in CLion but not the others (unless you tweak your path).
@@ -146,7 +146,7 @@ By default, it will also try to suppress warnings of targets specified by `TARGE
 It can by skipped by specifying `NO_SILENCE_WARNINGS`.
 
 @m_div{m-note m-danger}
-	@m_div{m-big}Not working@m_enddiv
+	@m_div{m-text m-big}Not working@m_enddiv
 	Sadly, suppressing warnings like this doesn't work for now ! 
 	See this [article](https://www.foonathan.net/2018/10/cmake-warnings/.)
 @m_enddiv
@@ -224,21 +224,21 @@ The following tools are needed :
 
 On MacOs :
 
-@cb{shell}
+@cb{sh}
 brew install doxygen
 pip3 install jinja2 Pygments
 @ce
 
 On windows using chocolatey (need elevated privileges) :
 
-@cb{shell}
+@cb{sh}
 choco install doxygen.install
 choco install python
 pip3 install jinja2 Pygments
 @ce
 
 @m_div{m-note m-warning}
-	@m_div{m-big}Warning@m_enddiv
+	@m_div{m-text m-big}Warning@m_enddiv
 	Make sure to Doxygen is in your path !
 @m_enddiv
 
@@ -253,7 +253,7 @@ If you want to pass more options to tune the benchmarking, see
 Alternitavely, you can use `bin\benchmarks\run_benchmarks.py` python script, to run benchmarks with a predefined set of options.
 
 
-@cb{shell}
+@cb{sh}
 py run_benchmarks.py Benchmarks.exe -n SomeName
 @ce
 
@@ -261,7 +261,7 @@ This line will generate a `.json` file with 'SomeName' in its name. It will also
 
 To compare two benchmarks, you can use the following command :
 
-@cb{shell}
+@cb{sh}
 py tools/compare.py benchmarks <baseline> <comparison>
 @ce
 
@@ -278,7 +278,7 @@ sure to check both references for more details :
 
 @m_div{m-button m-primary} 
 	<a href="https://www.doxygen.nl/manual/commands.html">
-	@m_div{m-big}Doxygen 
+	@m_div{m-text m-big}Doxygen 
 	@m_enddiv 
 	@m_div{m-small} 
 		references
@@ -287,7 +287,7 @@ sure to check both references for more details :
 @m_enddiv
 @m_div{m-button m-primary} 
 	<a href="https://mcss.mosra.cz/css/components/">
-	@m_div{m-big}M.CSS
+	@m_div{m-text m-big}M.CSS
 	@m_enddiv 
 	@m_div{m-small} 
 		references
@@ -332,7 +332,7 @@ Images are added with command `image` ([see doxygen ref](https://www.doxygen.nl/
 `@image html images/cute_smiling_robot_head.png "Robot" width=10cm`
 
 @m_div{m-note m-warning}
-	@m_div{m-big}Path@m_enddiv
+	@m_div{m-text m-big}Path@m_enddiv
 	Make sure images are stored correctly. As I had a lot of trouble with it, I decided to copy 
 	images to the html folder generated before building the docs. A cmake function `add_assets` is provided
 	(see `docs/CMakeLists.txt`).
@@ -342,99 +342,218 @@ Images are added with command `image` ([see doxygen ref](https://www.doxygen.nl/
 ### Note
 
 @m_div{m-note m-default}
-	@m_div{m-big}Default@m_enddiv
+	@m_div{m-text m-big}Default@m_enddiv
 	This is a default note 
 @m_enddiv
 
 ```
 @m_div{m-note m-default}
-	@m_div{m-big}Default@m_enddiv
+	@m_div{m-text m-big}Default@m_enddiv
 	This is a default note 
 @m_enddiv
 ```
 
 @m_div{m-note m-primary}
-	@m_div{m-big}Primary@m_enddiv
+	@m_div{m-text m-big}Primary@m_enddiv
 	This is a primary note
 @m_enddiv
 
 ```
 @m_div{m-note m-primary}
-	@m_div{m-big}Primary@m_enddiv
+	@m_div{m-text m-big}Primary@m_enddiv
 	This is a primary note
 @m_enddiv
 ```
 
 @m_div{m-note m-success}
-	@m_div{m-big}Success@m_enddiv
+	@m_div{m-text m-big}Success@m_enddiv
 	This is a success note
 @m_enddiv
 
 ```
 @m_div{m-note m-success}
-	@m_div{m-big}Success@m_enddiv
+	@m_div{m-text m-big}Success@m_enddiv
 	This is a success note
 @m_enddiv
 ```
 
 @m_div{m-note m-warning}
-	@m_div{m-big}WARNING@m_enddiv
+	@m_div{m-text m-big}WARNING@m_enddiv
 	This is a warning note
 @m_enddiv
 
 ```
 @m_div{m-note m-warning}
-	@m_div{m-big}WARNING@m_enddiv
+	@m_div{m-text m-big}WARNING@m_enddiv
 	This is a warning note
 @m_enddiv
 ```
 
 @m_div{m-note m-danger}
-	@m_div{m-big}Danger@m_enddiv
+	@m_div{m-text m-big}Danger@m_enddiv
 	This is a danger note
 @m_enddiv
 
 ```
 @m_div{m-note m-danger}
-	@m_div{m-big}Danger@m_enddiv
+	@m_div{m-text m-big}Danger@m_enddiv
 	This is a danger note
 @m_enddiv
 ```
 
 @m_div{m-note m-info}
-	@m_div{m-big}Info@m_enddiv
+	@m_div{m-text m-big}Info@m_enddiv
 	This is an info note
 @m_enddiv
 
 ```
 @m_div{m-note m-info}
-	@m_div{m-big}Info@m_enddiv
+	@m_div{m-text m-big}Info@m_enddiv
 	This is an info note
 @m_enddiv
 ```
 
 @m_div{m-note m-dim}
-	@m_div{m-big}Dim@m_enddiv
+	@m_div{m-text m-big}Dim@m_enddiv
 	This is a dim note
 @m_enddiv
 
 ```
 @m_div{m-note m-dim}
-	@m_div{m-big}Dim@m_enddiv
+	@m_div{m-text m-big}Dim@m_enddiv
 	This is a dim note
 @m_enddiv
 ```
 
 @m_div{m-note m-frame}
-	@m_div{m-big}Frame@m_enddiv
+	@m_div{m-text m-big}Frame@m_enddiv
 	This is a fram note
 @m_enddiv
 
 ```
 @m_div{m-note m-frame}
-	@m_div{m-big}Frame@m_enddiv
+	@m_div{m-text m-big}Frame@m_enddiv
 	This is a frame note
 @m_enddiv
+```
+
+
+### Block
+
+@m_div{m-block m-default}
+	@m_div{m-text m-big}Default@m_enddiv
+	This is a default block 
+@m_enddiv
+
+```
+@m_div{m-block m-default}
+	@m_div{m-text m-big}Default@m_enddiv
+	This is a default block 
+@m_enddiv
+```
+
+@m_div{m-block m-primary}
+	@m_div{m-text m-big}Primary@m_enddiv
+	This is a primary block
+@m_enddiv
+
+```
+@m_div{m-block m-primary}
+	@m_div{m-text m-big}Primary@m_enddiv
+	This is a primary block
+@m_enddiv
+```
+
+@m_div{m-block m-success}
+	@m_div{m-text m-big}Success@m_enddiv
+	This is a success block
+@m_enddiv
+
+```
+@m_div{m-block m-success}
+	@m_div{m-text m-big}Success@m_enddiv
+	This is a success note
+@m_enddiv
+```
+
+@m_div{m-block m-warning}
+	@m_div{m-text m-big}WARNING@m_enddiv
+	This is a warning block
+@m_enddiv
+
+```
+@m_div{m-block m-warning}
+	@m_div{m-text m-big}WARNING@m_enddiv
+	This is a warning block
+@m_enddiv
+```
+
+@m_div{m-block m-danger}
+	@m_div{m-text m-big}Danger@m_enddiv
+	This is a danger block
+@m_enddiv
+
+```
+@m_div{m-block m-danger}
+	@m_div{m-text m-big}Danger@m_enddiv
+	This is a danger block
+@m_enddiv
+```
+
+@m_div{m-block m-info}
+	@m_div{m-text m-big}Info@m_enddiv
+	This is an info block
+@m_enddiv
+
+```
+@m_div{m-block m-info}
+	@m_div{m-text m-big}Info@m_enddiv
+	This is an info block
+@m_enddiv
+```
+
+@m_div{m-block m-dim}
+	@m_div{m-text m-big}Dim@m_enddiv
+	This is a dim block
+@m_enddiv
+
+```
+@m_div{m-block m-dim}
+	@m_div{m-text m-big}Dim@m_enddiv
+	This is a dim block
+@m_enddiv
+```
+
+@m_div{m-block m-frame}
+	@m_div{m-text m-big}Frame@m_enddiv
+	This is a fram block
+@m_enddiv
+
+```
+@m_div{m-block m-frame}
+	@m_div{m-text m-big}Frame@m_enddiv
+	This is a frame block
+@m_enddiv
+```
+
+### Text 
+
+@m_div{m-text m-big}Big@m_enddiv
+
+```
+@m_div{m-text m-big}Big@m_enddiv
+```
+
+@m_div{m-text m-small}Small@m_enddiv
+
+```
+@m_div{m-text m-small}Small@m_enddiv
+```
+
+@m_div{m-text m-tiny}Tiny@m_enddiv
+
+```
+@m_div{m-text m-tiny}Tiny@m_enddiv
 ```
 
 
