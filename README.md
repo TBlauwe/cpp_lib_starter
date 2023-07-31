@@ -27,6 +27,14 @@ So I thought it would be nice to follow cmake convention like `PROJECT_SOURCE_DI
 
 ## Dependencies
 
+* In `CMakePresets.json`, `base` configuration specify `USE_CCACHE ON`. If you do not
+have `ccache` installed, build will fail. Either install `ccache` or set `USE_CCACHE` to `OFF`
+
+On windows using chocolatey (need elevated privileges) :
+```
+choco install ccache
+```
+
 Dependencies are downloaded with **[CPM](https://github.com/cpm-cmake/)**.
 This step can be skipped by setting `MY_LIB_SKIP_DEPENDENCIES` to `ON`. By default, it is `OFF` if it is the main
 project, `ON` otherwise.

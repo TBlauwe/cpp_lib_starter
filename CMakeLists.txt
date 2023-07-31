@@ -74,6 +74,11 @@ include(CMakePrintHelpers)
 include(cmake/cpm.cmake)
 include(cmake/target_set_compile_warnings.cmake)
 include(cmake/tools.cmake)
+CPMAddPackage(
+  NAME Ccache.cmake
+  GITHUB_REPOSITORY TheLartians/Ccache.cmake
+  VERSION 1.2.4
+)
 
 
 # ------------------------------------------------------------------------------
