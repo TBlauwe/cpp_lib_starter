@@ -123,3 +123,12 @@ macro(print_versions)
 	outdent()
 	unset(current_options)
 endmacro()
+
+function(add_assets target in_dir out_dir)
+    add_custom_target(${target}_copy_assets
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${in_dir} ${out_dir}
+            COMMENT "Copying assets directory ${in_dir} to ${out_dir}"
+    )
+    add_dependencies(${target} ${target}_copy_assets)
+endfunction()

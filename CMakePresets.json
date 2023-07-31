@@ -2,103 +2,135 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "default",
+      "name": "Base",
       "hidden": true,
-      "generator": "Ninja",
+      "displayName": "Default config",
+      "description": "Default build",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CPM_SOURCE_CACHE": "C:/dev/deps"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
+      "cacheVariables": {}
     },
     {
-      "name": "windows-base-msvc",
+      "name": "Ninja",
       "hidden": true,
-      "inherits": "default",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
+      "displayName": "Ninja generator",
+      "description": "Use ninja as generator",
+      "generator": "Ninja"
     },
     {
-      "name": "windows-base-clang",
+      "name": "Debug",
       "hidden": true,
-      "generator": "Ninja",
-      "inherits": "windows-base-msvc",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
+      "displayName": "Debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
     },
     {
-      "name": "x64-debug-msvc",
-      "displayName": "x64 Debug (MSVC)",
-      "inherits": "windows-base-msvc",
+      "name": "Release",
+      "hidden": true,
+      "displayName": "Release",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Relase" }
+    },
+    {
+      "name": "x64",
+      "hidden": true,
       "architecture": {
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
+      "cacheVariables": {}
     },
     {
-      "name": "x64-release-msvc",
-      "displayName": "x64 Release (MSVC)",
-      "inherits": "x64-debug-msvc",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "x64-debug-clang",
-      "displayName": "x64 Debug (Clang)",
-      "inherits": "windows-base-clang",
+      "name": "x86",
+      "hidden": true,
       "architecture": {
-        "value": "x64",
+        "value": "x86",
         "strategy": "external"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
+      "cacheVariables": {}
     },
     {
-      "name": "x64-release-clang",
-      "displayName": "x64 Release (Clang)",
-      "inherits": "x64-debug-clang",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "linux-base",
       "hidden": true,
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "name": "VCPKG",
       "cacheVariables": {
-        "CPM_SOURCE_CACHE": "/mnt/d/dev/.cache"
+        "CMAKE_TOOLCHAIN_FILE": {
+          "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+          "type": "FILEPATH"
+        }
+      }
+    },
+    {
+      "name": "MSVC",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl"
       },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "Clang-cl",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl",
+        "CMAKE_CXX_COMPILER": "clang-cl"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "Clang",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "GCC",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      }
+    },
+
+    {"name": "x64-debug-msvc", "inherits": ["Base", "Ninja", "x64", "MSVC", "Debug"]},
+    {"name": "x64-release-msvc", "inherits": ["Base", "Ninja", "x64", "MSVC", "Release"]},
+    {"name": "x64-debug-clang-cl", "inherits": ["Base", "Ninja", "x64", "Clang-cl", "Debug"]},
+    {"name": "x64-release-clang-cl", "inherits": ["Base", "Ninja", "x64", "Clang-cl", "Release"]},
+    {"name": "x64-debug-gcc", "inherits": ["Base", "Ninja", "x64", "GCC", "Debug"]},
+    {"name": "x64-release-gcc", "inherits": ["Base", "Ninja", "x64", "GCC", "Release"]},
+
+    {
+      "name": "wsl",
+      "hidden": true,
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -110,61 +142,11 @@
         }
       }
     },
-    {
-      "name": "linux-debug",
-      "displayName": "Linux Debug",
-      "inherits": "linux-base",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-        }
-      }
-    },
-    {
-      "name": "linux-release",
-      "displayName": "Linux Release",
-      "inherits": "linux-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-        }
-      }
-    },
-    {
-      "name": "macos-debug",
-      "displayName": "macOS Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-        }
-      }
-    }
+
+    {"name": "x64-debug-clang", "inherits": ["Base", "Ninja", "x64", "Clang", "Debug", "wsl"]},
+    {"name": "x64-release-clang", "inherits": ["Base", "Ninja", "x64", "Clang", "Release", "wsl"]},
+    {"name": "x64-debug-gnu", "inherits": ["Base", "Ninja", "x64", "GCC", "Debug", "wsl"]},
+    {"name": "x64-release-gnu", "inherits": ["Base", "Ninja", "x64", "GCC", "Release", "wsl"]}
+
   ]
 }

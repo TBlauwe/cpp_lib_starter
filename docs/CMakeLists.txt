@@ -57,26 +57,33 @@ else()
 	set(DOXYGEN_PROJECT_NAME  "${PROJECT_NAME}")
 	set(DOXYGEN_PROJECT_VERSION ${PROJECT_VERSION})
 	set(DOXYGEN_PROJECT_ROOT "${PROJECT_SOURCE_DIR}/")
-	set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
+	set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
 
 	configure_file(${CMAKE_CURRENT_LIST_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 	configure_file(${CMAKE_CURRENT_LIST_DIR}/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
 
+	file(GLOB_RECURSE pages "pages/*.md")
+
+	file(GLOB_RECURSE images "images/*.png")
+
+
 	add_custom_target(
-	  GenerateDocs
-	  ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIRECTORY}"
-	  COMMAND python "${m.css_SOURCE_DIR}/documentation/doxygen.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" --debug
-	  COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIRECTORY}"
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-	  SOURCES
-		"conf.py"
-		"Doxyfile"
-		"pages/about.dox"
+		generate_docs
+		${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
+		COMMAND python "${m.css_SOURCE_DIR}/documentation/doxygen.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" --debug
+		COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
+		WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+		SOURCES
+			"conf.py"
+			"Doxyfile"
+			${pages}
+			${images}
 	)
+	add_assets(generate_docs "${PROJECT_SOURCE_DIR}/docs/images/" "${DOXYGEN_OUTPUT_DIR}/html/images")
 
 	# Convenience target to open docs
 	add_custom_target(
-	  OpenDocs 
+		open_docs
 	  COMMAND "${DOXYGEN_OUTPUT_DIRECTORY}/html/index.html"
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	)
