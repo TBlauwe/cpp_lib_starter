@@ -48,6 +48,10 @@ jobs:
           - os: windows-latest
             toolchain: msvc
 
+    env:
+        preset_name: ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
+        build_directory: ../out/build/${{env.preset_name}}
+
     steps:
     - uses: actions/checkout@v3
 
@@ -63,9 +67,10 @@ jobs:
 
     - name: Build
       run: |
-          cmake --preset ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}
-          cmake --build --preset build-tests-${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}
+          cmake --preset ${{ env.preset_name }}
+          cmake --build ${{ env.build_directory }} --target tests
 
     - name: Run tests
-      working-directory: ${{github.workspace}}
-      run: ctest -C ${{matrix.configuration}}
+      working-directory: ${{ env.build_directory }}
+      run: |
+          ctest

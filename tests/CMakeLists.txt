@@ -45,7 +45,7 @@ target_compile_features(tests PRIVATE cxx_std_20)
 target_link_libraries(tests PRIVATE my_lib doctest::doctest)
 set_target_properties(tests PROPERTIES OUTPUT_NAME "Tests")
 set_target_properties(tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_EXE_DIR}")
-add_test(NAME tests::doctest_all COMMAND tests)
+#add_test(NAME tests::doctest_all COMMAND tests)
 
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
 doctest_discover_tests(tests)

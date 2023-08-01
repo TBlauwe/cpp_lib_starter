@@ -165,7 +165,7 @@ end_section(
 # Only available if this is the main project
 if(${MYLIB_MASTER_PROJECT})
 	include(CTest)
-	add_subdirectory(benchmarks)
 	add_subdirectory(tests)
+	add_subdirectory(benchmarks)
 	add_subdirectory(docs)
 endif()

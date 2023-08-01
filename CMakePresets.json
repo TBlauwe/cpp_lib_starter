@@ -242,47 +242,5 @@
         "wsl"
       ]
     }
-  ],
-  "buildPresets": [
-    {
-      "name": "build-tests-x64-release-clang-cl",
-      "configurePreset": "x64-release-clang-cl",
-      "targets": "tests"
-    },
-    {
-      "name": "build-tests-x64-release-msvc",
-      "configurePreset": "x64-release-msvc",
-      "targets": "tests"
-    },
-    {
-      "name": "build-tests-x64-release-clang",
-      "configurePreset": "x64-release-clang",
-      "targets": "tests"
-    },
-    {
-      "name": "build-tests-x64-release-gnu",
-      "configurePreset": "x64-release-gnu",
-      "targets": "tests"
-    },
-    {
-      "name": "build-benchmarks-x64-release-clang-cl",
-      "configurePreset": "x64-release-clang-cl",
-      "targets": "benchmarks"
-    },
-    {
-      "name": "build-benchmarks-x64-release-msvc",
-      "configurePreset": "x64-release-msvc",
-      "targets": "benchmarks"
-    },
-    {
-      "name": "build-benchmarks-x64-release-clang",
-      "configurePreset": "x64-release-clang",
-      "targets": "benchmarks"
-    },
-    {
-      "name": "build-benchmarks-x64-release-gnu",
-      "configurePreset": "x64-release-gnu",
-      "targets": "benchmarks"
-    }
   ]
-}
+ }
