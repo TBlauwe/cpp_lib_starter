@@ -58,7 +58,7 @@ jobs:
 
     - name: Build
       run: |
-          cmake --preset ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} --target tests
+          cmake --preset ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} --targets tests
 
     - name: Run tests
       working-directory: ${{github.workspace}}
