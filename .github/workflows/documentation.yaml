@@ -22,6 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          brew install python
           brew install doxygen
           pip3 install jinja2 Pygments
 
