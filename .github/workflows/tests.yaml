@@ -61,7 +61,7 @@ jobs:
 
     - name: Build
       run: |
-          cmake --preset ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} --targets tests
+          cmake --preset ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}
           cmake --build --preset build-${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}
 
     - name: Run tests
