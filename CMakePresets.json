@@ -1,4 +1,4 @@
-﻿{
+{
   "version": 3,
   "configurePresets": [
     {
@@ -21,13 +21,17 @@
       "name": "Debug",
       "hidden": true,
       "displayName": "Debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
     },
     {
       "name": "Release",
       "hidden": true,
       "displayName": "Release",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Relase" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
     },
     {
       "name": "x64",
@@ -120,14 +124,66 @@
         "strategy": "external"
       }
     },
-
-    {"name": "x64-debug-msvc", "inherits": ["Base", "Ninja", "x64", "MSVC", "Debug"]},
-    {"name": "x64-release-msvc", "inherits": ["Base", "Ninja", "x64", "MSVC", "Release"]},
-    {"name": "x64-debug-clang-cl", "inherits": ["Base", "Ninja", "x64", "Clang-cl", "Debug"]},
-    {"name": "x64-release-clang-cl", "inherits": ["Base", "Ninja", "x64", "Clang-cl", "Release"]},
-    {"name": "x64-debug-gcc", "inherits": ["Base", "Ninja", "x64", "GCC", "Debug"]},
-    {"name": "x64-release-gcc", "inherits": ["Base", "Ninja", "x64", "GCC", "Release"]},
-
+    {
+      "name": "x64-debug-msvc",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "MSVC",
+        "Debug"
+      ]
+    },
+    {
+      "name": "x64-release-msvc",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "MSVC",
+        "Release"
+      ]
+    },
+    {
+      "name": "x64-debug-clang-cl",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "Clang-cl",
+        "Debug"
+      ]
+    },
+    {
+      "name": "x64-release-clang-cl",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "Clang-cl",
+        "Release"
+      ]
+    },
+    {
+      "name": "x64-debug-gcc",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "GCC",
+        "Debug"
+      ]
+    },
+    {
+      "name": "x64-release-gcc",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "GCC",
+        "Release"
+      ]
+    },
     {
       "name": "wsl",
       "hidden": true,
@@ -142,11 +198,67 @@
         }
       }
     },
-
-    {"name": "x64-debug-clang", "inherits": ["Base", "Ninja", "x64", "Clang", "Debug", "wsl"]},
-    {"name": "x64-release-clang", "inherits": ["Base", "Ninja", "x64", "Clang", "Release", "wsl"]},
-    {"name": "x64-debug-gnu", "inherits": ["Base", "Ninja", "x64", "GCC", "Debug", "wsl"]},
-    {"name": "x64-release-gnu", "inherits": ["Base", "Ninja", "x64", "GCC", "Release", "wsl"]}
-
+    {
+      "name": "x64-debug-clang",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "Clang",
+        "Debug",
+        "wsl"
+      ]
+    },
+    {
+      "name": "x64-release-clang",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "Clang",
+        "Release",
+        "wsl"
+      ]
+    },
+    {
+      "name": "x64-debug-gnu",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "GCC",
+        "Debug",
+        "wsl"
+      ]
+    },
+    {
+      "name": "x64-release-gnu",
+      "inherits": [
+        "Base",
+        "Ninja",
+        "x64",
+        "GCC",
+        "Release",
+        "wsl"
+      ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-x64-release-clang-cl",
+      "configurePreset": "x64-release-clang-cl"
+    },
+    {
+      "name": "build-x64-release-msvc",
+      "configurePreset": "x64-release-msvc"
+    },
+    {
+      "name": "build-x64-release-clang",
+      "configurePreset": "x64-release-clang"
+    },
+    {
+      "name": "build-x64-release-gnu",
+      "configurePreset": "x64-release-gnu"
+    }
   ]
 }
