@@ -82,8 +82,8 @@ be built only if this is the main project.
 
 Two targets are provided :
 
-* `BuildDocs` uses **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)** to build the documentation.
-* `OpenDocs` is a convenience target to open docs without the hassle of finding it.
+* `generate_docs` uses **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)** to build the documentation.
+* `open_docs` is a convenience target to open docs without the hassle of finding it.
 
 The following tools are needed :
 * Doxygen, 
