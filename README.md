@@ -1,9 +1,9 @@
 # Cpp Library Starter
 
 An opitionated template repository to build C++17 projects.
-I use it as a learning tool, but some may find some part useful. 
+I use it as a learning tool, but some may find some parts useful. 
 
-The main goal behing is to be able to quickly incorporate a cross-platform library 
+The main goal is to be able to quickly incorporate a cross-platform library 
 built with this template into others projects using **[CPM](https://github.com/cpm-cmake/)**.
 
 ```cmake
@@ -29,7 +29,7 @@ No need to create it manually.
 by command-line or with an IDE like Visual Studio or Clion.
 * A verbose cmake output when built as the main project, but concise when imported.
 * A clear, cross-platform & easily extendable __CMakePreset.json__ is also provided
-* __Minimal cmake options__ used. Default values are best set (opition) according to whether it is built 
+* __Minimal cmake options__ used. Default values are best set (opinion) according to whether it is built 
 as the main project or not. 
 
 

@@ -82,16 +82,14 @@ endif()
 if(${MYLIB_MASTER_PROJECT})
 	section(CHECK_START "CMake dependencies")
 
-	add_version(NAME CCache.cmake VERSION "v1.2.4")
-
 	find_program(CCACHE_PROGRAM ccache)
 	if(CCACHE_PROGRAM)
-		download_library(
-		  NAME CCache.cmake
-		  GITHUB_REPOSITORY TheLartians/Ccache.cmake
-		  OPTIONS
-			"USE_CCACHE ON"
-		)
+		message(STATUS "CCache found : ${CCACHE_PROGRAM}")
+		message(STATUS "Using ccache")
+		set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+		set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+	else()
+		message(STATUS "CCache not found - skipping.")
 	endif()
 
 	end_section(

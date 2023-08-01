@@ -1,0 +1,59 @@
+name: "Execute tests"
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+      - '**.c'
+      - '**.cpp'
+      - '**.h'
+      - '**.hpp'
+      - '**.cmake'
+      - '**/CMakeLists.txt'
+      - '.github/workflows/**.yml'
+  pull_request:
+    paths:
+      - '**.c'
+      - '**.cpp'
+      - '**.h'
+      - '**.hpp'
+      - '**.cmake'
+      - '**/CMakeLists.txt'
+      - '.github/workflows/**.yml'
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+
+    name: ${{ matrix.presets.preset }}
+    runs-on: ${{ matrix.presets.os }}
+
+    strategy:
+      matrix:
+        presets:
+        [
+            {os: "ubuntu-latest", preset: "x64-release-clang"},
+            {os: "ubuntu-latest", preset: "x64-release-gnu"},
+            {os: "macos-latest", preset: "x64-release-clang"},
+            {os: "windows-latest", preset: "x64-release-clang-cl"},
+            {os: "windows-latest", preset: "x64-release-msvc"},
+        ]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/cache@v3
+      with:
+        path: "**/cpm_modules"
+        key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
+
+    - name: Build
+      run: |
+          cmake --preset ${{matrix.presets.preset}} -- target tests
+
+    - name: Run tests
+      working-directory: ${{github.workspace}}
+      run: ctest -C ${{env.BUILD_TYPE}}
