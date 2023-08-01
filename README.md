@@ -21,6 +21,10 @@ target_link_libraries(some_target PUBLIC my_lib)
 * __Tests__ are built with **[Doctest](https://github.com/doctest/doctest)**
 * __Benchmarks__ are built with **[Google Benchmark](https://github.com/google/benchmark)**
 * __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
+Using Github Actions, documentation is automatically built and published to github pages. Github pages is also automatically configured. 
+No need to create it manually.
+> Documentation example available [here](https://tblauwe.github.io/cpp_lib_starter/)
+
 * A great deal of care has been taken in writing clear and robust __CMake__ files. It should work on Windows, Linux, using WSL or not,
 by command-line or with an IDE like Visual Studio or Clion.
 * A verbose cmake output when built as the main project, but concise when imported.

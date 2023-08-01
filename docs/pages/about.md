@@ -3,9 +3,11 @@
 @tableofcontents
 
 Welcome to the documentation for the template repository [cpp_library_starter](https://github.com/TBlauwe/cpp_lib_starter).
+
 If you want to see how to use this repository as a template, see [README.md](https://github.com/TBlauwe/cpp_lib_starter#cpp-library-starter-project).
+
 This page is mostly a showcase of how the generated documentation will look like.
-But also a reference on how to write special commands provided by [Doxygen](https://www.doxygen.nl/) and [MCSS](https://mcss.mosra.cz/).
+But it is also a reference on how to write special commands provided by [Doxygen](https://www.doxygen.nl/) and [MCSS](https://mcss.mosra.cz/).
 Note, that Doxygen allows us to mix doxygen commands in markdown. So instead of using `.dox` extensions, we use `.md`. Make
 sure to check both references for more details :
 
