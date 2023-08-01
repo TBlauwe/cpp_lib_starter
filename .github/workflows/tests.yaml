@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        archi: [x64]
+        architecture: [x64]
         configuration: [release]
         include:
           -os: ubuntu-latest
@@ -58,8 +58,8 @@ jobs:
 
     - name: Build
       run: |
-          cmake --preset ${{matrix.presets.preset}} -- target tests
+          cmake --preset ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} -- target tests
 
     - name: Run tests
       working-directory: ${{github.workspace}}
-      run: ctest -C ${{env.BUILD_TYPE}}
+      run: ctest -C ${{matrix.configuration}}
