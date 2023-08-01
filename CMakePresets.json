@@ -188,9 +188,9 @@
       "name": "wsl",
       "hidden": true,
       "condition": {
-        "type": "equals",
+        "type": "notEquals",
         "lhs": "${hostSystemName}",
-        "rhs": "Linux"
+        "rhs": "Windows" 
       },
       "vendor": {
         "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
