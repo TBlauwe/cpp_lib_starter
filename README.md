@@ -60,9 +60,6 @@ Still, here is some options you may find interesting :
 and configured.
 	* If built as main project, then by default it is set to `true`
 	* If imported, then by default it is set to `false`
-* `USE_CCache` : Should **[CCache](https://ccache.dev/)** be used or not ? Options provided by **[CCache.cmake](https://github.com/TheLartians/Ccache.cmake/)**
-	* If built as main project, then by default it is set to `true`, only if you have **[CCache](https://ccache.dev/)** installed
-	* If imported, then by default it is set to `false`
 * `CPM_MY_DEPENDENCY_VERSION` : Specify a dependency version. It is not something added by **[CPM](https://github.com/cpm-cmake/)**
 but by me. It adds an option for overriding the version of a dependency. The value is a git tag, e.g `master`, `v3.12`, `1.0`, etc.
 
