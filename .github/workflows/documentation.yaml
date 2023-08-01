@@ -51,7 +51,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.CPM_SOURCE_CACHE }}
-          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt') }}
+          key: cpm-${{ hashFiles('**/*.cmake', '**/CMakeLists.txt') }}
 
       - name: Install dependencies
         run: |
