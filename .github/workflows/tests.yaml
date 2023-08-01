@@ -10,7 +10,7 @@ on:
       - '**.hpp'
       - '**.cmake'
       - '**/CMakeLists.txt'
-      - '.github/workflows/**.yaml'
+      - '.github/workflows/tests.yaml'
   pull_request:
     paths:
       - '**.c'
@@ -19,7 +19,7 @@ on:
       - '**.hpp'
       - '**.cmake'
       - '**/CMakeLists.txt'
-      - '.github/workflows/**.yaml'
+      - '.github/workflows/tests.yaml'
 
 jobs:
   build:
