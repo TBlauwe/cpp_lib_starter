@@ -37,16 +37,16 @@ jobs:
         architecture: [x64]
         configuration: [release]
         include:
-          -os: ubuntu-latest
-          toolchain: clang
-          -os: ubuntu-latest
-          toolchain: gnu
-          -os: macos-latest
-          toolchain: clang
-          -os: windows-latest
-          toolchain: clang-cl
-          -os: windows-latest
-          toolchain: msvc
+          - os: ubuntu-latest
+            toolchain: clang
+          - os: ubuntu-latest
+            toolchain: gnu
+          - os: macos-latest
+            toolchain: clang
+          - os: windows-latest
+            toolchain: clang-cl
+          - os: windows-latest
+            toolchain: msvc
 
     steps:
     - uses: actions/checkout@v3
