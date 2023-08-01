@@ -50,7 +50,7 @@ jobs:
 
     env:
         preset_name: ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
-        build_directory: ../out/build/${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
+        build_directory: ./out/build/${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
 
     steps:
     - uses: actions/checkout@v3
