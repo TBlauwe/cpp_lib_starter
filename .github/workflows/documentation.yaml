@@ -27,8 +27,8 @@ jobs:
 
       - name: Build
         run: |
-          cmake -Sdocumentation -Bbuild
-          cmake --build build --target generate_docs
+          cmake -S . -B build
+          cmake --build build --target my_lib_generate_docs
 
       - name: Publish
         uses: peaceiris/actions-gh-pages@v3

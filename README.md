@@ -1,96 +1,230 @@
-# Cpp library starter project
+# Cpp Library Starter
 
-Opitionated and simple template I use for my libraries and as a learning process.
+An opitionated template repository to build C++17 projects.
+I use it as a learning tool, but some may find some part useful. 
+
+The main goal behing is to be able to quickly incorporate a cross-platform library 
+built with this template into others projects using **[CPM](https://github.com/cpm-cmake/)**.
+
+```cmake
+CPMAddPackage(
+  NAME my_lib 
+  GITHUB_REPOSITORY my_lib_repo/my_lib
+)
+target_link_libraries(some_target PUBLIC my_lib)
+```
+
 
 ## Features
-* Tests build with **[Doctest](https://github.com/doctest/doctest)**
-* Benchmarks build with **[Google Benchmark](https://github.com/google/benchmark)**
-* Docs build with Doxygen and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
-* Dependencies downloaded with **[CPM](https://github.com/cpm-cmake/)**.
+
+* __Dependencies__ are downloaded with **[CPM](https://github.com/cpm-cmake/)**.
+* __Tests__ are built with **[Doctest](https://github.com/doctest/doctest)**
+* __Benchmarks__ are built with **[Google Benchmark](https://github.com/google/benchmark)**
+* __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
+* A great deal of care has been taken in writing clear and robust __CMake__ files. It should work on Windows, Linux, using WSL or not,
+by command-line or with an IDE like Visual Studio or Clion.
+* A verbose cmake output when built as the main project, but concise when imported.
+* A clear, cross-platform & easily extendable __CMakePreset.json__ is also provided
+* __Minimal cmake options__ used. Default values are best set (opition) according to whether it is built 
+as the main project or not. 
 
 
 ## Getting started
 
-Download the source code and replace the following identifiers :
+Go to the [github repository](https://github.com/TBlauwe/cpp_lib_starter) and click on `Use this template`
+
+Once the setup is done, replace the following identifiers :
 
 * `my_lib` : cmake target, folder name
 * `MYLIB` : cmake project name and cmake variables prefix
-* `ml` : namespace, only in source files.
+* `my_namespace` : namespace, only in source files.
+* `my_lib_source` : in `src/`
+* `my_lib_header` : in `include/my_lib`
 
-Set `CPM_SOURCE_CACHE` to an adequate location. It is a **[CPM](https://github.com/cpm-cmake/)** options 
-that tells it where to download libraries.
+It should be safe to do a "Replace All". Still, make sure that `#include <my_lib/my_lib_header.hpp>` 
+are correctly replaced.
 
-Executables location are specified by variable `PROJECT_EXE_DIR` in the main `CMakeLists.txt`. 
+That should be it for building the main target, tests and benchmarks.
+Documentation requires a bit more installation user-side.
+
+## CMake options
+
+As stated before, you shouldn't have to change options, as they will be adapted to the situations.
+Still, here is some options you may find interesting : 
+
+* `MYLIB_SKIP_DEPENDENCIES` : Should dependencies be downloaded with **[CPM](https://github.com/cpm-cmake/)** 
+and configured.
+	* If built as main project, then by default it is set to `true`
+	* If imported, then by default it is set to `false`
+* `USE_CCache` : Should **[CCache](https://ccache.dev/)** be used or not ? Options provided by **[CCache.cmake](https://github.com/TheLartians/Ccache.cmake/)**
+	* If built as main project, then by default it is set to `true`, only if you have **[CCache](https://ccache.dev/)** installed
+	* If imported, then by default it is set to `false`
+* `CPM_MY_DEPENDENCY_VERSION` : Specify a dependency version. It is not something added by **[CPM](https://github.com/cpm-cmake/)**
+but by me. It adds an option for overriding the version of a dependency. The value is a git tag, e.g `master`, `v3.12`, `1.0`, etc.
+
+Executables location are specified by variable `${PROJECT_EXE_DIR}` in the main `CMakeLists.txt`. 
 By default, it is set to : `${PROJECT_SOURCE_DIR}/bin`.
-Note that it is not prefixed by `MY_LIB`. As of now, it is only set when the library is built as the main project.
-So I thought it would be nice to follow cmake convention like `PROJECT_SOURCE_DIR`.
+Note that it is not prefixed by `MYLIB`. As of now, it is only set when the library is built as the main project.
+So I thought it would be nice to follow cmake convention like `${PROJECT_SOURCE_DIR}`.
 
-## Dependencies
 
-* In `CMakePresets.json`, `base` configuration specify `USE_CCACHE ON`. If you do not
-have `ccache` installed, build will fail. Either install `ccache` or set `USE_CCACHE` to `OFF`
+## CMake utilities
 
-On windows using chocolatey (need elevated privileges) :
+Inside `cmake/tools.cmake`, you will see several functions and macros. Most aren't noteworthy. They are mainly used 
+to organise and build prettier output. They are by no means necessary. If you don't like them, feel free to skip them.
+
+Here are three noteworthy functions/macros. 
+
+### add_version
+
+Macro used to set an option for a library.
+
+Usage : 
+
 ```
-choco install ccache
+add_version(NAME fmt VERSION "10.0.0")
 ```
 
-Dependencies are downloaded with **[CPM](https://github.com/cpm-cmake/)**.
-This step can be skipped by setting `MY_LIB_SKIP_DEPENDENCIES` to `ON`. By default, it is `OFF` if it is the main
-project, `ON` otherwise.
+It will set a cmake option `CPM_FMT_VERSION` to `10.0.0`. It will then be used by the following macro :
 
-Each dependencies version can be override by setting `CPM_MY_DEP_VERSION` to a git tag, e.g `master`, `v3.12`, `1.0`, etc.
+### download_library
 
-To reduce boilerplates, `cpm/tools.cmake` provide several functions and macros :
+Macro used to download a library using CPM. It is a wrapper of `CPMAddPackage` and used the same. The reason to add 
+this wrapper is to play nicely with options/version added through `add_version` and also with cmake output.
 
-* `macro(ADD_VERSION)` is a macro to set an option specifying a third_library version :
+Usage : 
+
 ```
-ADD_VERSION(NAME fmt VERSION "10.0.0")
-````
-
-* `macro(DOWNLOAD_LIBRARY)` is a macro wrapping `CPMAddPackage` to use version provided by the corresponding option :
-```
-DOWNLOAD_LIBRARY(
+download_library(
   NAME fmt
   TARGETS fmt fmt-header-only
   GITHUB_REPOSITORY fmtlib/fmt
   OPTIONS
     "FMT_INSTALL OFF"
 )
-````
+```
 
-It can mostly be used the same as `CPMAddPackage`. 
-By default, it will also try to suppress warnings of targets specified by `TARGETS` or `NAME` if no `TARGETS` are provided.
-It can by skipped by specifying `NO_SILENCE_WARNINGS`.
+As you can see, it is almost exactly the same as `CPMAddPackage`, but we didn't have to specify a version. The conjunction of these
+two macros/functions may and are most likely overkill/useless. Still, I like the readability of these cmake files
+and verbosity.
 
-> Sadly, it doesn't work for now ! Trying to work around https://www.foonathan.net/2018/10/cmake-warnings/.
+`TARGETS` is a multi-value arguments where you can pass targets.
+By default, `download_library` will try to suppress warnings when building those targets (or the target of the same name as `NAME` if no `TARGETS` are provided).
 
-## Verbosity
-The cmake output is very verbose. I like to be able to read easily my output. It is displayed according to my taste
-But, it will most likely annoy others that just want the relevant information, especially when used as a third-library.
-It is less relevant when build as the main project.
+> Sadly, suppressing warnings like this doesn't work for now (see this [article](https://www.foonathan.net/2018/10/cmake-warnings/.)).
 
-For now, I don't provide an option for a less verbose output and I guess `QUIET` can be used when using `FetchContent'.
+To prevent this behaviour, you can pass the options `NO_SUPPRESS_WARNINGS`, like so :
+
+```
+download_library(
+  NAME fmt
+  GITHUB_REPOSITORY fmtlib/fmt
+  OPTIONS
+    "FMT_INSTALL OFF"
+  NO_SUPPRESS_WARNINGS 
+)
+```
+
+## CMakePresets.json
+
+For cross-platform compiling, we use `CMakePresets.json` (see [ref](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) 
+to share settings.
+
+Here are some configurations provided:
+
+```json
+// Windows specific
+{"name": "x64-debug-msvc", "inherits": ["Base", "Ninja", "x64", "MSVC", "Debug"]},
+{"name": "x64-release-msvc", "inherits": ["Base", "Ninja", "x64", "MSVC", "Release"]},
+{"name": "x64-debug-clang-cl", "inherits": ["Base", "Ninja", "x64", "Clang-cl", "Debug"]},
+{"name": "x64-release-clang-cl", "inherits": ["Base", "Ninja", "x64", "Clang-cl", "Release"]},
+{"name": "x64-debug-gcc", "inherits": ["Base", "Ninja", "x64", "GCC", "Debug"]},
+{"name": "x64-release-gcc", "inherits": ["Base", "Ninja", "x64", "GCC", "Release"]},
+
+// For Windows Subsystem Linux (WSL), but should work on others
+{"name": "x64-debug-clang", "inherits": ["Base", "Ninja", "x64", "Clang", "Debug", "wsl"]},
+{"name": "x64-release-clang", "inherits": ["Base", "Ninja", "x64", "Clang", "Release", "wsl"]},
+{"name": "x64-debug-gnu", "inherits": ["Base", "Ninja", "x64", "GCC", "Debug", "wsl"]},
+{"name": "x64-release-gnu", "inherits": ["Base", "Ninja", "x64", "GCC", "Release", "wsl"]}
+```
+
+__NOTE 1__: `Clang-cl` refers to the clang toolchain provided by [Visual Studio 2022](https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170)
+
+Thanks to the structure of the file (credits to [DirectXTK](https://github.com/microsoft/DirectXTK/blob/main/CMakePresets.json)
+you can easily add other configurations, by inheritings relevant configurations.
+
+```json
+{"name": "x84-reldebwithinfo-msvc", "inherits": ["Base", "AnOtherGenerator", "x84", "MSVC", "RelDebWithInfo"]},
+```
+
+If you need to specify some cache variables for CMake, you can add them to the `base` configuration :
+
+```json
+    {
+      "name": "Base",
+      "hidden": true,
+      "displayName": "Default config",
+      "description": "Default build",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": 
+	  {
+		// HERE !
+	  }
+    },
+```
+
+### A warning note
+
+Some configurations may not work if some binaries and libraries are not in your `PATH`. 
+For example, by default with Visual Studio 2022, all windows specific configurations works but `GCC`.
+Vice-versa, only `GCC` works in CLion but not the others (unless you tweak your path).
 
 
-## Additional targets
+## Additional functionality
 
-Tests, docs and benchmarks adds additional targets. It was choosen to not propose option to build them, as they will
-be built only if this is the main project.
+If you wish, they are some additional functionality that requires a bit more work from you.
 
-## Documentation
 
+### CPM Download location
+
+By default, **[CPM](https://github.com/cpm-cmake/)** download source files in the output directory.
+If you have several projects that use the same libraries, it may be favorable to download
+them in one place.
+
+**[CPM](https://github.com/cpm-cmake/)** documentation is far more comprehensive, but you can set
+the cmake variable `CPM_SOURCE_CACHE` to an adequate location. 
+Personally I recommend to set it in your path, rather than in your .cmake files or in your preset.
+
+
+### CCache
+
+By default and when configured as the main project, if **[CCache](https://ccache.dev/)** is installed, it will be activated.
+Otherwise it will be ignored
+
+To install **[CCache](https://ccache.dev/)** on windows, you can use chocolatey (need elevated privileges) like so :
+```
+choco install ccache
+```
+
+
+### Documentation
+
+__Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
 Two targets are provided :
 
-* `generate_docs` uses **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)** to build the documentation.
-* `open_docs` is a convenience target to open docs without the hassle of finding it.
+* `docs` : utility target to build the documentation
+* `open_docs` : utility target to open docs without the hassle of finding it.
 
-The following tools are needed :
+> Documentation is only configured when the project is the main project !
+
+Documentation is built through github actions and push in github pages when commiting on master.
+If you wish to built it localy, the following tools are needed :
 * Doxygen, 
 * jinja2 
 * Pygments 
 
-### Instructions
+#### Instructions
 
 On MacOs :
 ```
@@ -107,14 +241,27 @@ pip3 install jinja2 Pygments
 
 > Make sure to add doxygen to your path !
 
-## Tests
+#### Writing docs
+
+It can be a bit of pain to write cool pages for our documentation, especially when sticking with Doxygen commands. 
+I recommend to write `.md` files where you can mix markdown and doxygen commands. You can also add components added
+by **[m.css](https://mcss.mosra.cz/)**. However, it is not easy to work out how to use them. So you can find [here]
+a reference of some commands you can to your pages.
+
+
+### Tests
 
 The library used for testing is [Doctest](https://github.com/doctest/doctest).
 
+One target is provided `tests`.
 
-## Benchmarks
+> Tests are only configured when the project is the main project !
+
+### Benchmarks
 
 The library used for benchmarking is [Google benchmark](https://github.com/google/benchmark).
+
+One target is provided `benchmarks`.
 
 If you want to pass more options to tune the benchmarking, see 
 [Google benchmark usage guide](https://github.com/google/benchmark/blob/main/docs/user_guide.md).
@@ -135,8 +282,11 @@ py tools/compare.py benchmarks <baseline> <comparison>
 
 Replace `<baseline>` and `<comparison>` with `.json` files obtained when running your benchmarks.
 
+
 ## Credits
 
 * **[Doctest](https://github.com/doctest/doctest)**
 * **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
 * **[Google Benchmark](https://github.com/google/benchmark)**
+* **[CCache](https://ccache.dev/)**
+* **[CCache.cmake](https://github.com/TheLartians/Ccache.cmake/)**

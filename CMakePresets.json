@@ -8,7 +8,7 @@
       "description": "Default build",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {"USE_CCACHE" : "YES"}
+      "cacheVariables": {}
     },
     {
       "name": "Ninja",

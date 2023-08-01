@@ -4,7 +4,7 @@
 // Define another benchmark
 static void BM_Success(benchmark::State& state) {
 	for (auto _ : state)
-		ml::success();
+		my_namespace::success();
 }
 BENCHMARK(BM_Success);
 

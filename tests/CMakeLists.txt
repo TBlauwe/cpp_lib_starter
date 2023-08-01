@@ -11,14 +11,13 @@
 #                  * CPM_USE_LOCAL_PACKAGES : search for locally installed dependencies first.
 #                  * CPM_LOCAL_PACKAGES_ONLY : error if dependecy not found locally.
 # ------------------------------------------------------------------------------ 
-BANNER_2(CHECK_START "Configuring target : tests")
+section(CHECK_START "Tests")
 
 
 # ------------------------------------------------------------------------------
 # --- OPTIONS
 # ------------------------------------------------------------------------------
-ADD_VERSION(NAME doctest VERSION "v2.4.11")
-PRINT_VERSIONS()
+add_version(NAME doctest VERSION "v2.4.11")
 
 
 # ------------------------------------------------------------------------------
@@ -26,8 +25,7 @@ PRINT_VERSIONS()
 # ------------------------------------------------------------------------------
 
 # Doctest is the fastest feature-rich C++11/14/17/20/23 single-header testing framework
-space()
-DOWNLOAD_LIBRARY(
+download_library(
 	NAME doctest
 	GITHUB_REPOSITORY onqtam/doctest
 )
@@ -49,16 +47,11 @@ set_target_properties(tests PROPERTIES OUTPUT_NAME "Tests")
 set_target_properties(tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_EXE_DIR}")
 add_test(NAME tests::doctest_all COMMAND tests)
 
-MESSAGE(STATUS "Discovering tests")
-indent("(CTest) ")
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
 doctest_discover_tests(tests)
-outdent()
 
-outdent()
-space()
-if(TARGET tests)
-    message(CHECK_PASS "done.")
-else()
-    message(CHECK_FAIL "failed.")
-endif()
+end_section(
+    CONDITION TARGET tests
+    PASS "done."
+    FAIL "failed."
+)

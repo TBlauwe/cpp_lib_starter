@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ml
+namespace my_namespace
 {
 	int success();
 }

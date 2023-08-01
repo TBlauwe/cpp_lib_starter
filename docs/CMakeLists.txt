@@ -11,14 +11,13 @@
 #                  * CPM_USE_LOCAL_PACKAGES : search for locally installed dependencies first.
 #                  * CPM_LOCAL_PACKAGES_ONLY : error if dependecy not found locally.
 # ------------------------------------------------------------------------------ 
-banner_2(CHECK_START "Configuring target : docs")
+section(CHECK_START "Documentation")
 
 
 # ------------------------------------------------------------------------------
 # --- OPTIONS
 # ------------------------------------------------------------------------------
-ADD_VERSION(NAME m.css VERSION "master")
-PRINT_VERSIONS()
+ADD_VERSION(NAME MCSS VERSION "master")
 
 
 # ------------------------------------------------------------------------------
@@ -26,65 +25,61 @@ PRINT_VERSIONS()
 # ------------------------------------------------------------------------------
 
 # Doxygen is a documentation generator and static analysis tool for software source trees.
-space()
-message(CHECK_START "Finding Doxygen")
-indent()
-find_package(Doxygen)
-outdent()
-if(Doxygen_FOUND)
-    message(CHECK_PASS "found.")
-else()
-    message(CHECK_FAIL "not found. Skipping docs.")
-    list(APPEND missing_components "Doxygen")
+find_library(Doxygen)
+if(NOT Doxygen_FOUND)
+    message(STATUS "Skipping docs.")
+	return()
 endif()
+
+space()
 
 # M.CSS is a no-nonsense, no-JavaScript CSS framework, site and documentation theme 
 # for content-oriented websites
 DOWNLOAD_LIBRARY(
-        NAME m.css 
+        NAME MCSS
         GITHUB_REPOSITORY mosra/m.css
 )
-
-
-# ------------------------------------------------------------------------------
-# --- Target : GenerateDocs and OpenDocs
-# ------------------------------------------------------------------------------
-if(missing_components)
-    message(CHECK_FAIL "missing components: ${missing_components}")
-else()
-    message(CHECK_PASS "ALL COMPONENTS FOUND")
-
-	set(DOXYGEN_PROJECT_NAME  "${PROJECT_NAME}")
-	set(DOXYGEN_PROJECT_VERSION ${PROJECT_VERSION})
-	set(DOXYGEN_PROJECT_ROOT "${PROJECT_SOURCE_DIR}/")
-	set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
-
-	configure_file(${CMAKE_CURRENT_LIST_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-	configure_file(${CMAKE_CURRENT_LIST_DIR}/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
-
-	file(GLOB_RECURSE pages "pages/*.md")
-
-	file(GLOB_RECURSE images "images/*.png")
-
-
-	add_custom_target(
-		generate_docs
-		${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
-		COMMAND python "${m.css_SOURCE_DIR}/documentation/doxygen.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" --debug
-		COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
-		WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-		SOURCES
-			"conf.py"
-			"Doxyfile"
-			${pages}
-			${images}
-	)
-	add_assets(generate_docs "${PROJECT_SOURCE_DIR}/docs/images/" "${DOXYGEN_OUTPUT_DIR}/html/images")
-
-	# Convenience target to open docs
-	add_custom_target(
-		open_docs
-	  COMMAND "${DOXYGEN_OUTPUT_DIRECTORY}/html/index.html"
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-	)
+if(NOT MCSS_ADDED)
+    message(STATUS "Skipping docs.")
+	return()
 endif()
+
+
+# ------------------------------------------------------------------------------
+# --- Target : my_lib_docs & my_lib_open_docs
+# ------------------------------------------------------------------------------
+set(DOXYGEN_PROJECT_NAME  "${PROJECT_NAME}")
+set(DOXYGEN_PROJECT_VERSION ${PROJECT_VERSION})
+set(DOXYGEN_PROJECT_ROOT "${PROJECT_SOURCE_DIR}/")
+set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
+
+configure_file(${CMAKE_CURRENT_LIST_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
+
+file(GLOB_RECURSE pages "pages/*.md")
+file(GLOB_RECURSE images "images/*.png")
+
+add_custom_target(
+	docs
+	${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
+	COMMAND python "${MCSS_SOURCE_DIR}/documentation/doxygen.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" --debug
+	COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
+	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+	SOURCES
+		"conf.py"
+		"Doxyfile"
+		${pages}
+		${images}
+)
+
+# Utility target to open docs
+add_custom_target(
+	open_docs
+	COMMAND "${DOXYGEN_OUTPUT_DIR}/html/index.html"
+)
+
+end_section(
+	CONDITION TARGET generate_docs
+	PASS "done."
+	FAIL "failed."
+)

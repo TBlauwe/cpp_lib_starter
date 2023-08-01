@@ -11,14 +11,13 @@
 #                  * CPM_USE_LOCAL_PACKAGES : search for locally installed dependencies first.
 #                  * CPM_LOCAL_PACKAGES_ONLY : error if dependecy not found locally.
 # ------------------------------------------------------------------------------ 
-BANNER_2(CHECK_START "Configuring target : benchmarks")
+section(CHECK_START "Benchmarks")
 
 
 # ------------------------------------------------------------------------------
 # --- OPTIONS
 # ------------------------------------------------------------------------------
-ADD_VERSION(NAME benchmark VERSION "v1.8.2")
-PRINT_VERSIONS()
+add_version(NAME benchmark VERSION "v1.8.2")
 
 
 # ------------------------------------------------------------------------------
@@ -26,7 +25,7 @@ PRINT_VERSIONS()
 # ------------------------------------------------------------------------------
 
 # A microbenchmark support library 
-DOWNLOAD_LIBRARY(
+download_library(
         NAME benchmark 
         GITHUB_REPOSITORY google/benchmark
         OPTIONS
@@ -70,5 +69,9 @@ add_custom_command(TARGET benchmarks POST_BUILD
 # ------------------------------------------------------------------------------
 # --- Closure
 # ------------------------------------------------------------------------------
-OUTDENT()
-PRINT_MISSING_DEPENDENCIES()
+
+end_section(
+    CONDITION TARGET benchmarks
+    PASS "done."
+    FAIL "failed."
+)

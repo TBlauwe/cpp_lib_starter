@@ -35,26 +35,26 @@ endif()
 
 # ----- Project information
 project(MYLIB
-        VERSION 0.1.0
-        DESCRIPTION "MY_DESC"
-        HOMEPAGE_URL "https://github.com"
-        LANGUAGES C CXX
+	VERSION 0.1.0
+	DESCRIPTION "MY_DESC"
+	HOMEPAGE_URL "https://github.com"
+	LANGUAGES C CXX
 )
 
 
 # --- Include guard
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if (NOT DEFINED MYLIB_MASTER_PROJECT)
-  set(MYLIB_MASTER_PROJECT OFF)
-  set(MYLIB_NOT_MASTER_PROJECT ON)
-  if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    set(MYLIB_MASTER_PROJECT ON)
-    set(MYLIB_NOT_MASTER_PROJECT OFF)
-	set(CMAKE_CXX_EXTENSIONS OFF) # Let's ensure -std=c++xx instead of -std=g++xx
-	set_property(GLOBAL PROPERTY USE_FOLDERS ON) # Let's nicely support folders in IDEs
-	# Convience variable so that executables (tests, benchmarks, experiments, examples) are outputed to a specific folder.
-	set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
-  endif ()
+	set(MYLIB_MASTER_PROJECT OFF)
+	set(MYLIB_NOT_MASTER_PROJECT ON)
+	if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+		set(MYLIB_MASTER_PROJECT ON)
+		set(MYLIB_NOT_MASTER_PROJECT OFF)
+		set(CMAKE_CXX_EXTENSIONS OFF) # Let's ensure -std=c++xx instead of -std=g++xx
+		set_property(GLOBAL PROPERTY USE_FOLDERS ON) # Let's nicely support folders in IDEs
+		# Convience variable so that executables (tests, benchmarks, experiments, examples) are outputed to a specific folder.
+		set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
+	endif ()
 endif ()
 
 
@@ -62,38 +62,61 @@ endif ()
 # --- CMake options
 # ------------------------------------------------------------------------------
 option(MYLIB_SKIP_DEPENDENCIES "If true, then dependencies will not be downloaded and build" ${MYLIB_NOT_MASTER_PROJECT})
+option(MYLIB_VERBOSE "If true, then cmake output will be more verbose, with headers, spacing and indent." ${MYLIB_MASTER_PROJECT})
 
 
 # ------------------------------------------------------------------------------
 # --- CMake libraries
 # ------------------------------------------------------------------------------
+include(CMakePrintHelpers)
+include(cmake/tools.cmake)
+include(cmake/target_set_compile_warnings.cmake)
+
+if(NOT ${MYLIB_SKIP_DEPENDENCIES})
 # Dependencies are added via CPM.
 # See https://github.com/cpm-cmake/CPM.cmake for more info.
-set(CPM_DOWNLOAD_VERSION 0.38.2)
-include(CMakePrintHelpers)
-include(cmake/cpm.cmake)
-include(cmake/target_set_compile_warnings.cmake)
-include(cmake/tools.cmake)
-CPMAddPackage(
-  NAME Ccache.cmake
-  GITHUB_REPOSITORY TheLartians/Ccache.cmake
-  VERSION 1.2.4
-)
+	set(CPM_DOWNLOAD_VERSION 0.38.2)
+	include(cmake/cpm.cmake)
+endif()
+
+if(${MYLIB_MASTER_PROJECT})
+	section(CHECK_START "CMake dependencies")
+
+	add_version(NAME CCache.cmake VERSION "v1.2.4")
+
+	find_program(CCACHE_PROGRAM ccache)
+	if(CCACHE_PROGRAM)
+		download_library(
+		  NAME CCache.cmake
+		  GITHUB_REPOSITORY TheLartians/Ccache.cmake
+		  OPTIONS
+			"USE_CCACHE ON"
+		)
+	endif()
+
+	end_section(
+		CONDITION EXISTS ${CPM_DOWNLOAD_LOCATION}
+		PASS "done."
+		FAIL "failed."
+	)
+endif()
 
 
 # ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
 if(NOT ${MYLIB_SKIP_DEPENDENCIES})
-	unset(missing_components)
-	include(extern/misc.cmake)
-endif()
+	section(CHECK_START "Finding my_lib dependencies")
 
-banner_2(CHECK_START "Configuring target : my_lib")
-if(missing_components)
-    message(FATAL_ERROR "Missing dependencies: ${missing_components}")
-elseif(NOT ${MYLIB_SKIP_DEPENDENCIES})
-    message("No dependencies missing")
+		unset(MYLIB_DEPENDENCIES)
+		unset(MYLIB_MISSING_DEPENDENCIES)
+		include(extern/misc.cmake)
+
+	end_section(
+		CONDITION NOT MYLIB_MISSING_DEPENDENCIES
+		PASS "done. Dependencies : ${MYLIB_DEPENDENCIES}"
+		FAIL "failed. Missing dependencies : ${MYLIB_MISSING_DEPENDENCIES}"
+	)
 endif()
 
 
@@ -116,38 +139,35 @@ SET(HEADER_LIST
 # ------------------------------------------------------------------------------
 # --- Target : my_lib
 # ------------------------------------------------------------------------------
-add_library (my_lib ${SOURCE_LIST} ${HEADER_LIST})
-target_include_directories(my_lib PUBLIC include)
-target_link_libraries(my_lib PUBLIC 
-    misc_deps
+section(CHECK_START "Configuring my_lib")
+
+	add_library (my_lib ${SOURCE_LIST} ${HEADER_LIST})
+	target_include_directories(my_lib PUBLIC include)
+	target_link_libraries(my_lib PUBLIC 
+		misc_deps
+	)
+	target_compile_features(my_lib PRIVATE cxx_std_20)
+	target_compile_options(my_lib PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>) # if using __VA_OPT__, we enforce latest preprocessor on MSVC
+	target_compile_options(my_lib PUBLIC $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->) # being a cross-platform target, we enforce standards conformance on MSVC
+
+	if(${MYLIB_MASTER_PROJECT})
+	  target_set_compile_warnings_cxx(TARGET my_lib SCOPE PRIVATE)
+	endif()
+
+end_section( 
+	CONDITION TARGET my_lib
+	PASS "done."
+	FAIL "failed."
 )
-target_compile_features(my_lib PRIVATE cxx_std_20)
-target_compile_options(my_lib PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>) # if using __VA_OPT__, we enforce latest preprocessor on MSVC
-target_compile_options(my_lib PUBLIC $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->) # being a cross-platform target, we enforce standards conformance on MSVC
-
-if(${MYLIB_MASTER_PROJECT})
-  target_set_compile_warnings_cxx(TARGET my_lib SCOPE PRIVATE)
-endif()
-
-outdent()
-if(TARGET my_lib)
-    message(CHECK_PASS "done.")
-else()
-    message(CHECK_FAIL "failed.")
-endif()
 
 
 # ------------------------------------------------------------------------------
-# --- Additional targets : tests, benchmarks, docs 
+# --- Additional targets : tests, benchmarks.
 # ------------------------------------------------------------------------------
-
 # Only available if this is the main project
 if(${MYLIB_MASTER_PROJECT})
-  include(CTest)
-  add_subdirectory(benchmarks)
-  add_subdirectory(docs)
-  add_subdirectory(tests)
+	include(CTest)
+	add_subdirectory(benchmarks)
+	add_subdirectory(tests)
+	add_subdirectory(docs)
 endif()
-
-BANNER_2(CHECK_START "Finished configuration")
-OUTDENT()

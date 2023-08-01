@@ -3,5 +3,5 @@
 
 TEST_CASE("Basic")
 {
-	CHECK(ml::success() == 1);
+	CHECK(my_namespace::success() == 1);
 }
