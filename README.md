@@ -3,7 +3,7 @@
 [![Windows [Clang-cl & MSVC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml)
 [![Ubuntu & MacOS [Clang & GCC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml)
 [![Documentation build & deploy](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml)
-![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white&link=https%3A%2F%2Ftblauwe.github.io%2Fcpp_lib_starter%2F)
+[![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://tblauwe.github.io/cpp_lib_starter/)
 
 
 An opitionated template repository to build C++ projects.
@@ -62,8 +62,7 @@ Once the setup is done, replace the following identifiers :
 * `my_lib_source` : in `src/`
 * `my_lib_header` : in `include/my_lib`
 * `TBlauwe/cpp_lib_starter` by your github repository, so badges in README are linked to correct workflows.
-* `TBlauwe/cpp_lib_starter` by your github repository, so badges in README are linked to correct workflows.
-* `tblauwe.github.io%2Fcpp_lib_starter`, by your user/org name and project name, so documentation link is updated.
+* `https://tblauwe.github.io/cpp_lib_starter/` by your github pages link.
 
 It should be safe to do a "Replace All". Still, make sure that `#include <my_lib/my_lib_header.hpp>` 
 are correctly replaced.
