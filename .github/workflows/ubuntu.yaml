@@ -10,8 +10,6 @@ on:
       - '**.hpp'
       - '**.cmake'
       - '**/CMakeLists.txt'
-      - '.github/workflows/0_setup_workflow.yaml'
-      - '.github/workflows/1_tests_workflow.yaml'
       - '.github/workflows/ubuntu.yaml'
   pull_request:
     paths:
@@ -21,8 +19,6 @@ on:
       - '**.hpp'
       - '**.cmake'
       - '**/CMakeLists.txt'
-      - '.github/workflows/0_setup_workflow.yaml'
-      - '.github/workflows/1_tests_workflow.yaml'
       - '.github/workflows/ubuntu.yaml'
 
 jobs:
@@ -41,7 +37,7 @@ jobs:
     env:
         preset_name: ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
         build_directory: ./out/build/${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
-        CPM_SOURCE_CACHE: ${{github.workspace}/.cpm_cache
+        CPM_SOURCE_CACHE: ${{github.workspace}}/.cpm_cache
 
     steps:
     - uses: actions/checkout@v3
