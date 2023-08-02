@@ -3,7 +3,7 @@
 [![Windows [Clang-cl & MSVC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml)
 [![Ubuntu & MacOS [Clang & GCC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml)
 [![Documentation build & deploy](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml)
-![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white&link=tblauwe.github.io%2Fcpp_lib_starter%2F)
+![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white&link=https%3A%2F%2Ftblauwe.github.io%2Fcpp_lib_starter%2F)
 
 
 An opitionated template repository to build C++ projects.
