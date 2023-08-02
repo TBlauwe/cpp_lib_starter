@@ -40,14 +40,15 @@ endif ()
 # ------------------------------------------------------------------------------
 # --- Target : benchmarks
 # ------------------------------------------------------------------------------
+set(BENCHMARKS_EXE_NAME "Benchmarks")
 set(SOURCE_LIST 
     "benchmark.cpp"
 )
 
-add_executable(benchmarks ${SOURCE_LIST})
+add_executable(benchmarks ${SOURCE_LIST} run_benchmarks.py)
 target_compile_features(benchmarks PRIVATE cxx_std_20)
 target_link_libraries(benchmarks PRIVATE my_lib benchmark::benchmark)
-set_target_properties(benchmarks PROPERTIES OUTPUT_NAME "Benchmarks")
+set_target_properties(benchmarks PROPERTIES OUTPUT_NAME ${BENCHMARKS_EXE_NAME})
 set_target_properties(benchmarks PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_EXE_DIR}")
 
 # Copy compare.py tools and its requirements for ease of use
@@ -60,10 +61,9 @@ add_custom_command(TARGET benchmarks POST_BUILD
 )
         
 # Copy run_benchmarks.py to launch benchmark
-add_custom_command(TARGET benchmarks POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E copy
-		"${PROJECT_SOURCE_DIR}/benchmarks/tools/run_benchmarks.py"
-        "${PROJECT_EXE_DIR}/"
+configure_file(
+		"run_benchmarks.py"
+        "${PROJECT_EXE_DIR}/run_benchmarks.py"
 )
 
 # ------------------------------------------------------------------------------

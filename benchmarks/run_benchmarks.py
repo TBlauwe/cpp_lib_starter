@@ -1,25 +1,35 @@
-# coding=utf8
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import subprocess
 import argparse
 import os
+from datetime import datetime
 
 if __name__ == '__main__':
+
+    # First, let's define a suitable so we can keep benchmarks as time goes on.
+    name = "@PROJECT_NAME@_@PROJECT_VERSION@_@CMAKE_BUILD_TYPE@_@CMAKE_CXX_COMPILER_ID@_" + datetime.now().strftime("%Y-%m-%d_%H-%M")
+    name = name.lower() + ".json"
+
+    # Now let's parse arguments, default should be good enough
     parser = argparse.ArgumentParser(description='Script to run benchmark with appropriate name.')
-    parser.add_argument('exe', help='Path to benchmark executable.')
-    parser.add_argument('-n', help='Name of benchmarks output file.')
-    parser.add_argument('-f', help='Filter')
-    parser.add_argument('-r', help='Repetition')
+    parser.add_argument('-e', '--exe', default='@BENCHMARKS_EXE_NAME@', help='Path to benchmark executable.')
+    parser.add_argument('-n', '--name', default=name, help='Name of benchmarks output file.')
+    parser.add_argument('-f', '--filter', help='Filter')
+    parser.add_argument('-r', '--repetition', help='Repetition')
     args = parser.parse_args()
-    array = [
-        args.exe,
-        "--benchmark_out=benchmark_" + os.path.basename(args.exe) + ".json",
+
+    # , let's prepare our call to run benchmarks
+    array = [args.exe,
+        "--benchmark_out=" + args.name,
     ]
-    if args.f:
-        array.append("--benchmark_filter=" + args.f)
-    if args.r:
-        array.append("--benchmark_repetitions=" + args.r)
+    if args.filter:
+        array.append("--benchmark_filter=" + args.filter)
+    if args.repetition:
+        array.append("--benchmark_repetitions=" + args.repetition)
         array.append("--benchmark_report_aggregates_only=true")
 
-    subprocess.Popen(array, shell=True)
+    result = subprocess.run(array, shell=True)
+    if result.returncode == 0:
+        print('\nSuccess !\nResults written to : ' + name)

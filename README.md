@@ -120,7 +120,7 @@ Macro used to set an option for a library.
 
 Usage : 
 
-```
+```cmake
 add_version(NAME fmt VERSION "10.0.0")
 ```
 
@@ -133,7 +133,7 @@ this wrapper is to play nicely with options/version added through `add_version` 
 
 Usage : 
 
-```
+```cmake
 download_library(
   NAME fmt
   TARGETS fmt fmt-header-only
@@ -154,7 +154,7 @@ By default, `download_library` will try to suppress warnings when building those
 
 To prevent this behaviour, you can pass the options `NO_SUPPRESS_WARNINGS`, like so :
 
-```
+```cmake
 download_library(
   NAME fmt
   GITHUB_REPOSITORY fmtlib/fmt
@@ -167,7 +167,7 @@ download_library(
 ## Build
 
 
-```cmake
+```console
 cmake -S . -B build
 cmake --build build --target <a-target>
 ```
@@ -189,7 +189,7 @@ Available targets are :
 For cross-platform compiling, we use `CMakePresets.json` (see [ref](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) 
 to share settings.
 
-```cmake
+```console
 cmake --preset <preset-name>
 cmake --build <preset-build-directory> --target <a-target>
 ```
@@ -275,7 +275,8 @@ By default and when configured as the main project, if **[CCache](https://ccache
 Otherwise it will be ignored
 
 To install **[CCache](https://ccache.dev/)** on windows, you can use chocolatey (need elevated privileges) like so :
-```
+
+```console
 choco install ccache
 ```
 
@@ -300,21 +301,21 @@ If you wish to built it localy, the following tools are needed :
 
 On Ubuntu :
 
-```shell
+```console
 sudo apt-get install doxygen
 pip3 install jinja2 Pygments
 ```
 
 On MacOs :
 
-```shell
+```console
 brew install doxygen
 pip3 install jinja2 Pygments
 ```
 
 On windows using chocolatey (need elevated privileges) :
 
-```shell
+```console
 choco install doxygen.install
 choco install python
 pip3 install jinja2 Pygments
@@ -348,21 +349,54 @@ One target is provided `benchmarks`.
 If you want to pass more options to tune the benchmarking, see 
 [Google benchmark usage guide](https://github.com/google/benchmark/blob/main/docs/user_guide.md).
 
-Alternitavely, you can use `bin\benchmarks\run_benchmarks.py` python script, to run benchmarks with a predefined set of options.
+#### Running benchmarks
 
-```
-py run_benchmarks.py Benchmarks.exe -n SomeName
+You can use provided `run_benchmarks.py` python script, to run benchmarks with a predefined set of options.
+
+```console
+py run_benchmarks.py 
 ```
 
-This line will generate a `.json` file with 'SomeName' in its name. It will also repeat benchmarks 10 times and compute the mean, median, variance, etc.
+Launch with `-h`, if you need to see available arguments.
+
+By default, benchmarks' results will be outputted to a file with following name :
+
+```console
+@PROJECT_NAME@_@PROJECT_VERSION@_@CMAKE_BUILD_TYPE@_@CMAKE_CXX_COMPILER_ID@_%Y-%m-%d_%H-%M
+```
+
+For example :
+
+```console
+mylib_0.1.0_debug_clang_2023-08-02_20-12.json
+```
+
+You can specify the name with option `-n` or `--name` :
+
+```console
+py run_benchmarks.py -n MyName
+```
+
+The goal is to be able to store results in the long run to compare evolution of
+performance.
+
+#### Comparing benchmarks
 
 To compare two benchmarks, you can use the following command :
 
-```
-py tools/compare.py benchmarks <baseline> <comparison>
+```console
+py benchmarks_tools/compare.py benchmarks <baseline> <comparison>
 ```
 
 Replace `<baseline>` and `<comparison>` with `.json` files obtained when running your benchmarks.
+
+To use this tools, requirement must be installed :
+
+```console
+cd benchmarks_tools
+pip3 install -r requirements.txt
+```
+
 
 
 ## Credits
