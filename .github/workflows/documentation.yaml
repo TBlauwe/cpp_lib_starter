@@ -12,6 +12,7 @@ on:
       - '**.hpp'
       - '**.cmake'
       - '**/CMakeLists.txt'
+      - '.github/workflows/0_setup_workflow.yaml'
       - '.github/workflows/documentation.yaml'
       - 'docs/conf.py'
       - 'docs/Doxygile'

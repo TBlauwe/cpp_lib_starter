@@ -1,7 +1,5 @@
 # Cpp Library Starter
 
-[![Execute tests](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/tests.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/tests.yaml)
-
 An opitionated template repository to build C++17 projects.
 I use it as a learning tool, but some may find some parts useful. 
 
