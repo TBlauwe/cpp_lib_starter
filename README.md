@@ -6,7 +6,7 @@
 [![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://tblauwe.github.io/cpp_lib_starter/)
 
 
-An opitionated template repository to build C++ projects.
+An opinionated template repository to build C++ projects.
 I use it as a learning tool, but some may find some parts useful. 
 
 The main goal is to be able to quickly incorporate a cross-platform library 
