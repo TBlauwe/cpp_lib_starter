@@ -64,6 +64,19 @@ Once the setup is done, replace the following identifiers :
 * `TBlauwe/cpp_lib_starter` by your github repository, so badges in README are linked to correct workflows.
 * `https://tblauwe.github.io/cpp_lib_starter/` by your github pages link.
 
+Also, in the root `CMakeLists.txt`, make sure to replace project information to your project.
+They will be used for the generated documentation.
+
+```cmake
+# ----- Project information
+project(MYLIB
+	VERSION 0.1.0
+	DESCRIPTION "Repository template for C++ projects"
+	HOMEPAGE_URL "https://github.com/TBlauwe/cpp_lib_starter"
+	LANGUAGES C CXX
+)
+```
+
 It should be safe to do a "Replace All". Still, make sure that `#include <my_lib/my_lib_header.hpp>` 
 are correctly replaced.
 

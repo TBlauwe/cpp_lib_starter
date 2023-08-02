@@ -11,7 +11,7 @@ But it is also a reference on how to write special commands provided by [Doxygen
 Note, that Doxygen allows us to mix doxygen commands in markdown. So instead of using `.dox` extensions, we use `.md`. Make
 sure to check both references for more details :
 
-@m_div{m-button m-primary} 
+@m_div{m-button m-info} 
 	<a href="https://www.doxygen.nl/manual/commands.html">
 	@m_div{m-text m-big}Doxygen 
 	@m_enddiv 
@@ -29,7 +29,6 @@ sure to check both references for more details :
 	@m_enddiv 
 	</a> 
 @m_enddiv
-
 
 @section References
 

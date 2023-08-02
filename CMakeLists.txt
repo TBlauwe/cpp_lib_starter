@@ -36,8 +36,8 @@ endif()
 # ----- Project information
 project(MYLIB
 	VERSION 0.1.0
-	DESCRIPTION "MY_DESC"
-	HOMEPAGE_URL "https://github.com"
+	DESCRIPTION "Repository template for C++ projects"
+	HOMEPAGE_URL "https://github.com/TBlauwe/cpp_lib_starter"
 	LANGUAGES C CXX
 )
 

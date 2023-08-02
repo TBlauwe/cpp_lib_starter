@@ -48,16 +48,22 @@ endif()
 # ------------------------------------------------------------------------------
 # --- Target : my_lib_docs & my_lib_open_docs
 # ------------------------------------------------------------------------------
-set(DOXYGEN_PROJECT_NAME  "${PROJECT_NAME}")
-set(DOXYGEN_PROJECT_VERSION ${PROJECT_VERSION})
-set(DOXYGEN_PROJECT_ROOT "${PROJECT_SOURCE_DIR}/")
 set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
+set(DOXYGEN_PAGES_DIR "${PROJECT_SOURCE_DIR}/docs/pages")
+set(DOXYGEN_IMAGES_DIR "${PROJECT_SOURCE_DIR}/docs/images")
+set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/project_logo_55x55.png")
 
-configure_file(${CMAKE_CURRENT_LIST_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-configure_file(${CMAKE_CURRENT_LIST_DIR}/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
+configure_file(Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+configure_file(conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
+configure_file(cppreference-doxygen-web.tag ${CMAKE_CURRENT_BINARY_DIR}/cppreference-doxygen-web.tag)
 
-file(GLOB_RECURSE pages "pages/*.md")
-file(GLOB_RECURSE images "images/*.png")
+file(GLOB_RECURSE DOCS_PAGES "pages/*.md")
+file(GLOB_RECURSE DOCS_IMAGES "images/*.png")
+set(DOCS_CONFIG_FILES 
+	"conf.py"
+	"Doxyfile.in"
+	"cppreference-doxygen-web.tag"
+)
 
 add_custom_target(
 	docs
@@ -66,10 +72,9 @@ add_custom_target(
 	COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	SOURCES
-		"conf.py"
-		"Doxyfile"
-		${pages}
-		${images}
+		${DOCS_CONFIG_FILES}
+		${DOCS_PAGES}
+		${DOCS_IMAGES}
 )
 
 # Utility target to open docs
