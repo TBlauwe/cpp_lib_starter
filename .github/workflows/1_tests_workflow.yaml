@@ -1,4 +1,6 @@
 # Reusable worflow to execute tests on different oses
+name: Tests workflow 
+
 on:
   workflow_call:
     inputs:

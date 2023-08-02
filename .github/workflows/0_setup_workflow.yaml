@@ -1,5 +1,5 @@
 # Reusable worflow to setup project
-name: Test workflow 
+name: Setup workflow 
 
 on:
   workflow_call:
@@ -46,6 +46,9 @@ jobs:
       id: set_build_directory
       run: |
           echo "build_directory=./out/build/${{inputs.architecture}}-${{inputs.configuration}}-${{inputs.toolchain}}" >> "$GITHUB_OUTPUT"
+
+    - name: Checkout
+      uses: actions/checkout@v3
 
     # Cache dependencies downloaded through CPM
     # The cache is only rebuilt if some .cmake files have changed
