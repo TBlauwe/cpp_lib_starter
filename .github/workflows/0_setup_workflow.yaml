@@ -1,0 +1,64 @@
+# Reusable worflow to setup project
+name: Test workflow 
+
+on:
+  workflow_call:
+    inputs:
+      cpm_source_cache:
+        required: false 
+        default: ${{github.workspace}}/.cpm_cache
+        type: string
+      os:
+        required: true
+        type: string
+      architecture:
+        required: true
+        type: string
+      toolchain:
+        required: true
+        type: string
+      configuration:
+        required: true
+        type: string
+    outputs:
+      preset_name:
+        description: "CMakePreset's name"
+        value: ${{jobs.setup.outputs.preset_name}}
+      build_directory:
+        description: "Build directory location"
+        value: ${{jobs.setup.outputs.build_directory}}
+
+jobs:
+  setup:
+    runs-on: ${{ inputs.os }}
+
+    outputs:
+        preset_name: ${{steps.set_preset_name.outputs.preset_name}}
+        build_directory: ${{steps.set_build_directory_outputs.build_directory}}
+
+    steps:
+    - name: Set preset_name output
+      id: set_preset_name
+      run: |
+          echo "preset_name=${{inputs.architecture}}-${{inputs.configuration}}-${{inputs.toolchain}}" >> "$GITHUB_OUTPUT"
+
+    - name: Set build_directory output
+      id: set_build_directory
+      run: |
+          echo "build_directory=./out/build/${{inputs.architecture}}-${{inputs.configuration}}-${{inputs.toolchain}}" >> "$GITHUB_OUTPUT"
+
+    # Cache dependencies downloaded through CPM
+    # The cache is only rebuilt if some .cmake files have changed
+    # We also enable `enableCrossOsArchive` as source files are the same for every OS.
+    - name: "Cache CPM dependencies" 
+      uses: actions/cache@v3
+      with:
+        path: ${{ inputs.CPM_SOURCE_CACHE }}
+        key: cpm-${{ hashFiles('**/*.cmake', '**/CMakeLists.txt') }}
+        restore-keys: cpm-
+        enableCrossOsArchive: true
+
+    # Setup the build machine with the most recent versions of CMake and Ninja. 
+    # Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
+    - name: "Install latest CMake and Ninja"
+      uses: lukka/get-cmake@latest

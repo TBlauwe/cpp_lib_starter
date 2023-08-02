@@ -1,0 +1,40 @@
+name: "Ubuntu & MacOS [Clang & GCC]"
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+      - '**.c'
+      - '**.cpp'
+      - '**.h'
+      - '**.hpp'
+      - '**.cmake'
+      - '**/CMakeLists.txt'
+      - '.github/workflows/tests.yaml'
+  pull_request:
+    paths:
+      - '**.c'
+      - '**.cpp'
+      - '**.h'
+      - '**.hpp'
+      - '**.cmake'
+      - '**/CMakeLists.txt'
+      - '.github/workflows/tests.yaml'
+
+jobs:
+  build:
+    name: "[${{matrix.os}}] : ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}"
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        architecture: [x64]
+        configuration: [release]
+        toolchain: [clang, gnu]
+
+    uses: ./.github/workflows/1_tests_workflow.yaml
+    with:
+        os: ${{matrix.os}}
+        architecture: ${{matrix.architecture}}
+        configuration: ${{matrix.configuration}}
+        toolchain: ${{matrix.toolchain}}

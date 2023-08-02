@@ -72,12 +72,20 @@ include(CMakePrintHelpers)
 include(cmake/tools.cmake)
 include(cmake/target_set_compile_warnings.cmake)
 
-if(NOT ${MYLIB_SKIP_DEPENDENCIES})
-# Dependencies are added via CPM.
-# See https://github.com/cpm-cmake/CPM.cmake for more info.
-	set(CPM_DOWNLOAD_VERSION 0.38.2)
-	include(cmake/cpm.cmake)
-endif()
+section(CHECK_START "CMake variables")
+
+	if(NOT ${MYLIB_SKIP_DEPENDENCIES})
+	# Dependencies are added via CPM.
+	# See https://github.com/cpm-cmake/CPM.cmake for more info.
+		set(CPM_DOWNLOAD_VERSION 0.38.2)
+		include(cmake/cpm.cmake)
+		cmake_print_variables(CPM_SOURCE_CACHE)
+	endif()
+end_section(
+	CONDITION true
+	PASS "done."
+	FAIL "failed."
+)
 
 if(${MYLIB_MASTER_PROJECT})
 	section(CHECK_START "CMake dependencies")
