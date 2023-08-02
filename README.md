@@ -54,15 +54,18 @@ as the main project or not.
 
 Go to the [github repository](https://github.com/TBlauwe/cpp_lib_starter) and click on `Use this template`
 
-Once the setup is done, replace the following identifiers :
+Once the setup is done, replace the following identifiers.
 
 * `my_lib` : cmake target, folder name
 * `MYLIB` : cmake project name and cmake variables prefix
 * `my_namespace` : namespace, only in source files.
 * `my_lib_source` : in `src/`
 * `my_lib_header` : in `include/my_lib`
-* `TBlauwe/cpp_lib_starter` by your github repository, so badges in README are linked to correct workflows.
-* `https://tblauwe.github.io/cpp_lib_starter/` by your github pages link.
+
+If you wish to reuse parts of the `README.md`, make sure to also replace
+* `TBlauwe/cpp_lib_starter` with your github repository (so badges are linked to correct workflows).
+* `https://tblauwe.github.io/cpp_lib_starter/` with your github pages link (so `Documentation link` badges
+redirects to your site).
 
 Also, in the root `CMakeLists.txt`, make sure to replace project information to your project.
 They will be used for the generated documentation.
@@ -83,7 +86,7 @@ are correctly replaced.
 That should be it for building the main target, tests and benchmarks.
 Documentation requires a bit more installation user-side.
 
-You also probably don't need `docs/pages/about.md` and can replace its whole contents, just like for the
+You also probably don't need `docs/pages/about.md` and `docs/pages/empty.md` can replace its whole contents, just like for the
 readme.
 
 
