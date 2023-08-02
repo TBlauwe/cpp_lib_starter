@@ -86,8 +86,7 @@ are correctly replaced.
 That should be it for building the main target, tests and benchmarks.
 Documentation requires a bit more installation user-side.
 
-You also probably don't need `docs/pages/about.md` and `docs/pages/empty.md` can replace its whole contents, just like for the
-readme.
+You also probably don't need `docs/pages/reference.md`. 
 
 
 ## CMake options
