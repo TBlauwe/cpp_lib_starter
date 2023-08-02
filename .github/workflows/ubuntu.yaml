@@ -24,6 +24,7 @@ on:
 jobs:
   build:
     name: "[${{matrix.os}}] : ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}"
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
@@ -32,24 +33,25 @@ jobs:
         configuration: [release]
         toolchain: [clang, gnu]
 
-    runs-on: ${{ matrix.os }}
-
     env:
         preset_name: ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
         build_directory: ./out/build/${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
         CPM_SOURCE_CACHE: ${{github.workspace}}/.cpm_cache
 
     steps:
-    - uses: actions/checkout@v3
+    - name: "Checkout"
+      uses: actions/checkout@v3
 
     - name: "Cache CPM dependencies" 
       uses: actions/cache@v3
       with:
         path: ${{ env.CPM_SOURCE_CACHE }}
         key: cpm-${{ hashFiles('**/*.cmake', '**/CMakeLists.txt') }}
+        enableCrossOsArchive: true
 
     # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
-    - uses: lukka/get-cmake@latest
+    - name: "Install CMake and Ninja"
+      uses: lukka/get-cmake@latest
 
     - name: Build
       run: |

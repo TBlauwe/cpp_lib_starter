@@ -1,6 +1,12 @@
 # Cpp Library Starter
 
-An opitionated template repository to build C++17 projects.
+[![Windows [Clang-cl & MSVC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml)
+[![Ubuntu & MacOS [Clang & GCC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml)
+[![Documentation build & deploy](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml)
+![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white&link=tblauwe.github.io%2Fcpp_lib_starter%2F)
+
+
+An opitionated template repository to build C++ projects.
 I use it as a learning tool, but some may find some parts useful. 
 
 The main goal is to be able to quickly incorporate a cross-platform library 
@@ -18,17 +24,28 @@ target_link_libraries(some_target PUBLIC my_lib)
 ## Features
 
 * __Dependencies__ are downloaded with **[CPM](https://github.com/cpm-cmake/)**.
-* __Tests__ are built with **[Doctest](https://github.com/doctest/doctest)**
+
+* __Tests__ are built with **[Doctest](https://github.com/doctest/doctest)**. Using Github Actions,
+tests are executed on :
+
+    * Windows : msvc and clang-cl
+    * Ubuntu : gcc and clang
+    * MacOS : gcc and clang
+
 * __Benchmarks__ are built with **[Google Benchmark](https://github.com/google/benchmark)**
-* __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
+
+* __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**.
 Using Github Actions, documentation is automatically built and published to github pages. Github pages is also automatically configured. 
 No need to create it manually.
 > Documentation example available [here](https://tblauwe.github.io/cpp_lib_starter/)
 
 * A great deal of care has been taken in writing clear and robust __CMake__ files. It should work on Windows, Linux, using WSL or not,
 by command-line or with an IDE like Visual Studio or Clion.
+
 * A verbose cmake output when built as the main project, but concise when imported.
+
 * A clear, cross-platform & easily extendable __CMakePreset.json__ is also provided
+
 * __Minimal cmake options__ used. Default values are best set (opinion) according to whether it is built 
 as the main project or not. 
 
@@ -44,12 +61,19 @@ Once the setup is done, replace the following identifiers :
 * `my_namespace` : namespace, only in source files.
 * `my_lib_source` : in `src/`
 * `my_lib_header` : in `include/my_lib`
+* `TBlauwe/cpp_lib_starter` by your github repository, so badges in README are linked to correct workflows.
+* `TBlauwe/cpp_lib_starter` by your github repository, so badges in README are linked to correct workflows.
+* `tblauwe.github.io%2Fcpp_lib_starter`, by your user/org name and project name, so documentation link is updated.
 
 It should be safe to do a "Replace All". Still, make sure that `#include <my_lib/my_lib_header.hpp>` 
 are correctly replaced.
 
 That should be it for building the main target, tests and benchmarks.
 Documentation requires a bit more installation user-side.
+
+You also probably don't need `docs/pages/about.md` and can replace its whole contents, just like for the
+readme.
+
 
 ## CMake options
 
@@ -126,10 +150,43 @@ download_library(
 )
 ```
 
+## Build
+
+
+```cmake
+cmake -S . -B build
+cmake --build build --target <a-target>
+```
+
+No need to pass options, default should be good.
+You can also use `CMakePresets.json` instead, [see below](#cmakepresets.json).
+
+### Targets
+
+Available targets are : 
+
+* `my_lib` : main library
+* `tests` : tests
+* `benchmarks` : benchmarks
+* `docs` : docs
+
 ## CMakePresets.json
 
 For cross-platform compiling, we use `CMakePresets.json` (see [ref](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) 
 to share settings.
+
+```cmake
+cmake --preset <preset-name>
+cmake --build <preset-build-directory> --target <a-target>
+```
+
+* `<preset-name>` : name of a configuration preset, [see below](#configuration-presets) for a list.
+* `<preset-build-directory>` : build folder. By default and for all configuration
+presets, it is set to `out/build/<preset-name>`.
+* `<a-target>` : name of a target, [see above](#targets).
+
+
+### Configuration presets
 
 Here are some configurations provided:
 
@@ -155,7 +212,7 @@ Thanks to the structure of the file (credits to [DirectXTK](https://github.com/m
 you can easily add other configurations, by inheritings relevant configurations.
 
 ```json
-{"name": "x84-reldebwithinfo-msvc", "inherits": ["Base", "AnOtherGenerator", "x84", "MSVC", "RelDebWithInfo"]},
+{"name": "x86-release-msvc", "inherits": ["Base", "Ninja", "x86", "MSVC", "Release"]},
 ```
 
 If you need to specify some cache variables for CMake, you can add them to the `base` configuration :
@@ -227,14 +284,23 @@ If you wish to built it localy, the following tools are needed :
 
 #### Instructions
 
-On MacOs :
+On Ubuntu :
+
+```shell
+sudo apt-get install doxygen
+pip3 install jinja2 Pygments
 ```
+
+On MacOs :
+
+```shell
 brew install doxygen
 pip3 install jinja2 Pygments
 ```
 
 On windows using chocolatey (need elevated privileges) :
-```
+
+```shell
 choco install doxygen.install
 choco install python
 pip3 install jinja2 Pygments
@@ -254,9 +320,10 @@ a reference of some commands you can to your pages.
 
 The library used for testing is [Doctest](https://github.com/doctest/doctest).
 
-One target is provided `tests`.
+One target is provided : `tests`.
 
 > Tests are only configured when the project is the main project !
+
 
 ### Benchmarks
 
