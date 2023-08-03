@@ -298,3 +298,40 @@ Command `@m_class` is applied to next emphasis  !
 # Others
 
 This text contains a @m_span{m-text m-success} green @m_endspan word.
+
+@m_class{m-code-figure}
+
+@parblock
+
+```
+@snippet my_lib/my_lib_header.hpp features-debug-output
+```
+
+<b></b>
+
+@m_class{m-nopad}
+
+@code{.shell-session}
+Image format is PixelFormat::RGBA8Srgb and size Vector(256, 192)
+Color of the bottom-left pixel is #33b27f
+@endcode
+
+@endparblock
+
+@m_class{m-row}
+
+@parblock
+
+@m_div{m-col-t-8 m-push-t-2 m-col-s-6 m-push-s-0 m-col-m-4 m-push-m-1} @m_div{m-button m-primary m-fullwidth} <a href="getting-started.html">@m_div{m-big}Getting Started@m_enddiv @m_div{m-small} bootstrap a basic project structure @m_enddiv </a> @m_enddiv @m_enddiv
+
+@m_div{m-col-t-8 m-push-t-2 m-col-s-6 m-push-s-0 m-col-m-4 m-push-m-3} @m_div{m-button m-success m-fullwidth} <a href="examples-triangle.html">@m_div{m-big}Your First Triangle@m_enddiv @m_div{m-small} a step-by-step tutorial @m_enddiv </a> @m_enddiv @m_enddiv
+
+@endparblock
+
+@m_class{m-note m-dim m-text-center} @parblock
+This block is rendered in a dim note.
+
+Centered.
+@endparblock
+
+This text contains a @span{m-text m-success} green @endspan word.

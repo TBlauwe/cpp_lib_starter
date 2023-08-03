@@ -59,12 +59,35 @@ add_custom_command(TARGET benchmarks POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${benchmark_SOURCE_DIR}/tools" "${PROJECT_EXE_DIR}/benchmarks_tools/"
 )
-        
+
+
+# ------------------------------------------------------------------------------
+# --- Run benchmarks tool
+# ------------------------------------------------------------------------------
+
+# Retrieve current git tag
+#https://github.com/TBlauwe/card/releases/tag/1.0
+execute_process(
+	COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+	OUTPUT_VARIABLE GIT_TAG
+	OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# Retrieve current git commit
+#https://github.com/TBlauwe/cpp_lib_starter/commit/7b79a9627de86a347a24319875006c6c000ce6f4
+execute_process(
+	COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+	OUTPUT_VARIABLE GIT_COMMIT
+	OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 # Copy run_benchmarks.py to launch benchmark
 configure_file(
 		"run_benchmarks.py"
         "${PROJECT_EXE_DIR}/run_benchmarks.py"
 )
+
 
 # ------------------------------------------------------------------------------
 # --- Closure

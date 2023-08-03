@@ -14,7 +14,7 @@ PROJECT_BRIEF			= @PROJECT_DESCRIPTION@
 
 
 # --- Sources
-INPUT                   = @DOXYGEN_IMAGES_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md
+INPUT                   = @DOXYGEN_IMAGES_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md @PROJECT_SOURCE_DIR@/docs/benchmarks.md
 IMAGE_PATH              = ./ @DOXYGEN_IMAGES_DIR@
 EXTRACT_ALL             = YES
 RECURSIVE               = YES
@@ -79,3 +79,4 @@ ALIASES					+=	"std_invoke=<a href=\"https://en.cppreference.com/w/cpp/utility/f
 							"ce=@endcode" \
 							"cpp=@code{.cpp}" \
 							"cmake=@code{.cmake}"
+

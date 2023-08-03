@@ -21,6 +21,10 @@ LINKS_NAVBAR2 = [
   ("<a href=\"@PROJECT_HOMEPAGE_URL@\">GitHub</a>", [])
 ]
 
+EXTRA_FILES = [
+    'benchmarks.md'
+]
+
 # LINKS_NAVBAR2 = [
 #     ("Classes", 'annotated', []),
 #     ("Files", 'files', [])

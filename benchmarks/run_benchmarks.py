@@ -4,6 +4,7 @@
 import subprocess
 import argparse
 import os
+import json
 from datetime import datetime
 
 if __name__ == '__main__':
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--repetition', help='Repetition')
     args = parser.parse_args()
 
-    # , let's prepare our call to run benchmarks
+    # Let's prepare our call to run benchmarks
     array = [args.exe,
         "--benchmark_out=" + args.name,
     ]
@@ -33,3 +34,12 @@ if __name__ == '__main__':
     result = subprocess.run(array, shell=True)
     if result.returncode == 0:
         print('\nSuccess !\nResults written to : ' + name)
+
+    # We add several informations to the ouput so we can display more information on our graphs
+    with open(name, 'r') as f:
+        json_file = json.load(f)
+        json_file["context"]["git_tag"] = "@GIT_TAG@"
+        json_file["context"]["git_commit"] = "@GIT_COMMIT@"
+
+    with open(name, 'w') as f:
+        json.dump(json_file, f, indent=4)
