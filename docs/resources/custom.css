@@ -2,8 +2,15 @@
 
 html {
     /* override light-mode variables here */
+    iframe {
+        border-width: 0;
+    }
 }
 
 html.dark-mode {
     /* override dark-mode variables here */
+}
+
+iframe {
+    border-width: 0;
 }

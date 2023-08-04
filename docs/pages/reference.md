@@ -18,7 +18,7 @@ files are in the `html/` folder.
 
 ## Hints
 
-One the many excellent tools provided by @Doxygen-awesom.
+One the many excellent tools provided by @Doxygen-awesome.
 
 @warning this is a warning only for demonstration purposes
 
