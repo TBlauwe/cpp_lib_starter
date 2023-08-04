@@ -34,7 +34,7 @@ tests are executed on :
 
 * __Benchmarks__ are built with **[Google Benchmark](https://github.com/google/benchmark)**
 
-* __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**.
+* __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**
 Using Github Actions, documentation is automatically built and published to github pages. Github pages is also automatically configured. 
 No need to create it manually.
 > Documentation example available [here](https://tblauwe.github.io/cpp_lib_starter/)
@@ -283,8 +283,7 @@ choco install ccache
 
 ### Documentation
 
-__Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
-Two targets are provided :
+__Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**
 
 * `docs` : utility target to build the documentation
 * `open_docs` : utility target to open docs without the hassle of finding it.
@@ -294,8 +293,6 @@ Two targets are provided :
 Documentation is built through github actions and push in github pages when commiting on master.
 If you wish to built it localy, the following tools are needed :
 * Doxygen, 
-* jinja2 
-* Pygments 
 
 #### Instructions
 
@@ -303,22 +300,21 @@ On Ubuntu :
 
 ```console
 sudo apt-get install doxygen
-pip3 install jinja2 Pygments
+sudo apt-get install graphviz
 ```
 
 On MacOs :
 
 ```console
 brew install doxygen
-pip3 install jinja2 Pygments
+brew install graphviz
 ```
 
 On windows using chocolatey (need elevated privileges) :
 
 ```console
 choco install doxygen.install
-choco install python
-pip3 install jinja2 Pygments
+choco install graphviz
 ```
 
 > Make sure to add doxygen to your path !
@@ -399,8 +395,16 @@ pip3 install -r requirements.txt
 
 ## Credits
 
-* **[Doctest](https://github.com/doctest/doctest)**
-* **[m.css](https://mcss.mosra.cz/)** from **[Magnum Engine](https://magnum.graphics/)**
-* **[Google Benchmark](https://github.com/google/benchmark)**
+_CMake_:
 * **[CCache](https://ccache.dev/)**
-* **[CCache.cmake](https://github.com/TheLartians/Ccache.cmake/)**
+
+_Benchmarks_:
+* **[Google Benchmark](https://github.com/google/benchmark)**
+
+_Tests_:
+* **[Doctest](https://github.com/doctest/doctest)**
+
+_Documentation_:
+* **[Doxygen](https://www.doxygen.nl/index.html)**
+* **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**
+* **[Plotly](https://plotly.com/graphing-libraries/)**

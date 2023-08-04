@@ -60,7 +60,7 @@ configure_file(config/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
 configure_file(resources/header.html ${CMAKE_CURRENT_BINARY_DIR}/header.html)
 
 file(GLOB_RECURSE DOCS_PAGES "pages/*.md")
-file(GLOB_RECURSE DOCS_IMAGES "images/*.png")
+file(GLOB_RECURSE DOCS_IMAGES "images/*")
 
 set(DOCS_CONFIG_FILES 
 	"config/conf.py"
@@ -77,6 +77,7 @@ add_custom_target(
 	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
 	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_HTML_DIR}"
 	COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/docs/vendor/plotly-${CPM_PLOTLY_VERSION}.min.js" "${DOXYGEN_HTML_DIR}"
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/docs/images" "${DOXYGEN_HTML_DIR}"
 	COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
 	COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"

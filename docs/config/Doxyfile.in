@@ -15,7 +15,7 @@ PROJECT_BRIEF			= @PROJECT_DESCRIPTION@
 
 # --- Sources
 INPUT                   = @DOXYGEN_IMAGES_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md
-IMAGE_PATH              = ./ @DOXYGEN_IMAGES_DIR@
+IMAGE_PATH              = ./
 EXTRACT_ALL             = YES
 RECURSIVE               = YES
 
@@ -61,9 +61,21 @@ XML_PROGRAMLISTING      = NO
 CREATE_SUBDIRS          = NO
 
 
+# --- Custom commands
+ALIASES					+= html_frame{1}="@htmlonly<iframe src=\"\1\"></iframe>@endhtmlonly"
+ALIASES					+= html_frame{3}="@htmlonly<iframe src=\"\1\" width=\"\2\" height=\"\3\"></iframe>@endhtmlonly"
+ALIASES					+= begin_plotly{1}="@htmlonly<div id=\"\1\"></div><script>"
+ALIASES					+= end_plotly="</script>@endhtmlonly"
+
+
+# --- Links
+ALIASES					+= Doxygen="[Doxygen](https://www.doxygen.nl/index.html)"
+ALIASES					+= Doxygen-awesome="[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)"
+ALIASES					+= Plotly="[Plotly](https://plotly.com/graphing-libraries/)"
+
+
 # --- External references
 TAGFILES				= @PROJECT_SOURCE_DIR@/docs/resources/cppreference-doxygen-web.tag=http://en.cppreference.com/w/
-
 ALIASES					+=	"std_invoke=<a href=\"https://en.cppreference.com/w/cpp/utility/functional/invoke\">std::invoke</a>" \
 							"std_future=<a href=\"https://en.cppreference.com/w/cpp/thread/future\">std::future</a>" \
 							"std_shared_future=<a href=\"https://en.cppreference.com/w/cpp/thread/shared_future\">std::shared_future</a>" \
@@ -83,6 +95,4 @@ ALIASES					+=	"std_invoke=<a href=\"https://en.cppreference.com/w/cpp/utility/f
 							"std_optional=<a href=\"https://en.cppreference.com/w/cpp/utility/optional\">std::optional</a>" \
 							"std_nullopt=<a href=\"https://en.cppreference.com/w/cpp/utility/optional/nullopt\">std::nullopt</a>" \
 							"std_ref=<a href=\"https://en.cppreference.com/w/cpp/utility/functional/ref\">std::ref</a>" \
-							"Doxygen=<a href=\"https://www.doxygen.nl/index.html\">Doxygen</a>"\
-							"iframe{3}=@htmlonly<iframe src=\"\1\" width=\"\2\" height=\"\3\"></iframe>@endhtmlonly"
 

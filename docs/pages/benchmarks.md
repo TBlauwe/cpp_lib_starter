@@ -14,14 +14,14 @@ First, let's assume we have the following:
 By writing :
 
 ```
-@iframe my_plot.html 800 600
+@html_frame{my_plot.html 800 600}
 
 @htmlonly
 <iframe src="my_plot.html" width="800" height="600"></iframe>
 @endhtmlonly
 ```
 
-@iframe my_plot.html 800 600
+@html_frame{ my_plot.html 800 600}
 
 @htmlonly
 <iframe src="my_plot.html" width="800" height="600"></iframe>

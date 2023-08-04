@@ -1,337 +1,343 @@
-@page reference Doxygen and MCSS reference
+@page reference Documentation's reference
 
 @tableofcontents
 
-This page serves  as a reference on how to write special commands provided by [Doxygen](https://www.doxygen.nl/) and [MCSS](https://mcss.mosra.cz/).
-Note, that Doxygen allows us to mix doxygen commands in markdown. So instead of using `.dox` extensions, we use `.md`. Make
-sure to check both references for more details :
+This page showcase some tools at your disposal to write documentation.
+They are provided by @Doxygen and @Doxygen-awesome.
 
-@m_div{m-button m-info} 
-	<a href="https://www.doxygen.nl/manual/commands.html">
-	@m_div{m-text m-big}Doxygen 
-	@m_enddiv 
-	@m_div{m-small} 
-		references
-	@m_enddiv 
-	</a> 
-@m_enddiv
-@m_div{m-button m-primary} 
-	<a href="https://mcss.mosra.cz/css/components/">
-	@m_div{m-text m-big}M.CSS
-	@m_enddiv 
-	@m_div{m-small} 
-		references
-	@m_enddiv 
-	</a> 
-@m_enddiv
+We used theses pages as references :
+* [Doxygen awesome example](https://jothepro.github.io/doxygen-awesome-css/class_my_library_1_1_example.html)
+Most of this page was built from it. We added code blocks for easier usage.
+* [Doxygen reference](https://www.doxygen.nl/manual/index.html)
 
-@section dox-sec Doxygen Section 
-
-This section was obtained with :
-
-@cb{.md}
-@section dox-sec Doxygen Section 
-^        ^       ^
-command  name    title
-@ce
+@warning When referencing extern files, like images and such, make sure
+to reference them as if you were in the final `html/` folder, generated
+by @Doxygen. For now, the structure of the directory is flat. Meaning, all
+files are in the `html/` folder.
 
 
-# Section
+## Hints
 
-this section was obtained with :
+One the many excellent tools provided by @Doxygen-awesom.
 
-@cb{.md}
-# Section
-@ce
+@warning this is a warning only for demonstration purposes
 
-
-# Code blocks
-
-By default with doxygen, use `@code{} ... @endcode` to write code blocks.
-
-Some aliases are provided `@cb{} ... @ce`, `@cpp ... @ce` and `@cmake ... @ce`: 
-
-
-# Images
-
-Images are added with command `image` ([see doxygen ref](https://www.doxygen.nl/manual/commands.html#cmdimage)).
-
-@image html images/cute_smiling_robot_head.png "Robot" width=5cm
-
-`@image html images/cute_smiling_robot_head.png "Robot" width=10cm`
-
-@m_div{m-note m-warning}
-	@m_div{m-text m-big}Path@m_enddiv
-	Make sure images are stored correctly. As I had a lot of trouble with it, I decided to copy 
-	images to the html folder generated before building the docs. A cmake function `add_assets` is provided
-	(see `docs/CMakeLists.txt`).
-@m_enddiv
-
-
-# Note
-
-@m_div{m-note m-default}
-	@m_div{m-text m-big}Default@m_enddiv
-	This is a default note 
-@m_enddiv
-
-```
-@m_div{m-note m-default}
-	@m_div{m-text m-big}Default@m_enddiv
-	This is a default note 
-@m_enddiv
+```markup
+@warning this is a warning only for demonstration purposes
 ```
 
-@m_div{m-note m-primary}
-	@m_div{m-text m-big}Primary@m_enddiv
-	This is a primary note
-@m_enddiv
-
-```
-@m_div{m-note m-primary}
-	@m_div{m-text m-big}Primary@m_enddiv
-	This is a primary note
-@m_enddiv
-```
-
-@m_div{m-note m-success}
-	@m_div{m-text m-big}Success@m_enddiv
-	This is a success note
-@m_enddiv
-
-```
-@m_div{m-note m-success}
-	@m_div{m-text m-big}Success@m_enddiv
-	This is a success note
-@m_enddiv
-```
-
-@m_div{m-note m-warning}
-	@m_div{m-text m-big}WARNING@m_enddiv
-	This is a warning note
-@m_enddiv
-
-```
-@m_div{m-note m-warning}
-	@m_div{m-text m-big}WARNING@m_enddiv
-	This is a warning note
-@m_enddiv
-```
-
-@m_div{m-note m-danger}
-	@m_div{m-text m-big}Danger@m_enddiv
-	This is a danger note
-@m_enddiv
-
-```
-@m_div{m-note m-danger}
-	@m_div{m-text m-big}Danger@m_enddiv
-	This is a danger note
-@m_enddiv
-```
-
-@m_div{m-note m-info}
-	@m_div{m-text m-big}Info@m_enddiv
-	This is an info note
-@m_enddiv
-
-```
-@m_div{m-note m-info}
-	@m_div{m-text m-big}Info@m_enddiv
-	This is an info note
-@m_enddiv
-```
-
-@m_div{m-note m-dim}
-	@m_div{m-text m-big}Dim@m_enddiv
-	This is a dim note
-@m_enddiv
-
-```
-@m_div{m-note m-dim}
-	@m_div{m-text m-big}Dim@m_enddiv
-	This is a dim note
-@m_enddiv
-```
-
-@m_div{m-note m-frame}
-	@m_div{m-text m-big}Frame@m_enddiv
-	This is a fram note
-@m_enddiv
-
-```
-@m_div{m-note m-frame}
-	@m_div{m-text m-big}Frame@m_enddiv
-	This is a frame note
-@m_enddiv
-```
-
-
-# Block
-
-@m_div{m-block m-default}
-	@m_div{m-text m-big}Default@m_enddiv
-	This is a default block 
-@m_enddiv
-
-```
-@m_div{m-block m-default}
-	@m_div{m-text m-big}Default@m_enddiv
-	This is a default block 
-@m_enddiv
-```
-
-@m_div{m-block m-primary}
-	@m_div{m-text m-big}Primary@m_enddiv
-	This is a primary block
-@m_enddiv
-
-```
-@m_div{m-block m-primary}
-	@m_div{m-text m-big}Primary@m_enddiv
-	This is a primary block
-@m_enddiv
-```
-
-@m_div{m-block m-success}
-	@m_div{m-text m-big}Success@m_enddiv
-	This is a success block
-@m_enddiv
-
-```
-@m_div{m-block m-success}
-	@m_div{m-text m-big}Success@m_enddiv
-	This is a success note
-@m_enddiv
-```
-
-@m_div{m-block m-warning}
-	@m_div{m-text m-big}WARNING@m_enddiv
-	This is a warning block
-@m_enddiv
-
-```
-@m_div{m-block m-warning}
-	@m_div{m-text m-big}WARNING@m_enddiv
-	This is a warning block
-@m_enddiv
-```
-
-@m_div{m-block m-danger}
-	@m_div{m-text m-big}Danger@m_enddiv
-	This is a danger block
-@m_enddiv
-
-```
-@m_div{m-block m-danger}
-	@m_div{m-text m-big}Danger@m_enddiv
-	This is a danger block
-@m_enddiv
-```
-
-@m_div{m-block m-info}
-	@m_div{m-text m-big}Info@m_enddiv
-	This is an info block
-@m_enddiv
-
-```
-@m_div{m-block m-info}
-	@m_div{m-text m-big}Info@m_enddiv
-	This is an info block
-@m_enddiv
-```
-
-@m_div{m-block m-dim}
-	@m_div{m-text m-big}Dim@m_enddiv
-	This is a dim block
-@m_enddiv
-
-```
-@m_div{m-block m-dim}
-	@m_div{m-text m-big}Dim@m_enddiv
-	This is a dim block
-@m_enddiv
-```
-
-@m_div{m-block m-frame}
-	@m_div{m-text m-big}Frame@m_enddiv
-	This is a fram block
-@m_enddiv
-
-```
-@m_div{m-block m-frame}
-	@m_div{m-text m-big}Frame@m_enddiv
-	This is a frame block
-@m_enddiv
-```
-
-# Text 
-
-@m_div{m-text m-big}Big@m_enddiv
-
-```
-@m_div{m-text m-big}Big@m_enddiv
-```
-
-@m_div{m-text m-small}Small@m_enddiv
-
-```
-@m_div{m-text m-small}Small@m_enddiv
-```
-
-@m_div{m-text m-tiny}Tiny@m_enddiv
-
-```
-@m_div{m-text m-tiny}Tiny@m_enddiv
-```
-
-# Label
-
-Command `@m_class` is applied to next emphasis  !
-
-@m_class{m-label m-warning} **warning** key.
-
-```
-@m_class{m-label m-warning} **warning** key.
-```
-
-# Others
-
-This text contains a @m_span{m-text m-success} green @m_endspan word.
-
-@m_class{m-code-figure}
-
-@parblock
-
-```
-@snippet my_lib/my_lib_header.hpp features-debug-output
-```
-
-<b></b>
-
-@m_class{m-nopad}
-
-@code{.shell-session}
-Image format is PixelFormat::RGBA8Srgb and size Vector(256, 192)
-Color of the bottom-left pixel is #33b27f
+@note this is a note to show that notes work. They can also include `code`:
+@code{.c}
+void this_looks_awesome();
 @endcode
 
-@endparblock
+```markup
+@note this is a note to show that notes work. They can also include `code`:
+@code{.c}
+void this_looks_awesome();
+@endcode
+```
 
-@m_class{m-row}
+@bug example bug
 
-@parblock
+```markup
+@bug example bug
+```
 
-@m_div{m-col-t-8 m-push-t-2 m-col-s-6 m-push-s-0 m-col-m-4 m-push-m-1} @m_div{m-button m-primary m-fullwidth} <a href="getting-started.html">@m_div{m-big}Getting Started@m_enddiv @m_div{m-small} bootstrap a basic project structure @m_enddiv </a> @m_enddiv @m_enddiv
+@deprecated None of this will be deprecated, because it's beautiful!
 
-@m_div{m-col-t-8 m-push-t-2 m-col-s-6 m-push-s-0 m-col-m-4 m-push-m-3} @m_div{m-button m-success m-fullwidth} <a href="examples-triangle.html">@m_div{m-big}Your First Triangle@m_enddiv @m_div{m-small} a step-by-step tutorial @m_enddiv </a> @m_enddiv @m_enddiv
+```markup
+@deprecated None of this will be deprecated, because it's beautiful!
+```
 
-@endparblock
+@invariant This is an invariant
 
-@m_class{m-note m-dim m-text-center} @parblock
-This block is rendered in a dim note.
+```markup
+@invariant This is an invariant
+```
 
-Centered.
-@endparblock
+@pre This is a precondition
 
-This text contains a @span{m-text m-success} green @endspan word.
+```markup
+@pre This is a precondition
+```
+
+@post This is a postcondition
+
+```markup
+@post This is a postcondition
+```
+
+@todo This theme is never finished!
+
+```markup
+@todo This theme is never finished!
+```
+
+@remark This is awesome!
+
+```markup
+@remark This is awesome!
+```
+
+
+## Tables
+
+The table content is scrollable if the table gets too wide.
+
+| first_column | second_column | third_column | fourth_column | fifth_column | sixth_column | seventh_column | eighth_column | ninth_column |
+|--------------|---------------|--------------|---------------|--------------|--------------|----------------|---------------|--------------|
+| 1            | 2             | 3            | 4             | 5            | 6            | 7              | 8             | 9            |
+
+```markup
+| first_column | second_column | third_column | fourth_column | fifth_column | sixth_column | seventh_column | eighth_column | ninth_column |
+|--------------|---------------|--------------|---------------|--------------|--------------|----------------|---------------|--------------|
+| 1            | 2             | 3            | 4             | 5            | 6            | 7              | 8             | 9            |
+```
+
+A table can contain images:
+
+| Column 1                  | Column 2                                        |
+|---------------------------|-------------------------------------------------|
+| ![logo](cute_smiling_robot_head.png) | ← the image should not be inverted in dark-mode |
+
+```markup
+| Column 1                  | Column 2                                        |
+|---------------------------|-------------------------------------------------|
+| ![logo](cute_smiling_robot_head.png) | ← the image should not be inverted in dark-mode |
+```
+
+Complex [Doxygen tables](https://www.doxygen.nl/manual/tables.html) are also supported as seen in @ref multi_row "this example":
+
+<table>
+<caption id="multi_row">Complex table</caption>
+<tr><th>Column 1                      <th>Column 2        <th>Column 3
+<tr><td rowspan="2">cell row=1+2,col=1<td>cell row=1,col=2<td>cell row=1,col=3
+<tr><td rowspan="2">cell row=2+3,col=2                    <td>cell row=2,col=3
+<tr><td>cell row=3,col=1                                  <td rowspan="2">cell row=3+4,col=3
+<tr><td colspan="2">cell row=4,col=1+2
+<tr><td>cell row=5,col=1              <td colspan="2">cell row=5,col=2+3
+<tr><td colspan="2" rowspan="2">cell row=6+7,col=1+2      <td>cell row=6,col=3
+<tr>                                                      <td>cell row=7,col=3
+<tr><td>cell row=8,col=1              <td>cell row=8,col=2\n
+  <table>
+    <tr><td>Inner cell row=1,col=1<td>Inner cell row=1,col=2
+    <tr><td>Inner cell row=2,col=1<td>Inner cell row=2,col=2
+  </table>
+  <td>cell row=8,col=3
+  <ul>
+    <li>Item 1
+    <li>Item 2
+  </ul>
+</table>
+
+```html
+<table>
+<caption id="multi_row">Complex table</caption>
+<tr><th>Column 1                      <th>Column 2        <th>Column 3
+<tr><td rowspan="2">cell row=1+2,col=1<td>cell row=1,col=2<td>cell row=1,col=3
+<tr><td rowspan="2">cell row=2+3,col=2                    <td>cell row=2,col=3
+<tr><td>cell row=3,col=1                                  <td rowspan="2">cell row=3+4,col=3
+<tr><td colspan="2">cell row=4,col=1+2
+<tr><td>cell row=5,col=1              <td colspan="2">cell row=5,col=2+3
+<tr><td colspan="2" rowspan="2">cell row=6+7,col=1+2      <td>cell row=6,col=3
+<tr>                                                      <td>cell row=7,col=3
+<tr><td>cell row=8,col=1              <td>cell row=8,col=2\n
+  <table>
+    <tr><td>Inner cell row=1,col=1<td>Inner cell row=1,col=2
+    <tr><td>Inner cell row=2,col=1<td>Inner cell row=2,col=2
+  </table>
+  <td>cell row=8,col=3
+  <ul>
+    <li>Item 1
+    <li>Item 2
+  </ul>
+</table>
+```
+
+A table can be centered with the `<center>` html tag:
+
+<center>
+| Foo         | Bar            | Baz                       | FooBar      |
+|-------------|----------------|---------------------------|-------------|
+| Lorem imsum | dolor sit amet | cenectetur adipisici elit | At vero eos |
+</center>
+
+```html
+<center>
+| Foo         | Bar            | Baz                       | FooBar      |
+|-------------|----------------|---------------------------|-------------|
+| Lorem imsum | dolor sit amet | cenectetur adipisici elit | At vero eos |
+</center>
+```
+
+
+## Lists
+
+- element 1
+- element 2
+
+1. element 1
+   ```
+   code in lists
+   ```
+2. element 2
+
+
+## Code Blocks
+
+Code blocks can be written in a markdown manner or with doxygen commands :
+
+### Markdown code block
+
+```cpp
+auto x = "code within md fences";
+```
+
+@code{markup}
+```cpp
+auto x = "code within md fences";
+```
+@endcode
+
+### Doxygen code block
+
+@code{.cpp}
+// code within @code block
+while(true) {
+   auto example = std::make_shared<Example>(5);
+   example->test("test");
+}
+@endcode
+
+```markup
+@code{.cpp}
+// code within @code block
+while(true) {
+   auto example = std::make_shared<Example>(5);
+   example->test("test");
+}
+@endcode
+```
+
+
+
+## Quotes
+ 
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+> ut labore et dolore magna aliqua. Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque viverra. 
+> Velit sed ullamcorper morbi tincidunt ornare. 
+> 
+> Lorem ipsum dolor sit amet consectetur adipiscing elit duis.
+*- jothepro*
+
+```markup
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+> ut labore et dolore magna aliqua. Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque viverra. 
+> Velit sed ullamcorper morbi tincidunt ornare. 
+> 
+> Lorem ipsum dolor sit amet consectetur adipiscing elit duis.
+*- jothepro*
+```
+
+
+## Graphviz
+
+Embedded Graphviz graphs support dark mode and can be scrolled once they get too wide:
+
+@dot Graphviz with a caption
+digraph example {
+   node [fontsize="12"];
+   rankdir="LR"
+   a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k;
+}
+@enddot
+
+## Plotly
+
+We added @Plotly to draw interactive charts. Multiple options are available.
+
+### HTML Block
+
+@htmlonly
+<div id="gd"></div>
+
+<script>
+	Plotly.newPlot("gd", /* JSON object */ {
+		"data": [{ "y": [1, 2, 3] }],
+		"layout": { "width": 600, "height": 400}
+	})
+</script>
+@endhtmlonly
+
+```html
+@htmlonly
+<div id="gd"></div>
+
+<script>
+	Plotly.newPlot("gd", /* JSON object */ {
+		"data": [{ "y": [1, 2, 3] }],
+		"layout": { "width": 600, "height": 400}
+	})
+</script>
+@endhtmlonly
+```
+
+We also added an alias : 
+
+@begin_plotly{div_id}
+Plotly.newPlot("div_id", /* JSON object */ {
+	"data": [{ "y": [1, 2, 3] }],
+	"layout": { "width": 600, "height": 400}
+})
+@end_plotly
+
+```html
+@begin_plotly{div_id}
+Plotly.newPlot("div_id", /* JSON object */ {
+	"data": [{ "y": [1, 2, 3] }],
+	"layout": { "width": 600, "height": 400}
+})
+@end_plotly{div_id}
+```
+
+
+### HTML IFrame
+
+Or by using an [IFrame](https://developer.mozilla.org/fr/docs/Web/HTML/Element/iframe).
+
+@html_frame{my_plot.html, 800, 600}
+
+```markup
+@html_frame{my_plot.html, 800, 600}
+```
+
+@htmlonly
+<iframe src="my_plot.html" width="800" height="600"></iframe>
+@endhtmlonly
+
+```markup
+@htmlonly
+<iframe src="my_plot.html" width="800" height="600"></iframe>
+@endhtmlonly
+```
+
+__Arguments__ :
+1. __name__ - `my_plot.html` : path to an .html file
+2. __width__ - `800` : IFrame's width
+3. __height__ - `600` : IFrame's height
+
+@remark You do not need to have @Plotly self-contained in the .html file, nor imported
+through a CDN. You can import it by integrating this line to your `<head>`
+@code{.html}
+<!-- Make sure that the version correspond the one used by the project-->
+<!-- Check `docs/CMakeLists.txt` -->
+<script charset="utf-8" src="plotly-2.21.1.min.js">
+@endcode
+If you need to insert many IFrames, this will save us some uncessary call.
+
+@warning Also, if you build documentation localy and open it in your browser,
+iframes will most likely not work : `Not allowed to load local resource: ...`.
+It's for security reason. To solve this, you need to run a web server.
+You can use visual studio code for example, with an official extension 
+called `Live Preview`.
