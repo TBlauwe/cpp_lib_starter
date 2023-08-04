@@ -1,12 +1,55 @@
-@m_div{m-button m-primary} 
-	<a href="https://doc.magnum.graphics/">
-	@m_div{m-big}See it live! @m_enddiv 
-	@m_div{m-small} uses the m.css theme @m_enddiv 
-	</a> 
-@m_enddiv
-@m_class{m-note m-dim m-text-center data-mx-skip} @parblock
-This block is rendered in a dim note.
+# Benchmarks
 
-<iframe src="my_plot.html" width="800" height="600" data-mx-skip></iframe>
-Centered.
-@endparblock
+This page showcase how to integrate charts from our "continuous benchmarking"
+
+## Usage
+
+First, let's assume we have the following:
+
+* Some benchmarking, like `BM_Success`
+* Severals results of those benchmarking
+
+> We recommand using `run_benchmark.py` as it will input additional information.
+
+By writing :
+
+```
+@iframe my_plot.html 800 600
+
+@htmlonly
+<iframe src="my_plot.html" width="800" height="600"></iframe>
+@endhtmlonly
+```
+
+@iframe my_plot.html 800 600
+
+@htmlonly
+<iframe src="my_plot.html" width="800" height="600"></iframe>
+@endhtmlonly
+
+
+Alternatively, you can script plot directly :
+
+```
+@htmlonly
+<div id="gd"></div>
+
+<script>
+	Plotly.newPlot("gd", /* JSON object */ {
+		"data": [{ "y": [1, 2, 3] }],
+		"layout": { "width": 600, "height": 400}
+	})
+</script>
+@endhtmlonly
+```
+
+@htmlonly
+<div id="gd"></div>
+
+<script>
+	Plotly.newPlot("gd", /* JSON object */ {
+		"data": [{ "y": [1, 2, 3] }],
+		"layout": { "width": 600, "height": 400}
+	})
+</script>
+@endhtmlonly

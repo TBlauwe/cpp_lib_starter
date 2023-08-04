@@ -1,0 +1,9 @@
+/* See reference : https://jothepro.github.io/doxygen-awesome-css/md_docs_2customization.html */
+
+html {
+    /* override light-mode variables here */
+}
+
+html.dark-mode {
+    /* override dark-mode variables here */
+}

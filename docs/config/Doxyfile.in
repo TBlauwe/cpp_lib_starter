@@ -14,7 +14,7 @@ PROJECT_BRIEF			= @PROJECT_DESCRIPTION@
 
 
 # --- Sources
-INPUT                   = @DOXYGEN_IMAGES_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md @PROJECT_SOURCE_DIR@/docs/benchmarks.md
+INPUT                   = @DOXYGEN_IMAGES_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md
 IMAGE_PATH              = ./ @DOXYGEN_IMAGES_DIR@
 EXTRACT_ALL             = YES
 RECURSIVE               = YES
@@ -26,22 +26,43 @@ FULL_PATH_NAMES         = YES
 STRIP_FROM_PATH         = "@PROJECT_SOURCE_DIR@/include"
 SHOW_FILES				= YES
 SHOW_INCLUDE_FILES		= YES
-GENERATE_TREEVIEW		= YES
+
+# --- Required by doxygen-awesome-css
+GENERATE_TREEVIEW		= YES 
+DISABLE_INDEX			= NO
+FULL_SIDEBAR			= NO
+HTML_COLORSTYLE			= LIGHT # required with Doxygen >= 1.9.5
+HTML_HEADER				= header.html
+HTML_EXTRA_FILES		=	@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-darkmode-toggle.js \
+							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-fragment-copy-button.js \
+							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-paragraph-link.js \
+							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-interactive-toc.js \
+							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-tabs.js \
+
+HTML_EXTRA_STYLESHEET	=	@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome.css \
+							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-sidebar-only.css \
+							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-sidebar-only-darkmode-toggle.css \
+							@PROJECT_SOURCE_DIR@/docs/resources/custom.css
+
+# --- DOT Graphs
+# Reference : https://jothepro.github.io/doxygen-awesome-css/md_docs_2tricks.html
+HAVE_DOT				= YES
+DOT_IMAGE_FORMAT		= svg
+#DOT_TRANSPARENT		= YES  # Obsolete
 
 
 # --- Build Generation
-# We use m.css to generate the html documentation, so we only need XML output
 OUTPUT_LANGUAGE         = English
 OUTPUT_DIRECTORY        = @DOXYGEN_OUTPUT_DIR@
-GENERATE_XML            = YES
-GENERATE_HTML           = NO
+GENERATE_XML            = NO
+GENERATE_HTML           = YES
 GENERATE_LATEX          = NO
 XML_PROGRAMLISTING      = NO
 CREATE_SUBDIRS          = NO
 
 
 # --- External references
-TAGFILES = cppreference-doxygen-web.tag=http://en.cppreference.com/w/
+TAGFILES				= @PROJECT_SOURCE_DIR@/docs/resources/cppreference-doxygen-web.tag=http://en.cppreference.com/w/
 
 ALIASES					+=	"std_invoke=<a href=\"https://en.cppreference.com/w/cpp/utility/functional/invoke\">std::invoke</a>" \
 							"std_future=<a href=\"https://en.cppreference.com/w/cpp/thread/future\">std::future</a>" \
@@ -62,21 +83,6 @@ ALIASES					+=	"std_invoke=<a href=\"https://en.cppreference.com/w/cpp/utility/f
 							"std_optional=<a href=\"https://en.cppreference.com/w/cpp/utility/optional\">std::optional</a>" \
 							"std_nullopt=<a href=\"https://en.cppreference.com/w/cpp/utility/optional/nullopt\">std::nullopt</a>" \
 							"std_ref=<a href=\"https://en.cppreference.com/w/cpp/utility/functional/ref\">std::ref</a>" \
-							"Doxygen=<a href=\"https://www.doxygen.nl/index.html\">Doxygen</a>" \
-							"MCSS=<a href=\"https://mcss.mosra.cz/documentation/doxygen/\">m.css</a>" \
-							"CPP17=<a href=\"https://en.wikipedia.org/wiki/C%2B%2B17\">C++17</a>" \
-							"m_div{1}=@xmlonly<mcss:div xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:class=\"\1\">@endxmlonly" \
-							"m_enddiv=@xmlonly</mcss:div>@endxmlonly" \
-							"m_span{1}=@xmlonly<mcss:span xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:class=\"\1\">@endxmlonly" \
-							"m_endspan=@xmlonly</mcss:span>@endxmlonly" \
-							"m_class{1}=@xmlonly<mcss:class xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:class=\"\1\" />@endxmlonly" \
-							"m_footernavigation=@xmlonly<mcss:footernavigation xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" />@endxmlonly" \
-							"m_examplenavigation{2}=@xmlonly<mcss:examplenavigation xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:page=\"\1\" mcss:prefix=\"\2\" />@endxmlonly" \
-							"m_keywords{1}=@xmlonly<mcss:search xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:keywords=\"\1\" />@endxmlonly" \
-							"m_keyword{3}=@xmlonly<mcss:search xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:keyword=\"\1\" mcss:title=\"\2\" mcss:suffix-length=\"\3\" />@endxmlonly" \
-							"m_enum_values_as_keywords=@xmlonly<mcss:search xmlns:mcss=\"http://mcss.mosra.cz/doxygen/\" mcss:enum-values-as-keywords=\"true\" />@endxmlonly" \
-							"cb{1}=@code{\1}" \
-							"ce=@endcode" \
-							"cpp=@code{.cpp}" \
-							"cmake=@code{.cmake}"
+							"Doxygen=<a href=\"https://www.doxygen.nl/index.html\">Doxygen</a>"\
+							"iframe{3}=@htmlonly<iframe src=\"\1\" width=\"\2\" height=\"\3\"></iframe>@endhtmlonly"
 

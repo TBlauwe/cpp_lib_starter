@@ -17,7 +17,8 @@ section(CHECK_START "Documentation")
 # ------------------------------------------------------------------------------
 # --- OPTIONS
 # ------------------------------------------------------------------------------
-ADD_VERSION(NAME MCSS VERSION "master")
+ADD_VERSION(NAME DOXYGEN_AWESOME_CSS VERSION "v2.2.1")
+ADD_VERSION(NAME PLOTLY VERSION "2.25.1")
 
 
 # ------------------------------------------------------------------------------
@@ -35,11 +36,11 @@ space()
 
 # M.CSS is a no-nonsense, no-JavaScript CSS framework, site and documentation theme 
 # for content-oriented websites
-DOWNLOAD_LIBRARY(
-        NAME MCSS
-        GITHUB_REPOSITORY mosra/m.css
+download_library(
+        NAME DOXYGEN_AWESOME_CSS
+        GITHUB_REPOSITORY jothepro/doxygen-awesome-css
 )
-if(NOT MCSS_ADDED)
+if(NOT DOXYGEN_AWESOME_CSS_ADDED)
     message(STATUS "Skipping docs.")
 	return()
 endif()
@@ -49,33 +50,43 @@ endif()
 # --- Target : my_lib_docs & my_lib_open_docs
 # ------------------------------------------------------------------------------
 set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
+set(DOXYGEN_HTML_DIR "${DOXYGEN_OUTPUT_DIR}/html")
 set(DOXYGEN_PAGES_DIR "${PROJECT_SOURCE_DIR}/docs/pages")
 set(DOXYGEN_IMAGES_DIR "${PROJECT_SOURCE_DIR}/docs/images")
-set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/project_logo_55x55.png")
+set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/logo/project_logo_55x55.png")
 
-configure_file(Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-configure_file(conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
-configure_file(cppreference-doxygen-web.tag ${CMAKE_CURRENT_BINARY_DIR}/cppreference-doxygen-web.tag)
+configure_file(config/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+configure_file(config/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
+configure_file(resources/header.html ${CMAKE_CURRENT_BINARY_DIR}/header.html)
 
 file(GLOB_RECURSE DOCS_PAGES "pages/*.md")
 file(GLOB_RECURSE DOCS_IMAGES "images/*.png")
+
 set(DOCS_CONFIG_FILES 
-	"conf.py"
-	"Doxyfile.in"
-	"cppreference-doxygen-web.tag"
+	"config/conf.py"
+	"config/Doxyfile.in"
+)
+set(DOCS_RESOURCE_FILES 
+	"resources/cppreference-doxygen-web.tag"
+	"resources/header.html"
+	"resources/custom.css"
 )
 
 add_custom_target(
 	docs
-	${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
-	COMMAND python "${MCSS_SOURCE_DIR}/documentation/doxygen.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" --debug
+	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
+	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_HTML_DIR}"
+	COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/docs/vendor/plotly-${CPM_PLOTLY_VERSION}.min.js" "${DOXYGEN_HTML_DIR}"
+	COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
 	COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	SOURCES
 		${DOCS_CONFIG_FILES}
+		${DOCS_RESOURCE_FILES}
 		${DOCS_PAGES}
 		${DOCS_IMAGES}
 )
+
 
 # Utility target to open docs
 add_custom_target(
@@ -84,7 +95,7 @@ add_custom_target(
 )
 
 end_section(
-	CONDITION TARGET generate_docs
+	CONDITION TARGET docs
 	PASS "done."
 	FAIL "failed."
 )
