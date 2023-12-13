@@ -15,16 +15,11 @@ section(CHECK_START "Benchmarks")
 
 
 # ------------------------------------------------------------------------------
-# --- OPTIONS
-# ------------------------------------------------------------------------------
-add_version(NAME benchmark VERSION "v1.8.2")
-
-
-# ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
 
 # A microbenchmark support library 
+use_version(NAME benchmark VERSION "v1.8.2")
 download_library(
         NAME benchmark 
         GITHUB_REPOSITORY google/benchmark
@@ -41,6 +36,8 @@ endif ()
 # --- Target : benchmarks
 # ------------------------------------------------------------------------------
 set(BENCHMARKS_EXE_NAME "Benchmarks")
+get_filename_component(BENCHMARKS_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/benchmarks/data/" ABSOLUTE)
+FILE(MAKE_DIRECTORY ${BENCHMARKS_OUTPUT_DIR})
 set(SOURCE_LIST 
     "benchmark.cpp"
 )
@@ -87,6 +84,13 @@ configure_file(
 		"run_benchmarks.py"
         "${PROJECT_EXE_DIR}/run_benchmarks.py"
 )
+
+add_custom_target(run_benchmarks
+    COMMAND "run_benchmarks.py"
+    WORKING_DIRECTORY "${PROJECT_EXE_DIR}"
+    COMMENT "Launching benchmarks through python script."
+)
+add_dependencies(run_benchmarks benchmarks)
 
 
 # ------------------------------------------------------------------------------

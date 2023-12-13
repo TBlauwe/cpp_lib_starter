@@ -15,18 +15,12 @@
 # ------------------------------------------------------------------------------ 
 
 # ------------------------------------------------------------------------------
-# --- OPTIONS
-# ------------------------------------------------------------------------------
-add_version(NAME tracy VERSION "v0.9.1")
-add_version(NAME fmt VERSION "10.0.0")
-
-
-# ------------------------------------------------------------------------------
-# --- Adding libraries
+# --- Dependencies
 # ------------------------------------------------------------------------------
 
 # Tracy is a real time, nanosecond resolution, remote telemetry, hybrid frame 
 # and sampling profiler for games and other applications.
+use_version(NAME tracy VERSION "v0.9.1")
 download_library(
 	NAME tracy 
 	TARGETS TracyClient
@@ -36,6 +30,7 @@ download_library(
 space()
 
 # FMT is an open-source formatting library providing a fast and safe alternative to C stdio and C++ iostream
+use_version(NAME fmt VERSION "10.0.0")
 download_library(
   NAME fmt
   TARGETS fmt fmt-header-only

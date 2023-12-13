@@ -240,6 +240,28 @@ while(true) {
 *- jothepro*
 ```
 
+## Navigation
+
+[Reference](https://jothepro.github.io/doxygen-awesome-css/md_docs_2extensions.html#extension-page-navigation)
+
+<div class="section_buttons">
+ 
+| Previous          |                              Next |
+|:------------------|----------------------------------:|
+| [Home](index.html) | [Bug List](bug.html) |
+ 
+</div>
+
+```markup
+<div class="section_buttons">
+ 
+| Previous          |                              Next |
+|:------------------|----------------------------------:|
+| [Home](index.html) | [Bug List](bug.html) |
+ 
+</div>
+```
+
 
 ## Graphviz
 

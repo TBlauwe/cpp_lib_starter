@@ -10,10 +10,10 @@
 #
 #                  Noteworthy cmake folders :
 #                  * extern/ : contains cmake files to find dependencies using CPM.
-#                              Can be skipped by setting MYLIB_SKIP_DEPENDENCIES 
+#                              Can be skipped by setting MY_LIB_SKIP_DEPENDENCIES 
 #
 #                  Noteworthy cmake options :
-#                  * MYLIB_SKIP_DEPENDENCIES : skip dependencies download and build (with CPM)
+#                  * MY_LIB_SKIP_DEPENDENCIES : skip dependencies download and build (with CPM)
 #
 #                  Noteworthy defines :
 #                  * TRACY_ENABLE : If defined, instructions related to tracy will be included.
@@ -21,130 +21,69 @@
 #                  vulkan validation layers and some logging, will be deactivated.
 # ------------------------------------------------------------------------------ 
 cmake_minimum_required (VERSION 3.17...3.26)
-
-
-# ------------------------------------------------------------------------------
-# --- CMake configuration 
-# ------------------------------------------------------------------------------
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
-
+include(cmake/prevent_in_source_build.cmake)
 
 # ----- Project information
-project(MYLIB
+project(MY_LIB
 	VERSION 0.1.0
 	DESCRIPTION "Repository template for C++ projects"
 	HOMEPAGE_URL "https://github.com/TBlauwe/cpp_lib_starter"
 	LANGUAGES C CXX
 )
 
+include(cmake/project_is_top_level.cmake) # Defines PROJECT_IS_TOP_LEVEL if cmake version is under 3.21.
 
-# --- Include guard
-# Only do these if this is the main project, and not if it is included through add_subdirectory
-if (NOT DEFINED MYLIB_MASTER_PROJECT)
-	set(MYLIB_MASTER_PROJECT OFF)
-	set(MYLIB_NOT_MASTER_PROJECT ON)
-	if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-		set(MYLIB_MASTER_PROJECT ON)
-		set(MYLIB_NOT_MASTER_PROJECT OFF)
-		set(CMAKE_CXX_EXTENSIONS OFF) # Let's ensure -std=c++xx instead of -std=g++xx
-		set_property(GLOBAL PROPERTY USE_FOLDERS ON) # Let's nicely support folders in IDEs
-		# Convience variable so that executables (tests, benchmarks, experiments, examples) are outputed to a specific folder.
-		set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
-	endif ()
+# Our CMake's behaviours is altered whether this project is consumed or if it is the main project
+if (PROJECT_IS_TOP_LEVEL)
+	set(CMAKE_CXX_EXTENSIONS OFF) # Ensure -std=c++xx is used instead of -std=g++xx. See: https://crascit.com/2015/03/28/enabling-cxx11-in-cmake/
+	set_property(GLOBAL PROPERTY USE_FOLDERS ON) # Support folders in IDEs
+	# Convience variable so that executables (tests, benchmarks, experiments, examples) are outputed to a specific folder.
+	set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
 endif ()
 
-
-# ------------------------------------------------------------------------------
-# --- CMake options
-# ------------------------------------------------------------------------------
-option(MYLIB_SKIP_DEPENDENCIES "If true, then dependencies will not be downloaded and build" ${MYLIB_NOT_MASTER_PROJECT})
-option(MYLIB_VERBOSE "If true, then cmake output will be more verbose, with headers, spacing and indent." ${MYLIB_MASTER_PROJECT})
+# --- Project options
+option(MY_LIB_SKIP_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_NOT_TOP_LEVEL})
+option(MY_LIB_VERBOSE "Enable a more verbose CMake's output, with headers, spacing and indent." ${PROJECT_IS_TOP_LEVEL})
 
 
-# ------------------------------------------------------------------------------
-# --- CMake libraries
-# ------------------------------------------------------------------------------
-include(CMakePrintHelpers)
+# --- CMake tools
 include(cmake/tools.cmake)
-include(cmake/target_set_compile_warnings.cmake)
-
-section(CHECK_START "CMake variables")
-
-	if(NOT ${MYLIB_SKIP_DEPENDENCIES})
-	# Dependencies are added via CPM.
-	# See https://github.com/cpm-cmake/CPM.cmake for more info.
-		set(CPM_DOWNLOAD_VERSION 0.38.2)
-		include(cmake/cpm.cmake)
-		cmake_print_variables(CPM_SOURCE_CACHE)
-	endif()
-end_section(
-	CONDITION true
-	PASS "done."
-	FAIL "failed."
-)
-
-if(${MYLIB_MASTER_PROJECT})
-	section(CHECK_START "CMake dependencies")
-
-	find_program(CCACHE_PROGRAM ccache)
-	if(CCACHE_PROGRAM)
-		message(STATUS "CCache found : ${CCACHE_PROGRAM}")
-		message(STATUS "Using ccache")
-		set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
-		set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
-	else()
-		message(STATUS "CCache not found - skipping.")
-	endif()
-
-	end_section(
-		CONDITION EXISTS ${CPM_DOWNLOAD_LOCATION}
-		PASS "done."
-		FAIL "failed."
-	)
-endif()
 
 
 # ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
-if(NOT ${MYLIB_SKIP_DEPENDENCIES})
+if(NOT ${MY_LIB_SKIP_DEPENDENCIES})
 	section(CHECK_START "Finding my_lib dependencies")
 
-		unset(MYLIB_DEPENDENCIES)
-		unset(MYLIB_MISSING_DEPENDENCIES)
+		unset(MY_LIB_DEPENDENCIES)
+		unset(MY_LIB_MISSING_DEPENDENCIES)
 		include(extern/misc.cmake)
 
 	end_section(
-		CONDITION NOT MYLIB_MISSING_DEPENDENCIES
-		PASS "done. Dependencies : ${MYLIB_DEPENDENCIES}"
-		FAIL "failed. Missing dependencies : ${MYLIB_MISSING_DEPENDENCIES}"
+		CONDITION NOT MY_LIB_MISSING_DEPENDENCIES
+		PASS "done. Dependencies : ${MY_LIB_DEPENDENCIES}"
+		FAIL "failed. Missing dependencies : ${MY_LIB_MISSING_DEPENDENCIES}"
 	)
 endif()
 
 
 # ------------------------------------------------------------------------------
-# --- Sources & Headers
+# --- Target : my_lib
 # ------------------------------------------------------------------------------
+# --- Sources
 SET(SOURCE_LIST
     "src/my_lib_source.cpp"
 )
 
+# --- Headers
 SET(HEADER_LIST
     "include/my_lib/my_lib_header.hpp"
 )
 
-# ------------------------------------------------------------------------------
 # --- Assets
-# ------------------------------------------------------------------------------
 # No assets here
 
-# ------------------------------------------------------------------------------
-# --- Target : my_lib
-# ------------------------------------------------------------------------------
 section(CHECK_START "Configuring my_lib")
 
 	add_library (my_lib ${SOURCE_LIST} ${HEADER_LIST})
@@ -156,7 +95,7 @@ section(CHECK_START "Configuring my_lib")
 	target_compile_options(my_lib PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>) # if using __VA_OPT__, we enforce latest preprocessor on MSVC
 	target_compile_options(my_lib PUBLIC $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->) # being a cross-platform target, we enforce standards conformance on MSVC
 
-	if(${MYLIB_MASTER_PROJECT})
+	if(${PROJECT_IS_TOP_LEVEL})
 	  target_set_compile_warnings_cxx(TARGET my_lib SCOPE PRIVATE)
 	endif()
 
@@ -171,7 +110,7 @@ end_section(
 # --- Additional targets : tests, benchmarks.
 # ------------------------------------------------------------------------------
 # Only available if this is the main project
-if(${MYLIB_MASTER_PROJECT})
+if(${PROJECT_IS_TOP_LEVEL})
 	include(CTest)
 	add_subdirectory(tests)
 	add_subdirectory(benchmarks)

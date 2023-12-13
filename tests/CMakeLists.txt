@@ -15,16 +15,11 @@ section(CHECK_START "Tests")
 
 
 # ------------------------------------------------------------------------------
-# --- OPTIONS
-# ------------------------------------------------------------------------------
-add_version(NAME doctest VERSION "v2.4.11")
-
-
-# ------------------------------------------------------------------------------
-# --- Adding libraries
+# --- Dependencies
 # ------------------------------------------------------------------------------
 
 # Doctest is the fastest feature-rich C++11/14/17/20/23 single-header testing framework
+use_version(NAME doctest VERSION "v2.4.11")
 download_library(
 	NAME doctest
 	GITHUB_REPOSITORY onqtam/doctest

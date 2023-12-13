@@ -5,12 +5,15 @@
 [![Documentation build & deploy](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml)
 [![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://tblauwe.github.io/cpp_lib_starter/)
 
+An opinionated template repository for C++20 static library.
 
-An opinionated template repository to build C++ projects.
-I use it as a learning tool, but some may find some parts useful. 
+> I'm using it as a continuous learning process. Suggestions are always welcome ! 
 
-The main goal is to be able to quickly incorporate a cross-platform library 
-built with this template into others projects using **[CPM](https://github.com/cpm-cmake/)**.
+
+## Features
+
+* __Dependencies__ downloaded with **[CPM](https://github.com/cpm-cmake/)**. 
+This template is also CPM-ready :
 
 ```cmake
 CPMAddPackage(
@@ -20,34 +23,34 @@ CPMAddPackage(
 target_link_libraries(some_target PUBLIC my_lib)
 ```
 
-
-## Features
-
-* __Dependencies__ are downloaded with **[CPM](https://github.com/cpm-cmake/)**.
-
-* __Tests__ are built with **[Doctest](https://github.com/doctest/doctest)**. Using Github Actions,
-tests are executed on :
+* __Tests__ built with **[Doctest](https://github.com/doctest/doctest)**. 
+Using Github Actions, tests are executed on :
 
     * Windows : msvc and clang-cl
     * Ubuntu : gcc and clang
     * MacOS : gcc and clang
 
-* __Benchmarks__ are built with **[Google Benchmark](https://github.com/google/benchmark)**
+* __Benchmarks__ built with **[Google Benchmark](https://github.com/google/benchmark)**.
+> A target called "run_benchmarks" will run benchmarks with some predefined settings and store the result inside your source dir : `benchmarks/data/...`.
+This is for continuous benchmarking. Why in the same repo ? Long story short, having it in the same repo made it easier to include it the documentation.
+For now, my side project to generate charts from these benchmarks is not yet finished. The goal is to include this tool in CI, generate interactive charts, and add them to the documentation.
 
-* __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**
-Using Github Actions, documentation is automatically built and published to github pages. Github pages is also automatically configured. 
-No need to create it manually.
-> Documentation example available [here](https://tblauwe.github.io/cpp_lib_starter/)
+* __Documentation__ built with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**.
+Using Github Actions, documentation is automatically built and published to github pages. Github pages is also automatically configured. No need to create it manually.
 
-* A great deal of care has been taken in writing clear and robust __CMake__ files. It should work on Windows, Linux, using WSL or not,
-by command-line or with an IDE like Visual Studio or Clion.
+> Documentation example available [here](https://tblauwe.github.io/cpp_lib_starter/).
 
-* A verbose cmake output when built as the main project, but concise when imported.
+> M.CSS was initially used, but I prefer **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**. It was also easier to integrate interactive charts in it.
 
-* A clear, cross-platform & easily extendable __CMakePreset.json__ is also provided
+* A great deal of care has been taken in writing clear and robust __CMake__ files. It should work on Windows, Linux, using WSL or not, by command-line or with an IDE like Visual Studio or Clion.
 
-* __Minimal cmake options__ used. Default values are best set (opinion) according to whether it is built 
-as the main project or not. 
+* A verbose cmake output when built as the main project, but concise when consumed.
+
+* A clear, cross-platform & easily extendable __CMakePreset.json__ is also provided.
+
+* Cross-compiler __warnings__ enabled through CMake, but only if built as main project (to not bother consumer of this library). 
+
+* __Minimal CMake options__ used. Default values should be good enough, but options are provided just in case.
 
 
 ## Getting started
@@ -57,22 +60,21 @@ Go to the [github repository](https://github.com/TBlauwe/cpp_lib_starter) and cl
 Once the setup is done, replace the following identifiers.
 
 * `my_lib` : cmake target, folder name
-* `MYLIB` : cmake project name and cmake variables prefix
+* `MY_LIB` : cmake project name and cmake variables prefix
 * `my_namespace` : namespace, only in source files.
 * `my_lib_source` : in `src/`
 * `my_lib_header` : in `include/my_lib`
 
-If you wish to reuse parts of the `README.md`, make sure to also replace
+If you wish to reuse parts of the `README.md`, make sure to also replace :
 * `TBlauwe/cpp_lib_starter` with your github repository (so badges are linked to correct workflows).
-* `https://tblauwe.github.io/cpp_lib_starter/` with your github pages link (so `Documentation link` badges
-redirects to your site).
+* `https://tblauwe.github.io/cpp_lib_starter/` with your github pages link (so `Documentation link` badges redirects to your site).
 
-Also, in the root `CMakeLists.txt`, make sure to replace project information to your project.
+Also, in the root `CMakeLists.txt`, make sure to replace project information to yours.
 They will be used for the generated documentation.
 
 ```cmake
 # ----- Project information
-project(MYLIB
+project(MY_LIB
 	VERSION 0.1.0
 	DESCRIPTION "Repository template for C++ projects"
 	HOMEPAGE_URL "https://github.com/TBlauwe/cpp_lib_starter"
@@ -80,56 +82,52 @@ project(MYLIB
 )
 ```
 
-It should be safe to do a "Replace All". Still, make sure that `#include <my_lib/my_lib_header.hpp>` 
-are correctly replaced.
+It should be safe to do a "Replace All". Still, make sure that `#include <my_lib/my_lib_header.hpp>` are correctly replaced.
 
-That should be it for building the main target, tests and benchmarks.
-Documentation requires a bit more installation user-side.
+That should be it for building the main target, tests and benchmarks. Documentation requires a bit more installation user-side.
 
 You also probably don't need `docs/pages/reference.md`. 
 
 
 ## CMake options
 
-As stated before, you shouldn't have to change options, as they will be adapted to the situations.
-Still, here is some options you may find interesting : 
+The following CMake options are available:
 
-* `MYLIB_SKIP_DEPENDENCIES` : Should dependencies be downloaded with **[CPM](https://github.com/cpm-cmake/)** 
-and configured.
-	* If built as main project, then by default it is set to `true`
-	* If imported, then by default it is set to `false`
-* `CPM_MY_DEPENDENCY_VERSION` : Specify a dependency version. It is not something added by **[CPM](https://github.com/cpm-cmake/)**
-but by me. It adds an option for overriding the version of a dependency. The value is a git tag, e.g `master`, `v3.12`, `1.0`, etc.
+* `MY_LIB_SKIP_DEPENDENCIES` : Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** 
+	* By default, if consumed it is set to `true`, `false` otherwise.
+* `CPM_MY_DEPENDENCY_VERSION` : Specify a dependency version. It is not something added by **[CPM](https://github.com/cpm-cmake/)** but by me. 
+It adds an option for overriding the version of a dependency. The value is a git tag, e.g `master`, `v3.12`, `1.0`, etc.
 
 Executables location are specified by variable `${PROJECT_EXE_DIR}` in the main `CMakeLists.txt`. 
 By default, it is set to : `${PROJECT_SOURCE_DIR}/bin`.
-Note that it is not prefixed by `MYLIB`. As of now, it is only set when the library is built as the main project.
+Note that it is not prefixed by `MY_LIB`. As of now, it is only set when the library is built as the main project.
 So I thought it would be nice to follow cmake convention like `${PROJECT_SOURCE_DIR}`.
 
 
 ## CMake utilities
 
-Inside `cmake/tools.cmake`, you will see several functions and macros. Most aren't noteworthy. They are mainly used 
+Inside `cmake/utility.cmake`, you will find several functions and macros. Most aren't noteworthy. They are mainly used 
 to organise and build prettier output. They are by no means necessary. If you don't like them, feel free to skip them.
 
-Here are three noteworthy functions/macros. 
+Still, here are some noteworthy functions/macros. 
 
-### add_version
+### Macro: use_version
 
-Macro used to set an option for a library.
+Define an option to set the version for a library.
 
 Usage : 
 
 ```cmake
-add_version(NAME fmt VERSION "10.0.0")
+use_version(NAME fmt VERSION "10.0.0")
 ```
 
-It will set a cmake option `CPM_FMT_VERSION` to `10.0.0`. It will then be used by the following macro :
+This will add a cmake option `CPM_FMT_VERSION` set to `10.0.0`. It will then be used by the following macro :
 
-### download_library
 
-Macro used to download a library using CPM. It is a wrapper of `CPMAddPackage` and used the same. The reason to add 
-this wrapper is to play nicely with options/version added through `add_version` and also with cmake output.
+### Macro: download_library
+
+Download a library using CPM. It is a wrapper of `CPMAddPackage` and used the same. The reason to add 
+this wrapper is to play nicely with options/version added through `use_version` and also with cmake output.
 
 Usage : 
 
@@ -182,12 +180,12 @@ Available targets are :
 * `my_lib` : main library
 * `tests` : tests
 * `benchmarks` : benchmarks
+* `run_benchmarks` : run benchmarks through a python script
 * `docs` : docs
 
 ## CMakePresets.json
 
-For cross-platform compiling, we use `CMakePresets.json` (see [ref](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) 
-to share settings.
+For cross-platform compiling, we use `CMakePresets.json` (see [ref](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)) to share settings.
 
 ```console
 cmake --preset <preset-name>
@@ -222,8 +220,7 @@ Here are some configurations provided:
 
 __NOTE 1__: `Clang-cl` refers to the clang toolchain provided by [Visual Studio 2022](https://learn.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170)
 
-Thanks to the structure of the file (credits to [DirectXTK](https://github.com/microsoft/DirectXTK/blob/main/CMakePresets.json)
-you can easily add other configurations, by inheritings relevant configurations.
+Thanks to the structure of the file (credits to [DirectXTK](https://github.com/microsoft/DirectXTK/blob/main/CMakePresets.json)), you can easily add other configurations, by inheritings relevant configurations.
 
 ```json
 {"name": "x86-release-msvc", "inherits": ["Base", "Ninja", "x86", "MSVC", "Release"]},
@@ -261,12 +258,9 @@ If you wish, they are some additional functionality that requires a bit more wor
 ### CPM Download location
 
 By default, **[CPM](https://github.com/cpm-cmake/)** download source files in the output directory.
-If you have several projects that use the same libraries, it may be favorable to download
-them in one place.
+If you have several projects that use the same libraries, it may be favorable to download them in one place.
 
-**[CPM](https://github.com/cpm-cmake/)** documentation is far more comprehensive, but you can set
-the cmake variable `CPM_SOURCE_CACHE` to an adequate location. 
-Personally I recommend to set it in your path, rather than in your .cmake files or in your preset.
+**[CPM](https://github.com/cpm-cmake/)** documentation is far more comprehensive, but you can set the cmake variable `CPM_SOURCE_CACHE` to an adequate location. Personally, I recommend to set it in your path, rather than in your .cmake files or in your preset.
 
 
 ### CCache
@@ -288,11 +282,12 @@ __Documentation__ is built with **[Doxygen](https://www.doxygen.nl/)** and **[Do
 * `docs` : utility target to build the documentation
 * `open_docs` : utility target to open docs without the hassle of finding it.
 
-> Documentation is only configured when the project is the main project !
+> Documentation is only built when the project is the main project !
 
-Documentation is built through github actions and push in github pages when commiting on master.
+Documentation is built through github actions and push in github pages when commiting on master. You don't need to setup your github pages, it's done automatically.
 If you wish to built it localy, the following tools are needed :
-* Doxygen, 
+* **[Doxygen](https://www.doxygen.nl/)**, 1.9.6+ recommended.
+
 
 #### Instructions
 
@@ -321,8 +316,7 @@ choco install graphviz
 
 #### Writing docs
 
-To help you write docs, [this page](https://tblauwe.github.io/cpp_lib_starter/pages/reference.html) is
-a reference of some commands.
+To help you write docs, [this page](https://tblauwe.github.io/cpp_lib_starter/pages/reference.html) is a reference of some commands.
 
 
 ### Tests
@@ -408,3 +402,17 @@ _Documentation_:
 * **[Doxygen](https://www.doxygen.nl/index.html)**
 * **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**
 * **[Plotly](https://plotly.com/graphing-libraries/)**
+
+## Ressources used
+
+These are the main ressources I used to organize CMake files:
+
+* ["Modern CMake" by CliUtils](https://cliutils.gitlab.io/modern-cmake/)
+* ["Deep CMake For Library Authors" by Craig Scott](https://crascit.com/2019/10/16/cppcon-2019-deep-cmake-for-library-authors/)
+* ["cmake-init" by FriendlyAnon](https://github.com/friendlyanon/cmake-init)
+
+
+## TODOs
+
+* [ ] - Add interactive charts for continuous benchmarking
+* [ ] - Support shared library

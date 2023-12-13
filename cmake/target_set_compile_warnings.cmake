@@ -9,7 +9,7 @@ function(target_set_compile_warnings_cxx)
             OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
     )
         target_compile_options(${TARGET_SET_COMPILE_WARNINGS_CXX_TARGET} ${TARGET_SET_COMPILE_WARNINGS_CXX_SCOPE}
-                #$<$<CONFIG:RELEASE>:-Werror>
+                #$<$<CONFIG:RELEASE>:-Werror> # Treat warnings as error
                 $<$<CONFIG:Debug>:-Wshadow>
                 $<$<CONFIG:Debug>:-Wunused>
                 -Wall -Wextra
@@ -29,7 +29,7 @@ function(target_set_compile_warnings_cxx)
 
     elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         target_compile_options(${TARGET_SET_COMPILE_WARNINGS_CXX_TARGET} ${TARGET_SET_COMPILE_WARNINGS_CXX_SCOPE}
-                #$<$<CONFIG:RELEASE>:/WX>
+                #$<$<CONFIG:RELEASE>:/WX> # Treat warnings as error
                 /W4
                 /w14242 /w14254 /w14263
                 /w14265 /w14287 /we4289
@@ -41,7 +41,7 @@ function(target_set_compile_warnings_cxx)
 
     else ()
         message(WARNING
-                "No Warnings specified for ${CMAKE_CXX_COMPILER_ID}. "
-                "Consider using one of the following compilers: Clang, GNU, MSVC, AppleClang.")
+                "Function target_set_compile_warnings_cxx() does not support : ${CMAKE_CXX_COMPILER_ID}. "
+                "Only the following compiler are supported: Clang, GNU, MSVC, AppleClang.")
     endif ()
 endfunction()

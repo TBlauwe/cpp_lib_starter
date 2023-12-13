@@ -13,16 +13,8 @@
 # ------------------------------------------------------------------------------ 
 section(CHECK_START "Documentation")
 
-
 # ------------------------------------------------------------------------------
-# --- OPTIONS
-# ------------------------------------------------------------------------------
-ADD_VERSION(NAME DOXYGEN_AWESOME_CSS VERSION "v2.2.1")
-ADD_VERSION(NAME PLOTLY VERSION "2.25.1")
-
-
-# ------------------------------------------------------------------------------
-# --- Depedencies
+# --- Dependencies
 # ------------------------------------------------------------------------------
 
 # Doxygen is a documentation generator and static analysis tool for software source trees.
@@ -34,8 +26,8 @@ endif()
 
 space()
 
-# M.CSS is a no-nonsense, no-JavaScript CSS framework, site and documentation theme 
-# for content-oriented websites
+# Doxygen awesome CSS is a custom CSS theme for doxygen html-documentation with lots of customization parameters.
+use_version(NAME DOXYGEN_AWESOME_CSS VERSION "v2.3.1")
 download_library(
         NAME DOXYGEN_AWESOME_CSS
         GITHUB_REPOSITORY jothepro/doxygen-awesome-css
@@ -44,6 +36,8 @@ if(NOT DOXYGEN_AWESOME_CSS_ADDED)
     message(STATUS "Skipping docs.")
 	return()
 endif()
+
+use_version(NAME PLOTLY VERSION "2.25.1")
 
 
 # ------------------------------------------------------------------------------
