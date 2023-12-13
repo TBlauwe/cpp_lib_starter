@@ -58,7 +58,12 @@ jobs:
         run: |
           sudo apt-add-repository universe
           sudo apt-get update
-          sudo apt-get install doxygen
+          wget https://doxygen.nl/files/doxygen-1.9.8.linux.bin.tar.gz
+          tar -xf doxygen-1.9.8.linux.bin.tar.gz
+          sudo mv doxygen-1.9.8 /usr/local/bin
+          echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc
+          source ~/.bashrc
+          sudo apt-get install graphviz
           pip3 install jinja2 Pygments
 
       - name: Build
