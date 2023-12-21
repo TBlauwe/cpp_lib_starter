@@ -1,8 +1,8 @@
 /*****************************************************************//**
-@file   my_lib_header.hpp
+@file   {{ tmplr.repo_name }}.hpp
 @brief  Main file.
 
-@defgroup MY_LIB My lib
+@defgroup {{ tmplr.repo_name }}
 
 @details 
 
@@ -14,22 +14,22 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 Usage:
 
 @code{.cpp}
-#include <my_lib/my_lib_header.hpp>
+#include <{{tmplr.repo_name}}/{{tmplr_project_name}}.hpp>
 
-my_namespace::success();
+{{tmplr.repo_name}}::success();
 @endcode
  
-@author Tristan
-@date   August 2023
+@author {{ tmplr.owner_name }}
+@date   {{ tmplr.datetime.date }}
  *********************************************************************/
 #pragma once
 
 
 /**
-    @namespace my_namespace
-    @brief a simple namespace
+    @namespace {{tmplr.repo_name}}
+    @brief Library namespace
 **/
-namespace my_namespace
+namespace {{tmplr.repo_name}}
 {
 	/**
 		@brief A simple function return an int.

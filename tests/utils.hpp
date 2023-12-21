@@ -1,10 +1,3 @@
-/*****************************************************************//**
- * \file   utils.hpp
- * \brief  Classical utility header.
- * 
- * \author Tristan
- * \date   August 2022
- *********************************************************************/
 #pragma once
 
 #include <algorithm>

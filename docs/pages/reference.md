@@ -279,6 +279,10 @@ digraph example {
 
 We added @Plotly to draw interactive charts. Multiple options are available.
 
+@htmlonly
+<div id="my_plot">$</div>
+@endhtmlonly
+
 ### HTML Block
 
 @htmlonly

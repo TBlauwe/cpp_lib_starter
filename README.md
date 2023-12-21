@@ -3,52 +3,88 @@
 [![Windows [Clang-cl & MSVC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/windows.yaml)
 [![Ubuntu & MacOS [Clang & GCC]](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/ubuntu.yaml)
 [![Documentation build & deploy](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml/badge.svg)](https://github.com/TBlauwe/cpp_lib_starter/actions/workflows/documentation.yaml)
+
+<center>
+
 [![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://tblauwe.github.io/cpp_lib_starter/)
+An opinionated template repository for C++20 static library, with an emphasis on quick setup to share library with other projects using **[CPM](https://github.com/cpm-cmake/)**.
 
-An opinionated template repository for C++20 static library.
+{{ tmplr.repo_name }}
 
+</center>
+
+</br>
+
+
+> [!NOTE]
+>
 > I'm using it as a continuous learning process. Suggestions are always welcome ! 
 
 
 ## Features
 
+* __Quick setup__ : Click `Use this template`, fill a few fields and a project/repository will be generated based on available information.
+	* Thanks to **[Tmplr](https://github.com/loreanvictor/tmplr)**, there are no leftover, no replacement needed. For example, a barebone `README.md` is generated, with working links, instructions, etc.
+
+
+* __Documentation__ generated with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**.
+
+	* __Github Pages__ is automatically setup. 
+	* Documentation is built during CI and pushed to github pages
+
 * __Dependencies__ downloaded with **[CPM](https://github.com/cpm-cmake/)**. 
-This template is also CPM-ready :
 
-```cmake
-CPMAddPackage(
-  NAME my_lib 
-  GITHUB_REPOSITORY my_lib_repo/my_lib
-)
-target_link_libraries(some_target PUBLIC my_lib)
-```
+    <details>
+	<summary>Project generated from this template are also CPM-ready</summary>
 
-* __Tests__ built with **[Doctest](https://github.com/doctest/doctest)**. 
-Using Github Actions, tests are executed on :
+	```cmake
+	CPMAddPackage(
+		NAME my_lib 
+		GITHUB_REPOSITORY my_lib_repo/my_lib
+	)
 
-    * Windows : msvc and clang-cl
-    * Ubuntu : gcc and clang
-    * MacOS : gcc and clang
+	target_link_libraries(some_target PUBLIC my_lib)
+	```
+	</details>
 
-* __Benchmarks__ built with **[Google Benchmark](https://github.com/google/benchmark)**.
-> A target called "run_benchmarks" will run benchmarks with some predefined settings and store the result inside your source dir : `benchmarks/data/...`.
-This is for continuous benchmarking. Why in the same repo ? Long story short, having it in the same repo made it easier to include it the documentation.
-For now, my side project to generate charts from these benchmarks is not yet finished. The goal is to include this tool in CI, generate interactive charts, and add them to the documentation.
 
-* __Documentation__ built with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**.
-Using Github Actions, documentation is automatically built and published to github pages. Github pages is also automatically configured. No need to create it manually.
 
-> Documentation example available [here](https://tblauwe.github.io/cpp_lib_starter/).
+* __Tests__ written with **[Doctest](https://github.com/doctest/doctest)** and executed during CI. 
+    <details>
+	<summary>CI Executions</summary>
 
-> M.CSS was initially used, but I prefer **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**. It was also easier to integrate interactive charts in it.
+	|Platform | Toolchains |
+	| --- | --- |
+	| Windows | msvc & clang-cl |
+	| Ubuntu | gcc & clang |
+	| MacOS | gcc & clang |
 
-* A great deal of care has been taken in writing clear and robust __CMake__ files. It should work on Windows, Linux, using WSL or not, by command-line or with an IDE like Visual Studio or Clion.
+	</details>
 
-* A verbose cmake output when built as the main project, but concise when consumed.
 
-* A clear, cross-platform & easily extendable __CMakePreset.json__ is also provided.
+* __Benchmarks__ written with **[Google Benchmark](https://github.com/google/benchmark)**.
 
-* Cross-compiler __warnings__ enabled through CMake, but only if built as main project (to not bother consumer of this library). 
+* __Continuous benchmarks__ done through a two-step process.
+    <details>
+	<summary>Execute and store benchmarks results.</summary>
+
+	This step is __partially automated__. It was chosen to not automatically run them in CI to ensure consistent results over time (at least when it comes to github actions).
+	
+	Therefore, a cmake utility target, called "run_benchmarks" is available to automate this step.
+    It will run benchmarks with some predefined settings and store the result in `benchmarks/data/...`. 
+	</details>
+
+	*  __Automated generation__ of various widgets (charts, tables) to showcase your benchmarks, using **[BenchDocs](https://github.com/TBlauwe/bench_docs)**. They are also automatically integrated in your documentation.
+	
+
+* __Robust and subjectively clear__ CMake files. 
+	* They should work on Windows, Linux, using WSL or not, by command-line or with an IDE like Visual Studio or Clion.
+
+* __Verbose when needed.__  CMake's output is only verbose when built as the main project, but concise when consumed.
+
+* A __Cross-platform__ and __modular__ _CMakePreset.json_  provided.
+
+* __Cross-compiler warnings__ enabled through CMake. 
 
 * __Minimal CMake options__ used. Default values should be good enough, but options are provided just in case.
 
@@ -165,7 +201,7 @@ download_library(
 ## Build
 
 
-```console
+```bash
 cmake -S . -B build
 cmake --build build --target <a-target>
 ```
@@ -270,7 +306,7 @@ Otherwise it will be ignored
 
 To install **[CCache](https://ccache.dev/)** on windows, you can use chocolatey (need elevated privileges) like so :
 
-```console
+```bash
 choco install ccache
 ```
 
@@ -293,21 +329,21 @@ If you wish to built it localy, the following tools are needed :
 
 On Ubuntu :
 
-```console
+```sh
 sudo apt-get install doxygen
 sudo apt-get install graphviz
 ```
 
 On MacOs :
 
-```console
+```sh
 brew install doxygen
 brew install graphviz
 ```
 
 On windows using chocolatey (need elevated privileges) :
 
-```console
+```sh
 choco install doxygen.install
 choco install graphviz
 ```
@@ -402,6 +438,9 @@ _Documentation_:
 * **[Doxygen](https://www.doxygen.nl/index.html)**
 * **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**
 * **[Plotly](https://plotly.com/graphing-libraries/)**
+
+_Utility_:
+* **[Tmplr](https://github.com/loreanvictor/tmplr)**
 
 ## Ressources used
 

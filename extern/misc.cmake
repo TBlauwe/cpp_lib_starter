@@ -1,6 +1,5 @@
 # ------------------------------------------------------------------------------ 
 #           File : extern/misc.cmake
-#         Author : TBlauwe
 #    Description : Download and build all additionnal dependencies using CPM :
 #                  * tracy
 #                  * fmt
