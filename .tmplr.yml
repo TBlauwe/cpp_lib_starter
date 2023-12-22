@@ -1,58 +1,78 @@
 steps:
-  #
-  # Read the name of the repo owner
-  # It might be set by Github workflow as an environment variable,
-  # or it might be set in local git settings.
-  # If all fails, we will simply ask the user.
-  #
+
+    # --- SET VARIABLES
   - read: owner_name
     from: env.owner_name
     fallback:
       from: git.author_name
       fallback:
-        prompt: What is your name?
+        prompt: What is your name ?
 
-  #
-  # Figure out user's email. Same process as their name.
-  #
+
   - read: owner_email
     from: env.owner_email
     fallback:
       from: git.author_email
       fallback:
-        prompt: What is your email address?
+        prompt: What is your email address ?
 
-  #
-  # Similar to name and email of the owner of the repo. However,
-  # if we're not invoked via an Action and there is no local git,
-  # then we'll just use the directory name as the project name.
-  #
   - read: repo_name
     from: env.repo_name
     fallback:
       from: git.remote_name
       fallback:
         from: filesystem.rootdir
+
+  - read: repo_desc
+    from: env.repo_desc
+    fallback:
+      prompt: What is the short description of your project ?
  
-  #
-  # So if the remote url cannot be figured out, we
-  # construct it using the owner name and repo name. This
-  # is for illustration purposes and might be wrong (e.g. the
-  # repo is not hosted on github).
-  #
   - read: repo_url
     from: env.repo_url
     fallback:
       from: git.remote_url
       fallback:
         eval: 'git@github.com/{{ owner_name }}/{{ repo_name }}.git'
+        
+  - read: now
+    eval: '{{ datetime.now | datetime format: dddd, MMMM Y}}'
+    
+  - read: namespace
+    from: env.namespace
+    fallback:
+      prompt: What is the namespace of your library ?
+      default: 
+        eval: '{{ repo_name }}'
 
-  #
-  # Copy the README template file. Will automatically
-  # replace all variables we "read" above while copying.
-  #
+    # --- GENERATE FILES
+  - update: cmake/utility.cmake
+  - update: cmake/tools.cmake
+  
   - copy: template/README.md
     to: README.md
+
+  - copy: template/static_library/main.hpp
+    to: 'include/{{ repo_name | lowercase }}/{{ repo_name | lowercase }}.hpp'
+  - copy: template/static_library/main.cpp
+    to: 'src/{{ repo_name | lowercase }}.cpp'
+    
+  - copy: template/static_library/CMakeLists.txt
+    to: './CMakeLists.txt'
+
+    # For benchmarks
+  - update: benchmarks/CMakeLists.txt
+    
+    # For tests
+  - update: tests/lib.cpp
+  - copy: tests/lib.cpp
+    to: './tests/{{ repo_name | lowercase }}.cpp'
+  - remove: tests/lib.cpp
+
+  - update: tests/CMakeLists.txt
+
    
+    # --- CLEAN
   - remove: template/
-  - remove: LICENSE
+  - remove: LICENSE.txt
+  - remove: .tmplr.yml

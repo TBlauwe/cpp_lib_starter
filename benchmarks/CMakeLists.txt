@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------ 
 #           File : benchmarks/CMakeList.txt
-#         Author : TBlauwe
+#         author : TBlauwe
 #    Description : CMake file to build benchmarks using GoogleBenchmark. 
 #
 #                  Version of each dependency can be set through options :
@@ -42,28 +42,28 @@ set(SOURCE_LIST
     "benchmark.cpp"
 )
 
-add_executable(benchmarks ${SOURCE_LIST} run_benchmarks.py)
+add_executable(benchmarks ${SOURCE_LIST} "scripts/continuous_benchmarking.py")
 target_compile_features(benchmarks PRIVATE cxx_std_20)
-target_link_libraries(benchmarks PRIVATE my_lib benchmark::benchmark)
+target_link_libraries(benchmarks PRIVATE {{ tmplr.repo_name | lowercase }} benchmark::benchmark)
 set_target_properties(benchmarks PROPERTIES OUTPUT_NAME ${BENCHMARKS_EXE_NAME})
 set_target_properties(benchmarks PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_EXE_DIR}")
 
-# Copy compare.py tools and its requirements for ease of use
+# Copy google benchmark tools : compare.py and its requirements for ease of use
 add_custom_command(TARGET benchmarks POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_EXE_DIR}/benchmarks_tools/"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_EXE_DIR}/scripts/google_benchmark_tools"
 )
+
 add_custom_command(TARGET benchmarks POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${benchmark_SOURCE_DIR}/tools" "${PROJECT_EXE_DIR}/benchmarks_tools/"
+        "${benchmark_SOURCE_DIR}/tools" "${PROJECT_EXE_DIR}/scripts/google_benchmark_tools"
 )
 
+# ------------------------------------------------------------------------------
+# --- Continuous benchmarking
+# ------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------
-# --- Run benchmarks tool
-# ------------------------------------------------------------------------------
 
 # Retrieve current git tag
-#https://github.com/TBlauwe/card/releases/tag/1.0
 execute_process(
 	COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
@@ -71,7 +71,6 @@ execute_process(
 	OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 # Retrieve current git commit
-#https://github.com/TBlauwe/cpp_lib_starter/commit/7b79a9627de86a347a24319875006c6c000ce6f4
 execute_process(
 	COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
@@ -81,16 +80,16 @@ execute_process(
 
 # Copy run_benchmarks.py to launch benchmark
 configure_file(
-		"run_benchmarks.py"
-        "${PROJECT_EXE_DIR}/run_benchmarks.py"
+		"scripts/continuous_benchmarking.py"
+        "${PROJECT_EXE_DIR}/scripts/continuous_benchmarking.py"
 )
 
-add_custom_target(run_benchmarks
-    COMMAND "run_benchmarks.py"
-    WORKING_DIRECTORY "${PROJECT_EXE_DIR}"
-    COMMENT "Launching benchmarks through python script."
+add_custom_target(continuous_benchmarking
+    COMMAND "continuous_benchmarking.py"
+    WORKING_DIRECTORY "${PROJECT_EXE_DIR}/scripts"
+    COMMENT "Launching benchmarks through python script and store results based on current configuration and git commit."
 )
-add_dependencies(run_benchmarks benchmarks)
+add_dependencies(continuous_benchmarking benchmarks)
 
 
 # ------------------------------------------------------------------------------

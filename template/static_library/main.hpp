@@ -2,7 +2,7 @@
 @file   {{ tmplr.repo_name }}.hpp
 @brief  Main file.
 
-@defgroup {{ tmplr.repo_name }}
+@defgroup {{ tmplr.namespace }}
 
 @details 
 
@@ -14,22 +14,22 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 Usage:
 
 @code{.cpp}
-#include <{{tmplr.repo_name}}/{{tmplr_project_name}}.hpp>
+#include <{{tmplr.repo_name}}/{{tmplr.repo_name}}.hpp>
 
-{{tmplr.repo_name}}::success();
+{{tmplr.namespace}}::success();
 @endcode
  
 @author {{ tmplr.owner_name }}
-@date   {{ tmplr.datetime.date }}
+@date   {{ tmplr.now }}
  *********************************************************************/
 #pragma once
 
 
 /**
-    @namespace {{tmplr.repo_name}}
+    @namespace {{tmplr.namespace}}
     @brief Library namespace
 **/
-namespace {{tmplr.repo_name}}
+namespace {{tmplr.namespace}}
 {
 	/**
 		@brief A simple function return an int.

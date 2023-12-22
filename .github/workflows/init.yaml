@@ -1,0 +1,33 @@
+name: Initialize Template
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    if: github.repository != 'TBlauwe/cpp_lib_starter'
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - id: template_exists
+        name: Check template
+        uses: andstor/file-existence-action@v1
+        with:
+          files: .tmplr.yml
+      
+      - name: Apply template
+        if: steps.template_exists.outputs.files_exists == 'true'
+        run: npx tmplr && rm -fr .tmplr.yml && rm -fr .github/workflows/init.yml
+        env:
+          owner_name: ${{ github.event.repository.owner.name }}
+          owner_email: ${{ github.event.repository.owner.email }}
+          repo_name: ${{ github.event.repository.name }}
+          repo_url: ${{ github.event.repository.ssh_url }}
+          repo_desc: ${{ github.event.repository.description }}
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: Initialize from template

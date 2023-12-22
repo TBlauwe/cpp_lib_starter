@@ -14,7 +14,7 @@ if(${PROJECT_IS_TOP_LEVEL})
 	endif()
 endif()
 
-if(NOT ${MY_LIB_SKIP_DEPENDENCIES})
+if(NOT ${{{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES})
 		# Dependencies are added via CPM.
 		# See https://github.com/cpm-cmake/CPM.cmake for more info.
 		set(CPM_DOWNLOAD_VERSION 0.38.2)

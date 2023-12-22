@@ -5,7 +5,7 @@
 [![Documentation build & deploy](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/documentation.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/documentation.yaml)
 [![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://{{tmplr.owner_name}}.github.io/{{ tmplr.repo_name }}/)
 
-{{ tmplr.desc }}
+{{ tmplr.repo_desc }}
 
 
 ## Features
@@ -29,7 +29,7 @@ target_link_libraries(your_target PUBLIC {{tmplr.repo_name}})
 
 | Options | Default | Description |
 | ---: | :---: | :--- |
-| `{{ tmplr.repo_name | snake_case }}_SKIP_DEPENDENCIES` | `true` in consumer mode, `false` otherwise | Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** |
+| `{{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES` | `true` in consumer mode, `false` otherwise | Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** |
 | `CPM_MY_DEPENDENCY_VERSION` | `true` in consumer mode, `false` otherwise | Override a dependency's version. Value must be a git tag, e.g `master`, `v3.12`, `1.0` |
 
 </details>

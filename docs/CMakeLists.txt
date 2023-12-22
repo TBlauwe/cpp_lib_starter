@@ -1,10 +1,10 @@
 # ------------------------------------------------------------------------------ 
 #           File : docs/CMakeList.txt
 #         Author : TBlauwe
-#    Description : CMake file to build docs using doxygen and m.css.
+#    Description : CMake file to build docs using doxygen and doxygen awesome
 #
 #                  Version of each dependency can be set through options :
-#                  * CPM_M_CSS_VERSION
+#                  * CPM_DOXYGEN_AWESOME_CSS_VERSION
 #
 #                  CPM noteworthy options :
 #                  * CPM_SOURCE_CACHE : download location.
