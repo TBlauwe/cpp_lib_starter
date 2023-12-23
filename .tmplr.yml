@@ -5,16 +5,12 @@ steps:
     from: env.owner_name
     fallback:
       from: git.author_name
-      fallback:
-        prompt: What is your name ?
 
 
   - read: owner_email
     from: env.owner_email
     fallback:
       from: git.author_email
-      fallback:
-        prompt: What is your email address ?
 
   - read: repo_name
     from: env.repo_name
@@ -25,8 +21,6 @@ steps:
 
   - read: repo_desc
     from: env.repo_desc
-    fallback:
-      prompt: What is the short description of your project ?
  
   - read: repo_url
     from: env.repo_url
@@ -36,14 +30,12 @@ steps:
         eval: 'git@github.com/{{ owner_name }}/{{ repo_name }}.git'
         
   - read: now
-    eval: '{{ datetime.now | datetime format: dddd, MMMM Y}}'
+    eval: '{{ datetime.now | datetime format: DD/MMMM/Y}}'
     
   - read: namespace
     from: env.namespace
     fallback:
-      prompt: What is the namespace of your library ?
-      default: 
-        eval: '{{ repo_name }}'
+      eval: '{{ repo_name }}'
 
     # --- GENERATE FILES
   - update: cmake/utility.cmake
@@ -52,16 +44,17 @@ steps:
   - copy: template/README.md
     to: README.md
 
-  - copy: template/static_library/main.hpp
+  - copy: template/cpp/main.hpp
     to: 'include/{{ repo_name | lowercase }}/{{ repo_name | lowercase }}.hpp'
-  - copy: template/static_library/main.cpp
+  - copy: template/cpp/main.cpp
     to: 'src/{{ repo_name | lowercase }}.cpp'
     
-  - copy: template/static_library/CMakeLists.txt
+  - copy: template/cpp/CMakeLists.txt
     to: './CMakeLists.txt'
 
     # For benchmarks
   - update: benchmarks/CMakeLists.txt
+  - update: benchmarks/benchmark.cpp
     
     # For tests
   - update: tests/lib.cpp

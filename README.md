@@ -6,7 +6,7 @@
 
 <center>
 
-[![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://tblauwe.github.io/cpp_lib_starter/)
+[![Static Badge](https://img.shields.io/badge/Documentation-blue?logo=readthedocs&logoColor=white&style=for-the-badge)](https://tblauwe.github.io/cpp_lib_starter/)
 An opinionated template repository for C++20 static library, with an emphasis on quick setup to share library with other projects using **[CPM](https://github.com/cpm-cmake/)**.
 
 </center>
@@ -424,6 +424,7 @@ pip3 install -r requirements.txt
 ## Credits
 
 _CMake_:
+* **[cmake-init](https://github.com/friendlyanon/cmake-init)**
 * **[CCache](https://ccache.dev/)**
 
 _Benchmarks_:
@@ -451,5 +452,6 @@ These are the main ressources I used to organize CMake files:
 
 ## TODOs
 
+* [x] - Support shared library
 * [ ] - Add interactive charts for continuous benchmarking
-* [ ] - Support shared library
+* [ ] - Install rules needs testing

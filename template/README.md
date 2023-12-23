@@ -3,7 +3,7 @@
 [![Windows [Clang-cl & MSVC]](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/windows.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/windows.yaml)
 [![Ubuntu & MacOS [Clang & GCC]](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/ubuntu.yaml)
 [![Documentation build & deploy](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/documentation.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/documentation.yaml)
-[![Static Badge](https://img.shields.io/badge/Documentation_link-blue?logo=readthedocs&logoColor=white)](https://{{tmplr.owner_name}}.github.io/{{ tmplr.repo_name }}/)
+[![Static Badge](https://img.shields.io/badge/Documentation-blue?logo=readthedocs&logoColor=white&style=for-the-badge)](https://{{tmplr.owner_name}}.github.io/{{ tmplr.repo_name }}/)
 
 {{ tmplr.repo_desc }}
 
