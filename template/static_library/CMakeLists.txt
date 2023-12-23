@@ -88,10 +88,41 @@ SET(HEADER_LIST
 section(CHECK_START "Configuring {{tmplr.repo_name | lowercase }}")
 
 	add_library ({{tmplr.repo_name | lowercase }} ${SOURCE_LIST} ${HEADER_LIST})
-	target_include_directories({{tmplr.repo_name | lowercase }} PUBLIC include)
+	add_library({{tmplr.repo_name | lowercase }}::{{tmplr.repo_name | lowercase }} ALIAS {{tmplr.repo_name | lowercase }})
+
+	include(GenerateExportHeader)
+	generate_export_header(
+		{{tmplr.repo_name | lowercase }}
+		BASE_NAME {{tmplr.repo_name | CONSTANT_CASE }}
+		EXPORT_FILE_NAME export/{{tmplr.repo_name | lowercase }}/export.hpp
+	)
+
+	set_target_properties( 
+		{{tmplr.repo_name | lowercase }}
+		PROPERTIES
+		CXX_VISIBILITY_PRESET hidden
+		VISIBILITY_INLINES_HIDDEN YES
+		VERSION "${PROJECT_VERSION}"
+		SOVERSION "${PROJECT_VERSION_MAJOR}"
+		EXPORT_NAME {{tmplr.repo_name | lowercase }}
+		OUTPUT_NAME {{tmplr.repo_name | lowercase }}
+	)
+
+	target_include_directories(
+		{{tmplr.repo_name | lowercase }} 
+		${{{tmplr.repo_name | CONSTANT_CASE }}_WARNING_GUARD} PUBLIC 
+		"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+	)
+	target_include_directories(
+		{{tmplr.repo_name | lowercase }}
+		SYSTEM PUBLIC
+		"$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/export>"
+	)
+
 	target_link_libraries({{tmplr.repo_name | lowercase }} PUBLIC 
 		misc_deps
 	)
+
 	target_compile_features({{tmplr.repo_name | lowercase }} PRIVATE cxx_std_20)
 	target_compile_options({{tmplr.repo_name | lowercase }} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>) # if using __VA_OPT__, we enforce latest preprocessor on MSVC
 	target_compile_options({{tmplr.repo_name | lowercase }} PUBLIC $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->) # being a cross-platform target, we enforce standards conformance on MSVC
@@ -99,6 +130,7 @@ section(CHECK_START "Configuring {{tmplr.repo_name | lowercase }}")
 	if(${PROJECT_IS_TOP_LEVEL})
 	  target_set_compile_warnings_cxx(TARGET {{tmplr.repo_name | lowercase }} SCOPE PRIVATE)
 	endif()
+
 
 end_section( 
 	CONDITION TARGET {{tmplr.repo_name | lowercase }}

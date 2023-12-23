@@ -1,4 +1,4 @@
-#include <{{tmplr.repo_name}}/{{tmplr.repo_name}}.hpp>
+#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
 
 int {{tmplr.namespace}}::success()
 {

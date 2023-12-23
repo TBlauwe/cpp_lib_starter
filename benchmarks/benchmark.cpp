@@ -1,10 +1,10 @@
 #include <benchmark/benchmark.h>
-#include <my_lib/my_lib_header.hpp>
+#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
 
 // Define another benchmark
 static void BM_Success(benchmark::State& state) {
 	for (auto _ : state)
-		my_namespace::success();
+		{{tmplr.namespace}}::success();
 }
 BENCHMARK(BM_Success);
 

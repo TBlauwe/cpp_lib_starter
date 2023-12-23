@@ -1,5 +1,5 @@
 /*****************************************************************//**
-@file   {{ tmplr.repo_name }}.hpp
+@file   {{ tmplr.repo_name | lowercase}}.hpp
 @brief  Main file.
 
 @defgroup {{ tmplr.namespace }}
@@ -14,7 +14,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 Usage:
 
 @code{.cpp}
-#include <{{tmplr.repo_name}}/{{tmplr.repo_name}}.hpp>
+#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
 
 {{tmplr.namespace}}::success();
 @endcode
@@ -23,6 +23,7 @@ Usage:
 @date   {{ tmplr.now }}
  *********************************************************************/
 #pragma once
+#include <{{tmplr.repo_name | lowercase}}/export.hpp>
 
 
 /**
@@ -35,5 +36,6 @@ namespace {{tmplr.namespace}}
 		@brief A simple function return an int.
 		@return Always 1;
 	**/
+	{{tmplr.repo_name | CONSTANT_CASE}}_EXPORT
     int success();
 }
