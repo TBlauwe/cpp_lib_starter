@@ -88,7 +88,12 @@ An opinionated template repository for C++20 static library, with an emphasis on
 
 On the [github repository](https://github.com/TBlauwe/cpp_lib_starter), click on `Use this template` and fill the fields
 
-After that, go to your repository on github and follow these steps : 
+There are two steps left :
+1. Allow deployement of Github Pages through github actions
+2. [OPTIONAL] - Clean workflow files
+
+### Github Pages
+Go to your repository on github and follow these steps : 
 
 1. Click on `Settings`
 2. Click on `Pages` in the section `Code and automation`
@@ -96,12 +101,55 @@ After that, go to your repository on github and follow these steps :
 
 Otherwise, GitHub Pages's deployement will always failed.
 
-Also, you may not have the time to set this up before the worflows are triggered. So they will fail a first time, but should passed for future commits.
+<details>
+
+<summary>Deploy Github Pages without commiting</summary>
+
 If you wish to deploy the documentation now, you can trigger the workflow from github by following these steps :
 
 1. Click on `Actions`
 2. In the left pane, Click on `Documentation build & deploy`
 3. To the right, click on `Run workflow`
+
+</details>
+
+
+### [OPTIONAL] - Clean workflow files
+
+> [!NOTE]
+>
+> I need to improve the template so this is not necessary. It is a workaround so that the user do not need to create a personal account token.
+> They are maybe another way but I haven't found it. Any help is appreciated !
+
+Modifications of workflows file needs additional permissions. Without them, we can't add them during generation. 
+But, it seems to require additional steps from the user.
+To circumvent that, all workflows files are initially present. 
+But we add to alter them slightly, so they can run only when relevant :
+
+1. All workflows should not run in the template repository
+```yaml
+    if: github.repository != 'TBlauwe/cpp_lib_starter'
+```
+
+2. Workflow `init.yaml` should run only once, when there is a `.tmplr.yml`. 
+```yaml
+        - name: Check file existence
+          id: check_files
+          uses: andstor/file-existence-action@v2
+          with:
+            files: '.tmplr.yml'`
+```
+
+2. Other workflows should run only when the project is generated, meaning when there is a root `CMakeLists.txt`. 
+```yaml
+        - name: Check file existence
+          id: check_files
+          uses: andstor/file-existence-action@v2
+          with:
+            files: 'CMakeLists.txt'
+```
+
+After the generation, you can remove `init.yaml`, as it is not needed anymore, idem for the checks in other workflows. 
 
 
 ## CMake options
