@@ -23,7 +23,7 @@ An opinionated template repository for C++20 static library, with an emphasis on
 
 * __Documentation__ generated with **[Doxygen](https://www.doxygen.nl/)** and **[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)**.
 
-	* __Github Pages__ is automatically setup. 
+	* __Github Pages__ is automatically setup _(just need to allow deployement from github actions)_
 	* Documentation is built during CI and pushed to github pages
 
 * __Dependencies__ downloaded with **[CPM](https://github.com/cpm-cmake/)**. 
