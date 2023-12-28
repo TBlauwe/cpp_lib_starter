@@ -23,7 +23,6 @@ on:
 
 jobs:
   build:
-    if: github.repository != 'TBlauwe/cpp_lib_starter'
     name: "[${{matrix.os}}] : ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}"
     runs-on: ${{ matrix.os }}
 
