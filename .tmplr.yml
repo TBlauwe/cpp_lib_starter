@@ -41,8 +41,8 @@ steps:
       eval: '{{ repo_name }}'
 
     # --- GENERATE FILES
-  - update: cmake/utility.cmake
-  - update: cmake/tools.cmake
+  - copy: template/cpp/cmake/**/*
+    to: cmake/
   
   - copy: template/README.md
     to: README.md
@@ -56,15 +56,15 @@ steps:
     to: './CMakeLists.txt'
 
     # For benchmarks
-  - update: benchmarks/CMakeLists.txt
-  - update: benchmarks/benchmark.cpp
+  - copy: template/cpp/benchmarks/**/*
+    to: benchmarks/
     
     # For tests
-  - update: tests/lib.cpp
+  - copy: template/cpp/tests/**/*
+    to: tests/
   - copy: tests/lib.cpp
-    to: './tests/{{ repo_name | lowercase }}.cpp'
+    to: tests/{{ repo_name | lowercase }}.cpp
   - remove: tests/lib.cpp
-  - update: tests/CMakeLists.txt
 
     # For examples
   - copy: template/cpp/examples/**/*
