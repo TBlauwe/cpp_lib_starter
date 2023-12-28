@@ -1,14 +1,13 @@
 # Cpp Library Starter
 
-<p align="center">
+<div align="center">
 
 An opinionated template repository for C++20 static library, with an emphasis on quick setup to share library with other projects using **[CPM](https://github.com/cpm-cmake/)**.
 
 [![Static Badge](https://img.shields.io/badge/See%20example%20here-blue?style=for-the-badge&logo=readthedocs&logoColor=white)](https://github.com/TBlauwe/CLS_Example/)
 
-</p>
+</div>
 
-</br>https://github.com/TBlauwe/CLS_Example/
 
 
 > [!NOTE]
