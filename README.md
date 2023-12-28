@@ -4,6 +4,8 @@
 
 An opinionated template repository for C++20 static library, with an emphasis on quick setup to share library with other projects using **[CPM](https://github.com/cpm-cmake/)**.
 
+![Static Badge](https://img.shields.io/badge/See%20example%20here-blue?style=for-the-badge&logo=readthedocs&logoColor=white&link=https%3A%2F%2Fgithub.com%2FTBlauwe%2FCLS_Example%2F)
+
 </center>
 
 </br>
