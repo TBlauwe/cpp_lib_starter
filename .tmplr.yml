@@ -67,8 +67,8 @@ steps:
   - update: tests/CMakeLists.txt
 
     # For examples
-  - copy: template/cpp/getting_started.cpp
-    to: examples/getting_started.cpp
+  - copy: template/cpp/examples/**/*
+    to: examples/
 
    
     # --- CLEAN

@@ -42,6 +42,6 @@ namespace {{tmplr.namespace}}
 
 
 /** 
-	\example getting_started.cpp
+	\example 00_GettingStarted/main.cpp
 	This is an example of how to get started with the library.
 **/
