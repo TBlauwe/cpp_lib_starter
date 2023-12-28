@@ -69,6 +69,7 @@ steps:
 
    
     # --- CLEAN
+  - remove: docs/pages/reference.md
   - remove: template/
   - remove: LICENSE.txt
   - remove: .tmplr.yml

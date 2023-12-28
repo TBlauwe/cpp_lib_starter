@@ -2,7 +2,7 @@
 @file   {{ tmplr.repo_name | lowercase}}.hpp
 @brief  Main file.
 
-@defgroup {{ tmplr.namespace }}
+@defgroup {{ tmplr.namespace }} Your title
 
 @details 
 

@@ -275,92 +275,29 @@ digraph example {
 }
 @enddot
 
-## Plotly
+## HTML IFrame
 
-We added @Plotly to draw interactive charts. Multiple options are available.
+If you ever need to incorporate another html inside your html, you can use an [IFrame](https://developer.mozilla.org/fr/docs/Web/HTML/Element/iframe).
 
-@htmlonly
-<div id="my_plot">$</div>
-@endhtmlonly
-
-### HTML Block
-
-@htmlonly
-<div id="gd"></div>
-
-<script>
-	Plotly.newPlot("gd", /* JSON object */ {
-		"data": [{ "y": [1, 2, 3] }],
-		"layout": { "width": 600, "height": 400}
-	})
-</script>
-@endhtmlonly
-
-```html
-@htmlonly
-<div id="gd"></div>
-
-<script>
-	Plotly.newPlot("gd", /* JSON object */ {
-		"data": [{ "y": [1, 2, 3] }],
-		"layout": { "width": 600, "height": 400}
-	})
-</script>
-@endhtmlonly
-```
-
-We also added an alias : 
-
-@begin_plotly{div_id}
-Plotly.newPlot("div_id", /* JSON object */ {
-	"data": [{ "y": [1, 2, 3] }],
-	"layout": { "width": 600, "height": 400}
-})
-@end_plotly
-
-```html
-@begin_plotly{div_id}
-Plotly.newPlot("div_id", /* JSON object */ {
-	"data": [{ "y": [1, 2, 3] }],
-	"layout": { "width": 600, "height": 400}
-})
-@end_plotly{div_id}
-```
-
-
-### HTML IFrame
-
-Or by using an [IFrame](https://developer.mozilla.org/fr/docs/Web/HTML/Element/iframe).
-
-@html_frame{my_plot.html, 800, 600}
+We provided an aliases : 
 
 ```markup
-@html_frame{my_plot.html, 800, 600}
-```
-
-@htmlonly
-<iframe src="my_plot.html" width="800" height="600"></iframe>
-@endhtmlonly
-
-```markup
-@htmlonly
-<iframe src="my_plot.html" width="800" height="600"></iframe>
-@endhtmlonly
+@html_frame{my_file.html, 800, 600}
 ```
 
 __Arguments__ :
-1. __name__ - `my_plot.html` : path to an .html file
+1. __name__ - `my_file.html` : path to an .html file
 2. __width__ - `800` : IFrame's width
 3. __height__ - `600` : IFrame's height
 
-@remark You do not need to have @Plotly self-contained in the .html file, nor imported
-through a CDN. You can import it by integrating this line to your `<head>`
-@code{.html}
-<!-- Make sure that the version correspond the one used by the project-->
-<!-- Check `docs/CMakeLists.txt` -->
-<script charset="utf-8" src="plotly-2.21.1.min.js">
-@endcode
-If you need to insert many IFrames, this will save us some uncessary call.
+
+Or you can write html directly :
+```markup
+@htmlonly
+<iframe src="my_file.html" width="800" height="600"></iframe>
+@endhtmlonly
+```
+
 
 @warning Also, if you build documentation localy and open it in your browser,
 iframes will most likely not work : `Not allowed to load local resource: ...`.
