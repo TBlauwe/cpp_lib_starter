@@ -80,4 +80,3 @@ steps:
   - remove: template/
   - remove: LICENSE.txt
   - remove: .tmplr.yml
-  - remove: .github/workflows/init.yaml
