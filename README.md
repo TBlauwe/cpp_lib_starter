@@ -58,7 +58,7 @@ An opinionated template repository for C++20 static library, with an emphasis on
 
 * __Benchmarks__ written with **[Google Benchmark](https://github.com/google/benchmark)**.
 
-* __Continuous benchmarks__ done through a two-step process.
+*  __(WIP) Continuous benchmarks__ done through a two-step process .
     <details>
 	<summary>Execute and store benchmarks results.</summary>
 
