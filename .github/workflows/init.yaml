@@ -9,17 +9,16 @@ jobs:
     if: github.repository != 'TBlauwe/cpp_lib_starter'
 
     runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
     steps:
       - uses: actions/checkout@v2
       
-      - id: template_exists
-        name: Check template
-        uses: andstor/file-existence-action@v1
-        with:
-          files: .tmplr.yml
-      
       - name: Apply template
-        if: steps.template_exists.outputs.files_exists == 'true'
         run: npx tmplr
         env:
           owner_name: ${{ github.event.repository.owner.name }}
@@ -28,6 +27,6 @@ jobs:
           repo_url: ${{ github.event.repository.ssh_url }}
           repo_desc: ${{ github.event.repository.description }}
 
-      - uses: EndBug/add-and-commit@v9
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          message: Initialize from template
+            commit_message: "Generate project from template"
