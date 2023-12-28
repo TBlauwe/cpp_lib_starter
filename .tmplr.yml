@@ -70,6 +70,10 @@ steps:
   - copy: template/cpp/examples/**/*
     to: examples/
 
+    # For benchmarks
+  - copy: template/.github/**/*
+    to: ./
+
    
     # --- CLEAN
   - remove: docs/pages/reference.md
