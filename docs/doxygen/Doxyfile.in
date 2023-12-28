@@ -18,6 +18,7 @@ INPUT                   = @DOXYGEN_ASSETS_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOUR
 IMAGE_PATH              = ./
 EXTRACT_ALL             = YES
 RECURSIVE               = YES
+EXAMPLE_PATH			= "@PROJECT_SOURCE_DIR@/examples/"
 
 
 # --- Preferences

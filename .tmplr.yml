@@ -64,8 +64,11 @@ steps:
   - copy: tests/lib.cpp
     to: './tests/{{ repo_name | lowercase }}.cpp'
   - remove: tests/lib.cpp
-
   - update: tests/CMakeLists.txt
+
+    # For examples
+  - copy: template/cpp/getting_started.cpp
+    to: examples/getting_started.cpp
 
    
     # --- CLEAN

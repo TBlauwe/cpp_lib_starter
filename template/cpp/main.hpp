@@ -39,3 +39,9 @@ namespace {{tmplr.namespace}}
 	{{tmplr.repo_name | CONSTANT_CASE}}_EXPORT
     int success();
 }
+
+
+/** 
+	\example getting_started.cpp
+	This is an example of how to get started with the library.
+**/
