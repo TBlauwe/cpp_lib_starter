@@ -1,5 +1,8 @@
 steps:
 
+    # --- IGNORE 
+  - remove: .vs/
+
     # --- SET VARIABLES
   - read: owner_name
     from: env.owner_name
@@ -69,3 +72,4 @@ steps:
   - remove: template/
   - remove: LICENSE.txt
   - remove: .tmplr.yml
+  - remove: .github/workflows/init.yaml

@@ -37,8 +37,6 @@ if(NOT DOXYGEN_AWESOME_CSS_ADDED)
 	return()
 endif()
 
-use_version(NAME PLOTLY VERSION "2.25.1")
-
 
 # ------------------------------------------------------------------------------
 # --- Target : my_lib_docs & my_lib_open_docs
@@ -46,40 +44,36 @@ use_version(NAME PLOTLY VERSION "2.25.1")
 set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
 set(DOXYGEN_HTML_DIR "${DOXYGEN_OUTPUT_DIR}/html")
 set(DOXYGEN_PAGES_DIR "${PROJECT_SOURCE_DIR}/docs/pages")
-set(DOXYGEN_IMAGES_DIR "${PROJECT_SOURCE_DIR}/docs/images")
-set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/logo/project_logo_55x55.png")
+set(DOXYGEN_ASSETS_DIR "${PROJECT_SOURCE_DIR}/docs/assets")
+set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/assets/project_logo_55x55.png")
 
-configure_file(config/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-configure_file(config/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
-configure_file(resources/header.html ${CMAKE_CURRENT_BINARY_DIR}/header.html)
+configure_file(doxygen/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+configure_file(doxygen/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
+configure_file(doxygen/header.html ${CMAKE_CURRENT_BINARY_DIR}/header.html)
 
 file(GLOB_RECURSE DOCS_PAGES "pages/*.md")
-file(GLOB_RECURSE DOCS_IMAGES "images/*")
+file(GLOB_RECURSE DOCS_ASSETS "assets/*")
 
-set(DOCS_CONFIG_FILES 
-	"config/conf.py"
-	"config/Doxyfile.in"
-)
-set(DOCS_RESOURCE_FILES 
-	"resources/cppreference-doxygen-web.tag"
-	"resources/header.html"
-	"resources/custom.css"
+set(DOCS_DOXYGEN_FILES 
+	"doxygen/conf.py"
+	"doxygen/Doxyfile.in"
+	"doxygen/cppreference-doxygen-web.tag"
+	"doxygen/header.html"
+	"doxygen/custom.css"
 )
 
 add_custom_target(
 	docs
 	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
 	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_HTML_DIR}"
-	COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/docs/vendor/plotly-${CPM_PLOTLY_VERSION}.min.js" "${DOXYGEN_HTML_DIR}"
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/docs/images" "${DOXYGEN_HTML_DIR}"
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "${DOXYGEN_ASSETS_DIR}" "${DOXYGEN_HTML_DIR}"
 	COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
 	COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIR}"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	SOURCES
-		${DOCS_CONFIG_FILES}
-		${DOCS_RESOURCE_FILES}
+		${DOCS_DOXYGEN_FILES}
 		${DOCS_PAGES}
-		${DOCS_IMAGES}
+		${DOCS_ASSETS}
 )
 
 

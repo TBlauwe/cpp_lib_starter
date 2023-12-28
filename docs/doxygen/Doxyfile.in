@@ -11,10 +11,11 @@ PROJECT_NAME            = @PROJECT_NAME@
 PROJECT_NUMBER          = @PROJECT_VERSION@
 PROJECT_LOGO			= @PROJECT_LOGO@
 PROJECT_BRIEF			= @PROJECT_DESCRIPTION@
+PROJECT_HOMEPAGE_URL	= @PROJECT_HOMEPAGE_URL@
 
 
 # --- Sources
-INPUT                   = @DOXYGEN_IMAGES_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md
+INPUT                   = @DOXYGEN_ASSETS_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md
 IMAGE_PATH              = ./
 EXTRACT_ALL             = YES
 RECURSIVE               = YES
@@ -42,7 +43,7 @@ HTML_EXTRA_FILES		=	@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-darkmode-to
 HTML_EXTRA_STYLESHEET	=	@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome.css \
 							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-sidebar-only.css \
 							@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome-sidebar-only-darkmode-toggle.css \
-							@PROJECT_SOURCE_DIR@/docs/resources/custom.css
+							@PROJECT_SOURCE_DIR@/docs/doxygen/custom.css
 
 # --- DOT Graphs
 # Reference : https://jothepro.github.io/doxygen-awesome-css/md_docs_2tricks.html
@@ -64,14 +65,12 @@ CREATE_SUBDIRS          = NO
 # --- Custom commands
 ALIASES					+= html_frame{1}="@htmlonly<iframe src=\"\1\"></iframe>@endhtmlonly"
 ALIASES					+= html_frame{3}="@htmlonly<iframe src=\"\1\" width=\"\2\" height=\"\3\"></iframe>@endhtmlonly"
-ALIASES					+= begin_plotly{1}="@htmlonly<div id=\"\1\"></div><script>"
-ALIASES					+= end_plotly="</script>@endhtmlonly"
+ALIASES					+= widget{2}="@htmlonly<div class=\"\1\" id=\"\2\"></div>@endhtmlonly"
 
 
 # --- Links
 ALIASES					+= Doxygen="[Doxygen](https://www.doxygen.nl/index.html)"
 ALIASES					+= Doxygen-awesome="[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)"
-ALIASES					+= Plotly="[Plotly](https://plotly.com/graphing-libraries/)"
 
 
 # --- External references
