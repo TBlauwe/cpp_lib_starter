@@ -38,6 +38,7 @@ env:
 
 jobs:
   deploy:
+    if: github.repository != 'TBlauwe/cpp_lib_starter'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
