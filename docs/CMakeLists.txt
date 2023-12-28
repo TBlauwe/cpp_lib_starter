@@ -48,18 +48,19 @@ set(DOXYGEN_ASSETS_DIR "${PROJECT_SOURCE_DIR}/docs/assets")
 set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/assets/project_logo_55x55.png")
 
 configure_file(doxygen/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-configure_file(doxygen/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
 configure_file(doxygen/header.html ${CMAKE_CURRENT_BINARY_DIR}/header.html)
+configure_file(doxygen/footer.html ${CMAKE_CURRENT_BINARY_DIR}/footer.html)
 
 file(GLOB_RECURSE DOCS_PAGES "pages/*.md")
 file(GLOB_RECURSE DOCS_ASSETS "assets/*")
 
 set(DOCS_DOXYGEN_FILES 
-	"doxygen/conf.py"
 	"doxygen/Doxyfile.in"
 	"doxygen/cppreference-doxygen-web.tag"
 	"doxygen/header.html"
+	"doxygen/footer.html"
 	"doxygen/custom.css"
+	"doxygen/DoxygenLayout.xml"
 )
 
 add_custom_target(
@@ -82,6 +83,7 @@ add_custom_target(
 	open_docs
 	COMMAND "${DOXYGEN_OUTPUT_DIR}/html/index.html"
 )
+add_dependencies(open_docs docs)
 
 end_section(
 	CONDITION TARGET docs

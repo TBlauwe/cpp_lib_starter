@@ -33,7 +33,7 @@ Usage:
 namespace {{tmplr.namespace}}
 {
 	/**
-		@brief A simple function return an int.
+		@brief A simple function returning an int.
 		@return Always 1;
 	**/
 	{{tmplr.repo_name | CONSTANT_CASE}}_EXPORT

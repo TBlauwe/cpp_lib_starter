@@ -33,7 +33,7 @@ steps:
         eval: 'git@github.com/{{ owner_name }}/{{ repo_name }}.git'
         
   - read: now
-    eval: '{{ datetime.now | datetime format: DD/MMMM/Y}}'
+    eval: '{{ datetime.now | datetime format: DD, MMMM Y}}'
     
   - read: namespace
     from: env.namespace
