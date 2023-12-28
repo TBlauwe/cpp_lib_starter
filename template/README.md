@@ -1,5 +1,7 @@
 # {{ tmplr.repo_name }}
 
+<p align="center">
+
 [![Windows [Clang-cl & MSVC]](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/windows.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/windows.yaml)
 [![Ubuntu & MacOS [Clang & GCC]](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/ubuntu.yaml)
 [![Documentation build & deploy](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/documentation.yaml/badge.svg)](https://github.com/{{tmplr.owner_name}}/{{ tmplr.repo_name }}/actions/workflows/documentation.yaml)
@@ -7,6 +9,9 @@
 
 {{ tmplr.repo_desc }}
 
+</p>
+
+</br>
 
 ## Features
 

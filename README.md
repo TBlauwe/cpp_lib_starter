@@ -1,14 +1,14 @@
 # Cpp Library Starter
 
-<center>
+<p align="center">
 
 An opinionated template repository for C++20 static library, with an emphasis on quick setup to share library with other projects using **[CPM](https://github.com/cpm-cmake/)**.
 
-![Static Badge](https://img.shields.io/badge/See%20example%20here-blue?style=for-the-badge&logo=readthedocs&logoColor=white&link=https%3A%2F%2Fgithub.com%2FTBlauwe%2FCLS_Example%2F)
+[![Static Badge](https://img.shields.io/badge/See%20example%20here-blue?style=for-the-badge&logo=readthedocs&logoColor=white)](https://github.com/TBlauwe/CLS_Example/)
 
-</center>
+</p>
 
-</br>
+</br>https://github.com/TBlauwe/CLS_Example/
 
 
 > [!NOTE]
@@ -86,9 +86,22 @@ An opinionated template repository for C++20 static library, with an emphasis on
 
 ## Getting started
 
-On the [github repository](https://github.com/TBlauwe/cpp_lib_starter), click on `Use this template`. 
-And that's it !
+On the [github repository](https://github.com/TBlauwe/cpp_lib_starter), click on `Use this template` and fill the fields
 
+After that, go to your repository on github and follow these steps : 
+
+1. Click on `Settings`
+2. Click on `Pages` in the section `Code and automation`
+3. In 'Build and deployement', change `Source` to `GitHub Actions`, instead of `Deploy from a branch`.
+
+Otherwise, GitHub Pages's deployement will always failed.
+
+Also, you may not have the time to set this up before the worflows are triggered. So they will fail a first time, but should passed for future commits.
+If you wish to deploy the documentation now, you can trigger the workflow from github by following these steps :
+
+1. Click on `Actions`
+2. In the left pane, Click on `Documentation build & deploy`
+3. To the right, click on `Run workflow`
 
 
 ## CMake options
