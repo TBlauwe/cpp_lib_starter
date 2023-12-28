@@ -62,21 +62,25 @@ add_custom_command(TARGET benchmarks POST_BUILD
 # --- Continuous benchmarking
 # ------------------------------------------------------------------------------
 
-
-# Retrieve current git tag
+# Try to get the current tag name
 execute_process(
-	COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
-	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-	OUTPUT_VARIABLE GIT_TAG
-	OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-# Retrieve current git commit
-execute_process(
-	COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+	COMMAND ${GIT_EXECUTABLE} describe --exact-match --tags
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 	OUTPUT_VARIABLE GIT_COMMIT
 	OUTPUT_STRIP_TRAILING_WHITESPACE
+	RESULT_VARIABLE GIT_RESULT
 )
+
+# If the tag name is not found, get the latest commit hash
+if(NOT GIT_RESULT EQUAL 0)
+	execute_process(
+		COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+		OUTPUT_VARIABLE GIT_COMMIT
+		OUTPUT_STRIP_TRAILING_WHITESPACE
+	)
+endif()
+
 
 # Copy run_benchmarks.py to launch benchmark
 configure_file(

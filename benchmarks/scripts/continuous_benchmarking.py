@@ -18,7 +18,7 @@ def create_nested_directories(path: str, dirs: List[str]):
 
 if __name__ == '__main__':
 
-    name = "@GIT_TAG@.json" if "@GIT_TAG@" else "@GIT_COMMIT@.json"
+    name = "@GIT_COMMIT@.json"
 
     parser = argparse.ArgumentParser(description='Script to run benchmark with appropriate name.')
     parser.add_argument('-e', '--exe', default='..\\@BENCHMARKS_EXE_NAME@', help='Path to benchmark executable.')
