@@ -16,25 +16,35 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Apply template
-        run: npx tmplr
-        env:
-          owner_name: ${{ github.event.repository.owner.name }}
-          owner_email: ${{ github.event.repository.owner.email }}
-          repo_name: ${{ github.event.repository.name }}
-          repo_url: ${{ github.event.repository.ssh_url }}
-          repo_desc: ${{ github.event.repository.description }}
+        - name: "Checkout"
+          uses: actions/checkout@v3
 
-      - name: Disable this workflow
-        shell: bash
-        run: |
-            gh workflow disable -R $GITHUB_REPOSITORY "${{ github.workflow }}"
-        env:
+        - name: Check file existence
+          id: check_files
+          uses: andstor/file-existence-action@v2
+          with:
+            files: '.tmplr.yml'
+
+        - name: Apply template 
+          if: steps.check_files.outputs.files_exists == 'true'
+          run: npx tmplr
+          env:
+            owner_name: ${{ github.event.repository.owner.name }}
+            owner_email: ${{ github.event.repository.owner.email }}
+            repo_name: ${{ github.event.repository.name }}
+            repo_url: ${{ github.event.repository.ssh_url }}
+            repo_desc: ${{ github.event.repository.description }} 
+            
+        - name: Disable this workflow
+          if: steps.check_files.outputs.files_exists == 'true'
+          shell: bash 
+          run: |
+            gh workflow disable -R $GITHUB_REPOSITORY "${{ github.workflow }}" 
+          env:
             GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
+        - uses: stefanzweifel/git-auto-commit-action@v5
+          if: steps.check_files.outputs.files_exists == 'true'
+          with:
             commit_message: "Generate project from template"
 
