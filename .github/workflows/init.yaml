@@ -27,6 +27,14 @@ jobs:
           repo_url: ${{ github.event.repository.ssh_url }}
           repo_desc: ${{ github.event.repository.description }}
 
+      - name: Disable this workflow
+        shell: bash
+        run: |
+            gh workflow disable -R $GITHUB_REPOSITORY "${{ github.workflow }}"
+        env:
+            GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
             commit_message: "Generate project from template"
+
