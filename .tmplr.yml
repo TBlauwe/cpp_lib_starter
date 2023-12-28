@@ -72,7 +72,7 @@ steps:
 
     # For benchmarks
   - copy: template/.github/**/*
-    to: ./
+    to: .github/
 
    
     # --- CLEAN
