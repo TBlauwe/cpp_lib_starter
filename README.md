@@ -1,16 +1,13 @@
 # Cpp Library Starter
 
+![C++20](https://img.shields.io/badge/c++20-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![CMake](https://img.shields.io/badge/CMake-%23008FBA.svg?style=for-the-badge&logo=cmake&logoColor=white) [![Static Badge](https://img.shields.io/badge/See%20example%20here-blue?style=for-the-badge&logo=readthedocs&logoColor=white)](https://github.com/TBlauwe/CLS_Example/)
+
 <div align="center">
 
 An opinionated template repository for C++20 static library, with an emphasis on quick setup to share library with other projects using **[CPM](https://github.com/cpm-cmake/)**.
 
-</br>
-
-[![Static Badge](https://img.shields.io/badge/See%20example%20here-blue?style=for-the-badge&logo=readthedocs&logoColor=white)](https://github.com/TBlauwe/CLS_Example/)
-
 </div>
 
-</br>
 
 > [!NOTE]
 >
@@ -83,6 +80,8 @@ An opinionated template repository for C++20 static library, with an emphasis on
 * __Cross-compiler warnings__ enabled through CMake. 
 
 * __Minimal CMake options__ used. Default values should be good enough, but options are provided just in case.
+
+* _EXPERIMENTAL_. Automatically includes example files in your readme with cmake.
 
 
 ## Getting started
@@ -243,6 +242,7 @@ Targets available :
 | `continuous_benchmarking` | Utility | Execute a python script to run benchmarks for continuous benchmarking |
 | `docs` | Utility | Build documentation |
 | `open_docs` | Utility | Open documentation in default browser |
+| `update_code_blocks` | Utility | Update code blocks by replacing its content with the relevant file. |
 
 You can also use `CMakePresets.json` instead, [see below](#cmakepresets.json)
 
@@ -379,6 +379,27 @@ choco install graphviz
 To help you write docs, [this page](https://tblauwe.github.io/cpp_lib_starter/pages/reference.html) is a reference of some commands.
 
 
+#### Include cpp files inside a markdown file.
+
+Let's start by a use case : You want your main readme.md to include a cpp file to showcase how to get started.
+Doxygen won't be able to help us here (unless I'm missing something).
+
+So a simple cmake function defined in `cmake/include_code_block.cmake` will allow you to include any file in a markdown file, without using a template.
+Suppose we have a markdown file, called `README.md`, that contains this : 
+```html
+<!--BEGIN_INCLUDE="examples/00_GettingStarted/main.cpp"-->
+'''cpp
+#include <{{tmplr.repo_name}}/{{tmplr.repo_name}}.h>
+'''
+<!--END_INCLUDE-->
+```
+
+By running `include_code_block("README.md")`, the content between the two balises will be replaced by the content of the file specified, `examples/00_GettingStarted/main.cpp` in this case.
+
+Now a problem I faced is when to call this function. Ideally only when necessary, but it turned out there are several cases where it needs to be updated, but we don't want to do it at every cmake invocation.
+I choose to define a custom target called `update_code_blocks` that you can manually run, or that is automatically run when building docs.
+
+
 ### Tests
 
 The library used for testing is [Doctest](https://github.com/doctest/doctest).
@@ -447,6 +468,8 @@ These are the main ressources I used to organize CMake files:
 ## TODOs
 
 * [x] - Support shared library
+* [ ] - Semantic versionning from Github
+* [ ] - Release/publish action
 * [ ] - Add interactive charts for continuous benchmarking
 * [ ] - Add section for continuous benchmarking
 * [ ] - Install rules needs testing

@@ -63,6 +63,14 @@ set(DOCS_DOXYGEN_FILES
 	"doxygen/DoxygenLayout.xml"
 )
 
+# This target runs a script to update each file that need to update code blocks based on an input file
+add_custom_target(
+	update_code_blocks
+	COMMAND ${CMAKE_COMMAND} -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}" -P "${CMAKE_CURRENT_SOURCE_DIR}/update_code_blocks.cmake"
+	SOURCES
+		"${CMAKE_CURRENT_SOURCE_DIR}/update_code_blocks.cmake"
+)
+
 add_custom_target(
 	docs
 	COMMAND ${CMAKE_COMMAND} -E make_directory "${DOXYGEN_OUTPUT_DIR}"
@@ -76,6 +84,7 @@ add_custom_target(
 		${DOCS_PAGES}
 		${DOCS_ASSETS}
 )
+add_dependencies(docs update_code_blocks)
 
 
 # Utility target to open docs
