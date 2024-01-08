@@ -41,9 +41,6 @@ steps:
       eval: '{{ repo_name }}'
 
     # --- GENERATE FILES
-  - copy: template/cpp/cmake/**/*
-    to: cmake/
-  
   - copy: template/README.md
     to: README.md
 

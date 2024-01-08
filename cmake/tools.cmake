@@ -14,7 +14,7 @@ if(${PROJECT_IS_TOP_LEVEL})
 	endif()
 endif()
 
-if(NOT ${{{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES})
+if(NOT ${PROJECT_NAME}_SKIP_DEPENDENCIES})
 		# Dependencies are added via CPM.
 		# See https://github.com/cpm-cmake/CPM.cmake for more info.
 		set(CPM_DOWNLOAD_VERSION 0.38.2)
@@ -39,15 +39,15 @@ set(pragma_suppress_c4251 "
 # to omit warnings from the provided paths, if the compiler supports that
 # This is to provide a user experience similar to find_package when
 # add_subdirectory or FetchContent is used to consume this project
-set({{ tmplr.repo_name | CONSTANT_CASE }}_WARNING_GUARD "")
+set(${PROJECT_NAME}_WARNING_GUARD "")
 if(NOT PROJECT_IS_TOP_LEVEL)
   option(
-      {{ tmplr.repo_name | CONSTANT_CASE }}_INCLUDES_WITH_SYSTEM
+      ${PROJECT_NAME}_INCLUDES_WITH_SYSTEM
       "Use SYSTEM modifier for shared's includes, disabling warnings"
       ON
   )
-  mark_as_advanced({{ tmplr.repo_name | CONSTANT_CASE }}_INCLUDES_WITH_SYSTEM)
-  if({{ tmplr.repo_name | CONSTANT_CASE }}_INCLUDES_WITH_SYSTEM)
-    set({{ tmplr.repo_name | CONSTANT_CASE }}_WARNING_GUARD SYSTEM)
+  mark_as_advanced(${PROJECT_NAME}_INCLUDES_WITH_SYSTEM)
+  if(${PROJECT_NAME}_INCLUDES_WITH_SYSTEM)
+    set(${PROJECT_NAME}_WARNING_GUARD SYSTEM)
   endif()
 endif()
