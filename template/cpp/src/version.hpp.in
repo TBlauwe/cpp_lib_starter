@@ -1,16 +1,50 @@
+/*****************************************************************//**
+@file   version.hpp
+@brief  Contains informations related to current version
+
+@author {{ tmplr.owner_name }}
+@date   {{ tmplr.now }}
+ *********************************************************************/
 #pragma once
 
 /**
     @namespace {{tmplr.namespace}}::version
-    @brief Contains informations related to current version.
+    @brief Contains informations related to current version
 **/
 namespace {{tmplr.namespace}}::version
 {
-    static constexpr int MAJOR = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_MAJOR@;
-    static constexpr int MINOR = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_MINOR@;
-    static constexpr int PATCH = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_PATCH@;
-    static constexpr int AHEAD = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_AHEAD@;
-    static constexpr const char * STRING_FULL = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING_FULL@";
-    static constexpr const char * STRING = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING@";
-    static constexpr const char * GIT_SHA = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_GIT_SHA@";
+    /** @brief Major version number of the project
+     *  @details This is the X in the X.Y.Z format of semantic versioning.
+    **/
+    inline constexpr int major = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_MAJOR@;
+
+    /** @brief Minor version number of the project
+     *  @details This is the Y in the X.Y.Z format of semantic versioning.
+    **/
+    inline constexpr int minor = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_MINOR@;
+
+    /** @brief Patch version number of the project
+     *  @details This is the Z in the X.Y.Z format of semantic versioning.
+    **/
+    inline constexpr int patch = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_PATCH@;
+
+    /** @brief Number of commits ahead of the latest release
+     *  @details This is the number of commits that have been made since the last tag.
+    **/
+    inline constexpr int ahead = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_AHEAD@;
+
+    /** @brief Full version string of the project in MAJOR.MINOR.PATCH+AHEAD-sha format.
+     *  @details This is the version string that includes the major, minor, patch, ahead and git sha.
+    **/
+    inline constexpr const char * full = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING_FULL@";
+
+    /** @brief Version string of the project in X.Y.Z format
+     *  @details This is the version string that only includes the major, minor, and patch numbers in the X.Y.Z format of semantic versioning.
+    **/
+    inline constexpr const char * short = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING@";
+
+    /** @brief Git SHA of the project
+     *  @details This is the hash of the latest commit in the project.
+    **/
+    inline constexpr const char * git_sha = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_GIT_SHA@";
 }

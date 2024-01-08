@@ -2,7 +2,7 @@
 @file   core.hpp
 @brief  Main file.
 
-@defgroup {{ tmplr.namespace }} Your title
+@defgroup {{ tmplr.namespace }} Topic's title
 
 @details 
 
@@ -11,7 +11,7 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-@example 00_GettingStarted/main.cpp
+@example getting_started.cpp
 This is an example of how to get started with the library.
 
 @author {{ tmplr.owner_name }}

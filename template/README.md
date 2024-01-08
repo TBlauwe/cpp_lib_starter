@@ -52,7 +52,7 @@ target_link_libraries(your_target PUBLIC {{tmplr.repo_name}})
 
 ### Minimal example
 
-<!--BEGIN_INCLUDE="examples/00_GettingStarted/main.cpp"-->
+<!--BEGIN_INCLUDE="examples/getting_started.cpp"-->
 ```cpp
 #include <{{tmplr.repo_name}}/core.h>
 ```
