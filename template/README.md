@@ -54,7 +54,7 @@ target_link_libraries(your_target PUBLIC {{tmplr.repo_name}})
 
 <!--BEGIN_INCLUDE="examples/00_GettingStarted/main.cpp"-->
 ```cpp
-#include <{{tmplr.repo_name}}/{{tmplr.repo_name}}.h>
+#include <{{tmplr.repo_name}}/core.h>
 ```
 <!--END_INCLUDE-->
 

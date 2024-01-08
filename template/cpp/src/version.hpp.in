@@ -1,0 +1,16 @@
+#pragma once
+
+/**
+    @namespace {{tmplr.namespace}}::version
+    @brief Contains informations related to current version.
+**/
+namespace {{tmplr.namespace}}::version
+{
+    static constexpr int MAJOR = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_MAJOR@;
+    static constexpr int MINOR = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_MINOR@;
+    static constexpr int PATCH = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_PATCH@;
+    static constexpr int AHEAD = @{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_AHEAD@;
+    static constexpr const char * STRING_FULL = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING_FULL@";
+    static constexpr const char * STRING = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING@";
+    static constexpr const char * GIT_SHA = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_GIT_SHA@";
+}

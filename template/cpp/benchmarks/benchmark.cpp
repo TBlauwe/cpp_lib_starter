@@ -1,5 +1,5 @@
 #include <benchmark/benchmark.h>
-#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
+#include <{{tmplr.repo_name | lowercase}}/core.hpp>
 
 // Define another benchmark
 static void BM_Success(benchmark::State& state) {

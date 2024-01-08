@@ -1,5 +1,5 @@
 /*****************************************************************//**
-@file   {{ tmplr.repo_name | lowercase}}.hpp
+@file   core.hpp
 @brief  Main file.
 
 @defgroup {{ tmplr.namespace }} Your title
@@ -11,14 +11,9 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Usage:
+@example 00_GettingStarted/main.cpp
+This is an example of how to get started with the library.
 
-@code{.cpp}
-#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
-
-{{tmplr.namespace}}::success();
-@endcode
- 
 @author {{ tmplr.owner_name }}
 @date   {{ tmplr.now }}
  *********************************************************************/
@@ -39,9 +34,3 @@ namespace {{tmplr.namespace}}
 	{{tmplr.repo_name | CONSTANT_CASE}}_EXPORT
     int success();
 }
-
-
-/** 
-	\example 00_GettingStarted/main.cpp
-	This is an example of how to get started with the library.
-**/

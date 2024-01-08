@@ -32,7 +32,7 @@ download_library(
 set(SOURCE_LIST 
 	"main.cpp"
     "utils.hpp"
-    "{{tmplr.repo_name | lowercase }}.cpp"
+    "core.cpp"
 )
 
 add_executable(tests ${SOURCE_LIST})

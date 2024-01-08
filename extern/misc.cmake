@@ -17,6 +17,19 @@
 # --- Dependencies
 # ------------------------------------------------------------------------------
 
+# Hedley is a C/C++ header to help move #ifdefs out of your code.
+use_version(NAME hedley VERSION "v15")
+download_library(
+	NAME hedley 
+	GITHUB_REPOSITORY nemequ/hedley
+)
+if(hedley_ADDED)
+	add_library(hedley INTERFACE)
+	target_include_directories(hedley INTERFACE ${hedley_SOURCE_DIR})
+endif ()
+
+space()
+
 # Tracy is a real time, nanosecond resolution, remote telemetry, hybrid frame 
 # and sampling profiler for games and other applications.
 use_version(NAME tracy VERSION "v0.9.1")
@@ -40,5 +53,5 @@ download_library(
 
 
 add_library(misc_deps INTERFACE)
-target_link_libraries(misc_deps INTERFACE Tracy::TracyClient fmt-header-only)
+target_link_libraries(misc_deps INTERFACE hedley Tracy::TracyClient fmt-header-only)
 suppress_warnings(misc_deps)

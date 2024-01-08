@@ -1,4 +1,4 @@
-#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
+#include <{{tmplr.repo_name | lowercase}}/core.hpp>
 
 int main(int argc, char** argv)
 {

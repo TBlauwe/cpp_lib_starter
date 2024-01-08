@@ -44,10 +44,10 @@ steps:
   - copy: template/README.md
     to: README.md
 
-  - copy: template/cpp/main.hpp
-    to: 'include/{{ repo_name | lowercase }}/{{ repo_name | lowercase }}.hpp'
-  - copy: template/cpp/main.cpp
-    to: 'src/{{ repo_name | lowercase }}.cpp'
+  - copy: template/cpp/include/core.hpp
+    to: 'include/{{ repo_name | lowercase }}/core.hpp'
+  - copy: template/cpp/src/**/*
+    to: 'src/'
     
   - copy: template/cpp/CMakeLists.txt
     to: './CMakeLists.txt'
@@ -59,9 +59,6 @@ steps:
     # For tests
   - copy: template/cpp/tests/**/*
     to: tests/
-  - copy: tests/lib.cpp
-    to: tests/{{ repo_name | lowercase }}.cpp
-  - remove: tests/lib.cpp
 
     # For examples
   - copy: template/cpp/examples/**/*

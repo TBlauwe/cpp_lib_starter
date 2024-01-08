@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <{{tmplr.repo_name | lowercase}}/{{tmplr.repo_name | lowercase}}.hpp>
+#include <{{tmplr.repo_name | lowercase}}/core.hpp>
 
 TEST_CASE("Basic")
 {

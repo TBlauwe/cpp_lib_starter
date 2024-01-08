@@ -25,7 +25,6 @@ include(cmake/prevent_in_source_build.cmake)
 
 # ----- Project information
 project({{ tmplr.repo_name | CONSTANT_CASE }}
-	VERSION 0.1.0
 	DESCRIPTION "{{ tmplr.repo_desc }}"
 	HOMEPAGE_URL "{{ tmplr.repo_url }}"
 	LANGUAGES C CXX
@@ -39,10 +38,14 @@ if (PROJECT_IS_TOP_LEVEL)
 	set_property(GLOBAL PROPERTY USE_FOLDERS ON) # Support folders in IDEs
 	# Convience variable so that executables (tests, benchmarks, experiments, examples) are outputed to a specific folder.
 	set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
+	find_package(Git)
 endif ()
+include(cmake/git_version.cmake) # Defines version from git if is TOP_LEVEL, otherwise read it from file.
+include(cmake/version_header.cmake)
+
 
 # --- Project options
-option({{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_NOT_TOP_LEVEL})
+option(${PROJECT_NAME}_SKIP_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_NOT_TOP_LEVEL})
 
 
 # --- CMake tools
@@ -52,7 +55,7 @@ include(cmake/tools.cmake)
 # ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
-if(NOT ${{{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES})
+if(NOT ${${PROJECT_NAME}_SKIP_DEPENDENCIES})
 	section(CHECK_START "Finding {{ tmplr.repo_name | lowercase }} dependencies")
 
 		unset({{ tmplr.repo_name | CONSTANT_CASE }}_DEPENDENCIES)
@@ -74,12 +77,13 @@ endif()
 # ------------------------------------------------------------------------------
 # --- Sources
 SET(SOURCE_LIST
-    "src/{{tmplr.repo_name | lowercase }}.cpp"
+    "src/core.cpp"
 )
 
 # --- Headers
 SET(HEADER_LIST
-    "include/{{tmplr.repo_name | lowercase }}/{{tmplr.repo_name | lowercase }}.hpp"
+    "include/{{tmplr.repo_name | lowercase }}/core.hpp"
+    "include/{{tmplr.repo_name | lowercase }}/version.hpp"
 )
 
 # --- Assets
@@ -110,7 +114,7 @@ section(CHECK_START "Configuring {{tmplr.repo_name | lowercase }}")
 
 	target_include_directories(
 		{{tmplr.repo_name | lowercase }} 
-		${{{tmplr.repo_name | CONSTANT_CASE }}_WARNING_GUARD} PUBLIC 
+		${${PROJECT_NAME}_WARNING_GUARD} PUBLIC 
 		"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 	)
 	target_include_directories(
