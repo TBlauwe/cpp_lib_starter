@@ -45,7 +45,7 @@ set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
 set(DOXYGEN_HTML_DIR "${DOXYGEN_OUTPUT_DIR}/html")
 set(DOXYGEN_PAGES_DIR "${PROJECT_SOURCE_DIR}/docs/pages")
 set(DOXYGEN_ASSETS_DIR "${PROJECT_SOURCE_DIR}/docs/assets")
-set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/assets/project_logo_55x55.png")
+set(PROJECT_LOGO "${PROJECT_SOURCE_DIR}/docs/assets/logo_small.png")
 
 configure_file(doxygen/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 configure_file(doxygen/header.html ${CMAKE_CURRENT_BINARY_DIR}/header.html)

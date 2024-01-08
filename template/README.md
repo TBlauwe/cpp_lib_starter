@@ -1,6 +1,4 @@
-# {{ tmplr.repo_name }}
-
-![C++](https://img.shields.io/badge/c++%20Library-%2300599C.svg?style=for-the-badge&logo=cplusplus&logoColor=white)
+![C++](https://img.shields.io/badge/c++%2020%20Library-%2300599C.svg?style=for-the-badge&logo=cplusplus&logoColor=white)
 ![CMake](https://img.shields.io/badge/CMake-%232B2F33.svg?style=for-the-badge&logo=cmake)
 [![Version](https://img.shields.io/github/v/release/{{tmplr.owner_name}}/{{tmplr.repo_name}}?include_prereleases&style=for-the-badge)](https://github.com/{{tmplr.owner_name}}/{{tmplr.repo_name}}/releases)
 [![MIT](https://img.shields.io/badge/license-TBD-blue.svg?style=for-the-badge)](https://github.com/{{tmplr.owner_name}}/{{tmplr.repo_name}}/blob/master/LICENSE)
