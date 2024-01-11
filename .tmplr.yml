@@ -52,6 +52,9 @@ steps:
   - copy: template/cpp/CMakeLists.txt
     to: './CMakeLists.txt'
 
+  - copy: template/cpp/cmake/version_header.cmake
+    to: 'cmake/version_header.cmake'
+
     # For benchmarks
   - copy: template/cpp/benchmarks/**/*
     to: benchmarks/
