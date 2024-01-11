@@ -139,7 +139,7 @@ macro(use_version)
 	endif()
 
 	LIST(APPEND ${PROJECT_NAME}_CURRENT_OPTIONS CPM_${use_version_NAME}_VERSION)
-	list(APPEND ${PROJECT_NAME}_DEPENDENCIES "${DOWNLOAD_LIBRARY_NAME} [${CPM_${use_version_NAME}_VERSION}]")
+	list(APPEND ${PROJECT_NAME}_DEPENDENCIES "${use_version_NAME} [${CPM_${use_version_NAME}_VERSION}]")
 endmacro()
 
 
