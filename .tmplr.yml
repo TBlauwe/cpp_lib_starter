@@ -26,11 +26,7 @@ steps:
     from: env.repo_desc
  
   - read: repo_url
-    from: env.repo_url
-    fallback:
-      from: git.remote_url
-      fallback:
-        eval: 'https://github.com/{{ owner_name }}/{{ repo_name }}.git'
+    eval: 'https://github.com/{{ owner_name }}/{{ repo_name }}.git'
         
   - read: now
     eval: '{{ datetime.now | datetime format: DD, MMMM Y}}'
