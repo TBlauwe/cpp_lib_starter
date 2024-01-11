@@ -36,6 +36,8 @@
 # Check if git is found...
 if (GIT_FOUND AND ${PROJECT_IS_TOP_LEVEL}) 
 
+	MESSAGE(STATUS "Configuring version from VERSION file ...")
+
 	# Get last tag from git
 	execute_process(COMMAND ${GIT_EXECUTABLE} describe --abbrev=0 --tags
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -98,7 +100,11 @@ if (GIT_FOUND AND ${PROJECT_IS_TOP_LEVEL})
 		"*" ${${PROJECT_NAME}_VERSION_AHEAD}
 		"*" ${${PROJECT_NAME}_VERSION_GIT_SHA})
 
+	MESSAGE(STATUS "Configuring version from VERSION file ... done")
+
 else()
+
+	MESSAGE(STATUS "Configuring version from VERSION file ...")
 
 	# Git not available, get version from file
 	file(STRINGS ${CMAKE_SOURCE_DIR}/VERSION ${PROJECT_NAME}_VERSION_LIST)
@@ -112,6 +118,8 @@ else()
 	list(GET ${PROJECT_NAME}_VERSION_LIST 5 ${PROJECT_NAME}_VERSION_TWEAK)
 	list(GET ${PROJECT_NAME}_VERSION_LIST 6 ${PROJECT_NAME}_VERSION_AHEAD)
 	list(GET ${PROJECT_NAME}_VERSION_LIST 7 ${PROJECT_NAME}_VERSION_GIT_SHA)
+
+	MESSAGE(STATUS "Configuring version from VERSION file ... done")
 
 endif()
 

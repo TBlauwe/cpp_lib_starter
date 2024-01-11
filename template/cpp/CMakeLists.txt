@@ -40,16 +40,23 @@ if (PROJECT_IS_TOP_LEVEL)
 	set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
 	find_package(Git)
 endif ()
-include(cmake/git_version.cmake) # Defines version from git if is TOP_LEVEL, otherwise read it from file.
-include(cmake/version_header.cmake)
+
+
+include(cmake/tools.cmake)
+section(CHECK_START "Configuring project")
+
+	include(cmake/git_version.cmake) # Defines version from git if is TOP_LEVEL, otherwise read it from file.
+	include(cmake/version_header.cmake)
+
+end_section(
+	CONDITION ${PROJECT_NAME}_VERSION
+	PASS "done. Version : ${${PROJECT_NAME}_VERSION_STRING_FULL}"
+	FAIL "failed."
+)
 
 
 # --- Project options
 option(${PROJECT_NAME}_SKIP_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_NOT_TOP_LEVEL})
-
-
-# --- CMake tools
-include(cmake/tools.cmake)
 
 
 # ------------------------------------------------------------------------------
