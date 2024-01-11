@@ -10,17 +10,17 @@
 #
 #                  Noteworthy cmake folders :
 #                  * extern/ : contains cmake files to find dependencies using CPM.
-#                              Can be skipped by setting {{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES 
+#                              Can be skipped by setting {{ tmplr.repo_name | CONSTANT_CASE }}_DOWNLOAD_DEPENDENCIES 
 #
 #                  Noteworthy cmake options :
-#                  * {{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES : skip dependencies download and build (with CPM)
+#                  * {{ tmplr.repo_name | CONSTANT_CASE }}_DOWNLOAD_DEPENDENCIES : skip dependencies download and build (with CPM)
 #
 #                  Noteworthy defines :
 #                  * TRACY_ENABLE : If defined, instructions related to tracy will be included.
 #                  * _NDEBUG : If undefined, some instructions specific for debugging, like
 #                  vulkan validation layers and some logging, will be deactivated.
 # ------------------------------------------------------------------------------ 
-cmake_minimum_required (VERSION 3.17...3.26)
+cmake_minimum_required (VERSION 3.21...3.26)
 include(cmake/prevent_in_source_build.cmake)
 
 # ----- Project information
@@ -29,8 +29,6 @@ project({{ tmplr.repo_name | CONSTANT_CASE }}
 	HOMEPAGE_URL "{{ tmplr.repo_url }}"
 	LANGUAGES C CXX
 )
-
-include(cmake/project_is_top_level.cmake) # Defines PROJECT_IS_TOP_LEVEL if cmake version is under 3.21.
 
 # Our CMake's behaviours is altered whether this project is consumed or if it is the main project
 if (PROJECT_IS_TOP_LEVEL)
@@ -56,13 +54,13 @@ end_section(
 
 
 # --- Project options
-option(${PROJECT_NAME}_SKIP_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_NOT_TOP_LEVEL})
+option(${PROJECT_NAME}_DOWNLOAD_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_TOP_LEVEL})
 
 
 # ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
-if(NOT ${${PROJECT_NAME}_SKIP_DEPENDENCIES})
+if(${${PROJECT_NAME}_DOWNLOAD_DEPENDENCIES})
 	section(CHECK_START "Finding {{ tmplr.repo_name | lowercase }} dependencies")
 
 		unset(${PROJECT_NAME}_DEPENDENCIES)
