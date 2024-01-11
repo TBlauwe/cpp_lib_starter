@@ -96,7 +96,7 @@ SET(HEADER_LIST
 
 section(CHECK_START "Configuring {{tmplr.repo_name | lowercase }}")
 
-	add_library ({{tmplr.repo_name | lowercase }} ${SOURCE_LIST} ${HEADER_LIST})
+	add_library({{tmplr.repo_name | lowercase }} ${SOURCE_LIST} ${HEADER_LIST})
 	add_library({{tmplr.repo_name | lowercase }}::{{tmplr.repo_name | lowercase }} ALIAS {{tmplr.repo_name | lowercase }})
 
 	include(GenerateExportHeader)

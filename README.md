@@ -156,7 +156,7 @@ After the generation, you can remove `init.yaml`, as it is not needed anymore, i
 
 | Options | Default | Description |
 | ---: | :---: | :--- |
-| `<YOUR_PROJECT_NAME>_SKIP_DEPENDENCIES` | `true` in consumer mode, `false` otherwise | Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** |
+| `<YOUR_PROJECT_NAME>_DOWNLOAD_DEPENDENCIES` | `false` in consumer mode, `true` otherwise | Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** |
 | `CPM_<A_DEPENDENCY>_VERSION` | `true` in consumer mode, `false` otherwise | Override a dependency's version. Value must be a git tag, e.g `master`, `v3.12`, `1.0` |
 
 <details>
