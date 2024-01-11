@@ -58,16 +58,16 @@ include(cmake/tools.cmake)
 if(NOT ${${PROJECT_NAME}_SKIP_DEPENDENCIES})
 	section(CHECK_START "Finding {{ tmplr.repo_name | lowercase }} dependencies")
 
-		unset({{ tmplr.repo_name | CONSTANT_CASE }}_DEPENDENCIES)
-		unset({{ tmplr.repo_name | CONSTANT_CASE }}_MISSING_DEPENDENCIES)
+		unset(${PROJECT_NAME}_DEPENDENCIES)
+		unset(${PROJECT_NAME}_MISSING_DEPENDENCIES)
 
 		# Add all your dependencies here (either as a subfile or directly, matter of preferences)
 		include(extern/misc.cmake)
 
 	end_section(
-		CONDITION NOT {{tmplr.repo_name | CONSTANT_CASE }}_MISSING_DEPENDENCIES
-		PASS "done. Dependencies : ${{{tmplr.repo_name | CONSTANT_CASE }}_DEPENDENCIES}"
-		FAIL "failed. Missing dependencies : ${{{tmplr.repo_name | CONSTANT_CASE }}_MISSING_DEPENDENCIES}"
+		CONDITION NOT ${PROJECT_NAME}_MISSING_DEPENDENCIES
+		PASS "done. Dependencies : ${${PROJECT_NAME}_DEPENDENCIES}"
+		FAIL "failed. Missing dependencies : ${${PROJECT_NAME}_MISSING_DEPENDENCIES}"
 	)
 endif()
 
@@ -97,7 +97,7 @@ section(CHECK_START "Configuring {{tmplr.repo_name | lowercase }}")
 	include(GenerateExportHeader)
 	generate_export_header(
 		{{tmplr.repo_name | lowercase }}
-		BASE_NAME {{tmplr.repo_name | CONSTANT_CASE }}
+		BASE_NAME ${PROJECT_NAME}
 		EXPORT_FILE_NAME export/{{tmplr.repo_name | lowercase }}/export.hpp
 	)
 

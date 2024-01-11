@@ -34,6 +34,17 @@ jobs:
             repo_name: ${{ github.event.repository.name }}
             repo_url: ${{ github.event.repository.ssh_url }}
             repo_desc: ${{ github.event.repository.description }} 
+
+        # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
+        - name: "Install CMake and Ninja"
+          if: steps.check_files.outputs.files_exists == 'true'
+          uses: lukka/get-cmake@latest
+
+        - name: Build
+          if: steps.check_files.outputs.files_exists == 'true'
+          run: |
+            cmake --preset x64-debug-clang
+
             
         - uses: stefanzweifel/git-auto-commit-action@v5
           if: steps.check_files.outputs.files_exists == 'true'
