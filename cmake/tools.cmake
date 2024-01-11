@@ -14,12 +14,12 @@ if(${PROJECT_IS_TOP_LEVEL})
 	endif()
 endif()
 
-if(NOT ${PROJECT_NAME}_SKIP_DEPENDENCIES})
-		# Dependencies are added via CPM.
-		# See https://github.com/cpm-cmake/CPM.cmake for more info.
-		set(CPM_DOWNLOAD_VERSION 0.38.2)
-		include(cmake/cpm.cmake)
-		cmake_print_variables(CPM_SOURCE_CACHE)
+if(${PROJECT_NAME}_DOWNLOAD_DEPENDENCIES)
+	# Dependencies are added via CPM.
+	# See https://github.com/cpm-cmake/CPM.cmake for more info.
+	set(CPM_DOWNLOAD_VERSION 0.38.2)
+	include(cmake/cpm.cmake)
+	cmake_print_variables(CPM_SOURCE_CACHE)
 endif()
 
 # From : https://github.com/friendlyanon/cmake-init-shared-static/blob/master/cmake/variables.cmake

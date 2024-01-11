@@ -40,6 +40,10 @@ if (PROJECT_IS_TOP_LEVEL)
 endif ()
 
 
+# --- Project options
+option(${PROJECT_NAME}_DOWNLOAD_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_TOP_LEVEL})
+
+
 include(cmake/tools.cmake)
 section(CHECK_START "Configuring project")
 
@@ -51,10 +55,6 @@ end_section(
 	PASS "done. Version : ${${PROJECT_NAME}_VERSION_STRING_FULL}"
 	FAIL "failed."
 )
-
-
-# --- Project options
-option(${PROJECT_NAME}_DOWNLOAD_DEPENDENCIES "Disable automatic download of dependencies with CPM." ${PROJECT_IS_TOP_LEVEL})
 
 
 # ------------------------------------------------------------------------------
