@@ -46,16 +46,16 @@ add_executable(benchmarks ${SOURCE_LIST} "scripts/continuous_benchmarking.py")
 target_compile_features(benchmarks PRIVATE cxx_std_20)
 target_link_libraries(benchmarks PRIVATE {{ tmplr.repo_name | lowercase }} benchmark::benchmark)
 set_target_properties(benchmarks PROPERTIES OUTPUT_NAME ${BENCHMARKS_EXE_NAME})
-set_target_properties(benchmarks PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_EXE_DIR}")
+set_target_properties(benchmarks PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${${PROJECT_NAME}_EXE_DIR}")
 
 # Copy google benchmark tools : compare.py and its requirements for ease of use
 add_custom_command(TARGET benchmarks POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_EXE_DIR}/scripts/google_benchmark_tools"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${${PROJECT_NAME}_EXE_DIR}/scripts/google_benchmark_tools"
 )
 
 add_custom_command(TARGET benchmarks POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${benchmark_SOURCE_DIR}/tools" "${PROJECT_EXE_DIR}/scripts/google_benchmark_tools"
+        "${benchmark_SOURCE_DIR}/tools" "${${PROJECT_NAME}_EXE_DIR}/scripts/google_benchmark_tools"
 )
 
 # ------------------------------------------------------------------------------
@@ -85,12 +85,12 @@ endif()
 # Copy run_benchmarks.py to launch benchmark
 configure_file(
 		"scripts/continuous_benchmarking.py"
-        "${PROJECT_EXE_DIR}/scripts/continuous_benchmarking.py"
+        "${${PROJECT_NAME}_EXE_DIR}/scripts/continuous_benchmarking.py"
 )
 
 add_custom_target(continuous_benchmarking
     COMMAND "continuous_benchmarking.py"
-    WORKING_DIRECTORY "${PROJECT_EXE_DIR}/scripts"
+    WORKING_DIRECTORY "${${PROJECT_NAME}_EXE_DIR}/scripts"
     COMMENT "Launching benchmarks through python script and store results based on current configuration and git commit."
 )
 add_dependencies(continuous_benchmarking benchmarks)

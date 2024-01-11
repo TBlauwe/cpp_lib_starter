@@ -35,7 +35,7 @@ if (PROJECT_IS_TOP_LEVEL)
 	set(CMAKE_CXX_EXTENSIONS OFF) # Ensure -std=c++xx is used instead of -std=g++xx. See: https://crascit.com/2015/03/28/enabling-cxx11-in-cmake/
 	set_property(GLOBAL PROPERTY USE_FOLDERS ON) # Support folders in IDEs
 	# Convience variable so that executables (tests, benchmarks, experiments, examples) are outputed to a specific folder.
-	set(PROJECT_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
+	set(${PROJECT_NAME}_EXE_DIR "${CMAKE_BINARY_DIR}/bin") 
 	find_package(Git)
 endif ()
 
