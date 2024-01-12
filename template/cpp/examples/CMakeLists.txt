@@ -25,7 +25,7 @@ foreach (example IN LISTS examples)
 	add_executable(${target_name} ${example})
 	target_compile_features(${target_name} PRIVATE cxx_std_20)
 	target_link_libraries(${target_name} PRIVATE {{tmplr.repo_name | lowercase }})
-	set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${${PROJECT}_EXE_DIR}/examples")
+	set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${${PROJECT_NAME}_EXE_DIR}/examples")
 endforeach ()
 
 
