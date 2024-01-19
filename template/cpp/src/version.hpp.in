@@ -41,7 +41,7 @@ namespace {{tmplr.namespace}}::version
     /** @brief Version string of the project in X.Y.Z format
      *  @details This is the version string that only includes the major, minor, and patch numbers in the X.Y.Z format of semantic versioning.
     **/
-    inline constexpr const char * short = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING@";
+    inline constexpr const char * str = "@{{ tmplr.repo_name | CONSTANT_CASE }}_VERSION_STRING@";
 
     /** @brief Git SHA of the project
      *  @details This is the hash of the latest commit in the project.

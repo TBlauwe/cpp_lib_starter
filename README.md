@@ -473,3 +473,4 @@ These are the main ressources I used to organize CMake files:
 * [ ] - Add interactive charts for continuous benchmarking
 * [ ] - Add section for continuous benchmarking
 * [ ] - Install rules needs testing
+* [ ] - Simplify download_library / remove use_version / Rename to add mark_include_system

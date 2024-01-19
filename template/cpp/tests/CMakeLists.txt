@@ -22,6 +22,7 @@ section(CHECK_START "Tests")
 use_version(NAME doctest VERSION "v2.4.11")
 download_library(
 	NAME doctest
+    TARGETS doctest
 	GITHUB_REPOSITORY onqtam/doctest
 )
 

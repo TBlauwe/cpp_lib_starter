@@ -22,6 +22,7 @@ section(CHECK_START "Benchmarks")
 use_version(NAME benchmark VERSION "v1.8.2")
 download_library(
         NAME benchmark 
+        TARGETS benchmark
         GITHUB_REPOSITORY google/benchmark
         OPTIONS
             "BENCHMARK_ENABLE_TESTING OFF"

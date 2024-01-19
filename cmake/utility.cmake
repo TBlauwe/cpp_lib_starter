@@ -1,10 +1,8 @@
 # Prevent warnings from displaying when building target
 # Useful when you do not want libraries warnings polluting your build output
-macro(suppress_warnings target)
-	if(TARGET target)
-		set_target_properties(${target} PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES $<TARGET_PROPERTY:${target},INTERFACE_INCLUDE_DIRECTORIES>)
-	endif()
-endmacro()
+function(suppress_warnings target)
+	set_target_properties(${target} PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES $<TARGET_PROPERTY:${target},INTERFACE_INCLUDE_DIRECTORIES>)
+endfunction()
 
 
 # Indent cmake message
@@ -20,15 +18,15 @@ endmacro()
 
 
 # Print a space
-macro(space)
+function(space)
 	if(${PROJECT_IS_TOP_LEVEL})
 		message(STATUS "")
 	endif()
-endmacro()
+endfunction()
 
 
-# Macro to begin a section. A section is a header and indent. Don't forget to call end_section() afterwards !
-macro(section)
+# Function to begin a section. A section is a header and indent. Don't forget to call end_section() afterwards !
+function(section)
 	if(${PROJECT_IS_TOP_LEVEL})
 		space()
 		message(STATUS "-----------------------------------------------")
@@ -39,11 +37,11 @@ macro(section)
 		message(${ARGN})
 	endif()
 	indent()
-endmacro()
+endfunction()
 
 
-# Macro to end a section. Take a condition to see if section failed or not
-macro(end_section)
+# Function to end a section. Take a condition to see if section failed or not
+function(end_section)
 	set(opts)
 	set(one_value_args)
 	set(multi_value_args PASS FAIL CONDITION)
@@ -56,12 +54,12 @@ macro(end_section)
 	else()
 		message(CHECK_FAIL ${END_SECTION_FAIL})
 	endif()
-endmacro()
+endfunction()
 
 
 # CPM Wrapper to play nicely with formatting and the use_version call. 
 # Name should match with the name given in use_version.
-macro(download_library)
+function(download_library)
 	set(opts NO_SUPPRESS_WARNINGS)
 	set(one_value_args NAME GITHUB_REPOSITORY VERSION)
 	set(multi_value_args OPTIONS TARGETS)
@@ -101,12 +99,12 @@ macro(download_library)
 		outdent()
 		message(CHECK_PASS "found.")
 	endif()
-endmacro()
+endfunction()
 
 
 # Find package to play nicely with formatting and the use_version call. 
 # Name should match with the name given in use_version.
-macro(find_library _NAME)
+function(find_library _NAME)
 	message(CHECK_START "Finding " ${_NAME})
 
 	indent("(${_NAME}) ")
@@ -120,12 +118,12 @@ macro(find_library _NAME)
 		outdent()
 		message(CHECK_PASS "found.")
 	endif()
-endmacro()
+endfunction()
 
 
 # Handy function going hand to hand with download_library. Set an option to specify
 # library's version, that will be used by default by download_library
-macro(use_version)
+function(use_version)
 	set(opts APPEND REPLACE)
 	set(one_value_args NAME VERSION DESCRIPTION)
 	cmake_parse_arguments(use_version "${opts}" "${one_value_args}" "" ${ARGN})
@@ -140,7 +138,7 @@ macro(use_version)
 
 	LIST(APPEND ${PROJECT_NAME}_CURRENT_OPTIONS CPM_${use_version_NAME}_VERSION)
 	list(APPEND ${PROJECT_NAME}_DEPENDENCIES "${use_version_NAME} [${CPM_${use_version_NAME}_VERSION}]")
-endmacro()
+endfunction()
 
 
 # Copy folder in_dir to out_dir before target is built.
