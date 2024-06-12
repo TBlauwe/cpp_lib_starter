@@ -20,8 +20,6 @@ endif ()
 # --- Target : tests
 # ------------------------------------------------------------------------------
 set(SOURCE_LIST 
-	"main.cpp"
-    "utils.hpp"
     "core.cpp"
 )
 

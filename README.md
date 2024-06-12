@@ -152,76 +152,7 @@ But we add to alter them slightly, so they can run only when relevant :
 After the generation, you can remove `init.yaml`, as it is not needed anymore, idem for the checks in other workflows. 
 
 
-## CMake options
-
-| Options | Default | Description |
-| ---: | :---: | :--- |
-| `<YOUR_PROJECT_NAME>_DOWNLOAD_DEPENDENCIES` | `false` in consumer mode, `true` otherwise | Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** |
-| `CPM_<A_DEPENDENCY>_VERSION` | `true` in consumer mode, `false` otherwise | Override a dependency's version. Value must be a git tag, e.g `master`, `v3.12`, `1.0` |
-
-<details>
 <summary>CMake Utilities</summary>
-
-### CMake utilities
-
-Inside `cmake/utility.cmake`, you will find several functions and macros. Most aren't noteworthy. They are mainly used 
-to organise and build prettier output. They are by no means necessary. If you don't like them, feel free to skip them.
-
-Still, here are some noteworthy functions/macros. 
-
-#### Macro: use_version
-
-Define an option to set the version for a library.
-
-Usage : 
-
-```cmake
-use_version(NAME fmt VERSION "10.0.0")
-```
-
-This will add a cmake option `CPM_FMT_VERSION` set to `10.0.0`. It will then be used by the following macro :
-
-
-#### Macro: download_library
-
-Download a library using CPM. It is a wrapper of `CPMAddPackage` and used the same. The reason to add 
-this wrapper is to play nicely with options/version added through `use_version` and also with cmake output.
-
-Usage : 
-
-```cmake
-download_library(
-  NAME fmt
-  TARGETS fmt fmt-header-only
-  GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS
-	"FMT_INSTALL OFF"
-)
-```
-
-As you can see, it is almost exactly the same as `CPMAddPackage`, but we didn't have to specify a version. The conjunction of these
-two macros/functions may and are most likely overkill/useless. Still, I like the readability of these cmake files
-and verbosity.
-
-`TARGETS` is a multi-value arguments where you can pass targets.
-By default, `download_library` will try to suppress warnings when building those targets (or the target of the same name as `NAME` if no `TARGETS` are provided).
-
-> Sadly, doesn't work for now.
-
-To prevent this behaviour, you can pass the options `NO_SUPPRESS_WARNINGS`, like so :
-
-```cmake
-download_library(
-  NAME fmt
-  GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS
-	"FMT_INSTALL OFF"
-  NO_SUPPRESS_WARNINGS 
-)
-```
-
-</details>
-
 
 ## Build
 
@@ -402,7 +333,7 @@ I choose to define a custom target called `update_code_blocks` that you can manu
 
 ### Tests
 
-The library used for testing is [Doctest](https://github.com/doctest/doctest).
+The library used for testing is [Catch2](https://github.com/catchorg/Catch2).
 
 One target is provided : `tests`.
 
@@ -446,7 +377,7 @@ _Benchmarks_:
 * **[Google Benchmark](https://github.com/google/benchmark)**
 
 _Tests_:
-* **[Doctest](https://github.com/doctest/doctest)**
+* **[Catch2](https://github.com/catchorg/Catch2)**
 
 _Documentation_:
 * **[Doxygen](https://www.doxygen.nl/index.html)**

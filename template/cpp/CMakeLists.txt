@@ -77,7 +77,6 @@ section("Finding dependencies")
 	# See https://github.com/cpm-cmake/CPM.cmake for more info.
 	include(cmake/find_cpm.cmake)
 	include(extern/core.cmake)
-	include(extern/graphics.cmake)
 end_section()
 
 
