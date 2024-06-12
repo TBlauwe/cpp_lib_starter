@@ -190,18 +190,18 @@ presets, it is set to `out/build/<preset-name>`.
 
 Available presets : 
 
-| Targets | Inherits | Note | 
-| ---: | :--- | :--- |
-| `x64-debug-msvc`| `Base`, `Ninja`, `x64`, `MSVC`, `Debug`| Windows specific (Visual studio)|
-| `x64-release-msvc`| `Base`, `Ninja`, `x64`, `MSVC`, `Release`| Windows specific (Visual studio) |
-| `x64-debug-clang-cl`| `Base`, `Ninja`, `x64`, `Clang-cl`, `Debug`| Windows specific (Visual studio) |
-| `x64-release-clang-cl`| `Base`, `Ninja`, `x64`, `Clang-cl`, `Release`| Windows specific (Visual studio) |
-| `x64-debug-gcc`| `Base`, `Ninja`, `x64`, `GCC`, `Debug`| Windows specific (CLion) |
-| `x64-release-gcc`| `Base`, `Ninja`, `x64`, `GCC`, `Release`| Windows specific (Clion) |
-| `x64-debug-clang`| `Base`, `Ninja`, `x64`, `Clang`, `Debug`| Unix, MacOs, WSL |
-| `x64-release-clang`| `Base`, `Ninja`, `x64`, `Clang`, `Release`| Unix, MacOs, WSL|
-| `x64-debug-gnu`| `Base`, `Ninja`, `x64`, `GCC`, `Debug`, `wsl`| Unix, MacOs, WSL |
-| `x64-release-gnu`| `Base`, `Ninja`, `x64`, `GCC`, `Release`, `wsl`| Unix, MacOs, WSL|
+|                Targets | Inherits | Note | 
+|-----------------------:| :--- | :--- |
+|       `x64-msvc-debug` | `Base`, `Ninja`, `x64`, `MSVC`, `Debug`| Windows specific (Visual studio)|
+|     `x64-msvc-release` | `Base`, `Ninja`, `x64`, `MSVC`, `Release`| Windows specific (Visual studio) |
+|   `x64-clang-cl-debug` | `Base`, `Ninja`, `x64`, `Clang-cl`, `Debug`| Windows specific (Visual studio) |
+| `x64-clang-cl-release` | `Base`, `Ninja`, `x64`, `Clang-cl`, `Release`| Windows specific (Visual studio) |
+|        `x64-gcc-debug` | `Base`, `Ninja`, `x64`, `GCC`, `Debug`| Windows specific (CLion) |
+|      `x64-gcc-release` | `Base`, `Ninja`, `x64`, `GCC`, `Release`| Windows specific (Clion) |
+|      `x64-clang-debug` | `Base`, `Ninja`, `x64`, `Clang`, `Debug`| Unix, MacOs, WSL |
+|    `x64-clang-release` | `Base`, `Ninja`, `x64`, `Clang`, `Release`| Unix, MacOs, WSL|
+|        `x64-gnu-debug` | `Base`, `Ninja`, `x64`, `GCC`, `Debug`, `wsl`| Unix, MacOs, WSL |
+|      `x64-gnu-release` | `Base`, `Ninja`, `x64`, `GCC`, `Release`, `wsl`| Unix, MacOs, WSL|
 
 > [!NOTE]
 >
@@ -210,7 +210,7 @@ Available presets :
 Thanks to the structure of the file (credits to [DirectXTK](https://github.com/microsoft/DirectXTK/blob/main/CMakePresets.json)), you can easily add other configurations, by inheritings relevant configurations.
 
 ```json
-{"name": "x86-release-msvc", "inherits": ["Base", "Ninja", "x86", "MSVC", "Release"]},
+{"name": "x86-msvc-release", "inherits": ["Base", "Ninja", "x86", "MSVC", "Release"]},
 ```
 
 If you need to specify some cache variables for CMake, you can add them to the `base` configuration :

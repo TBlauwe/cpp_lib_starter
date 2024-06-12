@@ -24,7 +24,7 @@ on:
 jobs:
   build:
     if: github.repository != 'TBlauwe/cpp_lib_starter'
-    name: "[${{matrix.os}}] : ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}}"
+    name: "[${{matrix.os}}] : ${{matrix.architecture}}-${{matrix.toolchain}}-${{matrix.configuration}}"
 
     strategy:
       matrix:
@@ -36,8 +36,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-        preset_name: ${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
-        build_directory: ./out/build/${{matrix.architecture}}-${{matrix.configuration}}-${{matrix.toolchain}} 
+        preset_name: ${{matrix.architecture}}-${{matrix.toolchain}}-${{matrix.configuration}}
+        build_directory: ./out/build/${{matrix.architecture}}-${{matrix.toolchain}}-${{matrix.configuration}}
         CPM_SOURCE_CACHE: ${{github.workspace}}/.cpm_cache
 
     steps:

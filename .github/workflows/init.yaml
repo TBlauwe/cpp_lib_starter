@@ -43,7 +43,7 @@ jobs:
         - name: Build
           if: steps.check_files.outputs.files_exists == 'true'
           run: |
-            cmake --preset x64-debug-clang
+            cmake --preset x64-clang-debug
 
             
         - uses: stefanzweifel/git-auto-commit-action@v5
