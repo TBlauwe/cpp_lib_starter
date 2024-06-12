@@ -104,7 +104,7 @@ section(CHECK_START "Configuring {{tmplr.repo_name | lowercase }}")
 	target_compile_features({{tmplr.repo_name | lowercase }} PRIVATE cxx_std_20)
 	target_compile_options({{tmplr.repo_name | lowercase }} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>) # if using __VA_OPT__, we enforce latest preprocessor on MSVC
 	target_compile_options({{tmplr.repo_name | lowercase }} PUBLIC $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->) # being a cross-platform target, we enforce standards conformance on MSVC
-	target_link_libraries({{tmplr.repo_name | lowercase }} PUBLIC misc_deps)
+	target_link_libraries({{tmplr.repo_name | lowercase }} PUBLIC core_dependencies)
 	target_include_directories({{tmplr.repo_name | lowercase }} ${${PROJECT_NAME}_WARNING_GUARD} PUBLIC "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>")
 
 	option_define({{tmplr.repo_name | lowercase }} ${PROJECT_NAME}_NO_ASSERT)
