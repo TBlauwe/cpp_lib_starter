@@ -152,8 +152,6 @@ But we add to alter them slightly, so they can run only when relevant :
 After the generation, you can remove `init.yaml`, as it is not needed anymore, idem for the checks in other workflows. 
 
 
-<summary>CMake Utilities</summary>
-
 ## Build
 
 Use following command in the root directory :
