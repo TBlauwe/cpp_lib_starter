@@ -42,7 +42,7 @@ An opinionated template repository for C++20 static library, with an emphasis on
 
 
 
-* __Tests__ written with **[Doctest](https://github.com/doctest/doctest)** and executed during CI. 
+* __Tests__ written with **[Catch2](https://github.com/catchorg/Catch2)** and executed during CI. 
     <details>
 	<summary>CI Executions</summary>
 
