@@ -14,7 +14,7 @@ PROJECT_BRIEF			= @PROJECT_DESCRIPTION@
 
 
 # --- Sources
-INPUT                   = @DOXYGEN_ASSETS_DIR@ @DOXYGEN_PAGES_DIR@ @PROJECT_SOURCE_DIR@/include/ @PROJECT_SOURCE_DIR@/README.md
+INPUT                   = @PROJECT_SOURCE_DIR@/README.md @PROJECT_SOURCE_DIR@/include/ @DOXYGEN_ASSETS_DIR@ @DOXYGEN_PAGES_DIR@
 IMAGE_PATH              = ./
 EXTRACT_ALL             = YES
 RECURSIVE               = YES
@@ -51,7 +51,7 @@ HTML_EXTRA_STYLESHEET	=	@DOXYGEN_AWESOME_CSS_SOURCE_DIR@/doxygen-awesome.css \
 # Reference : https://jothepro.github.io/doxygen-awesome-css/md_docs_2tricks.html
 HAVE_DOT				= YES
 DOT_IMAGE_FORMAT		= svg
-#DOT_TRANSPARENT		= YES  # Obsolete
+#DOT_TRANSPARENT		    = YES # Doxygen 1.9.8 report this line as obsolete
 
 
 # --- Build Generation
@@ -74,10 +74,11 @@ ALIASES					+= widget{2}="@htmlonly<div class=\"\1\" id=\"\2\"></div>@endhtmlonl
 # --- Links
 ALIASES					+= Doxygen="[Doxygen](https://www.doxygen.nl/index.html)"
 ALIASES					+= Doxygen-awesome="[Doxygen Awesome CSS](https://jothepro.github.io/doxygen-awesome-css/)"
+ALIASES					+= flecs="[Flecs](https://github.com/SanderMertens/flecs)"
 
 
 # --- External references
-TAGFILES				= @PROJECT_SOURCE_DIR@/docs/doxygen/cppreference-doxygen-web.tag=http://en.cppreference.com/w/
+TAGFILES				= "@PROJECT_SOURCE_DIR@/docs/doxygen/cppreference-doxygen-web.tag=https://en.cppreference.com/w/"
 ALIASES					+=	"std_invoke=<a href=\"https://en.cppreference.com/w/cpp/utility/functional/invoke\">std::invoke</a>" \
 							"std_future=<a href=\"https://en.cppreference.com/w/cpp/thread/future\">std::future</a>" \
 							"std_shared_future=<a href=\"https://en.cppreference.com/w/cpp/thread/shared_future\">std::shared_future</a>" \

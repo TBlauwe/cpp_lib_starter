@@ -1,9 +1,8 @@
 # ------------------------------------------------------------------------------ 
 #           File : examples/CMakeList.txt
 #    Description : CMake file to build examples.
-#
-# ------------------------------------------------------------------------------ 
-section(CHECK_START "Examples")
+# ------------------------------------------------------------------------------
+section("Examples")
 
 # ------------------------------------------------------------------------------
 # --- Target : Build examples
@@ -28,13 +27,4 @@ foreach (example IN LISTS examples)
 	set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${${PROJECT_NAME}_EXE_DIR}/examples")
 endforeach ()
 
-
-# ------------------------------------------------------------------------------
-# --- Closure
-# ------------------------------------------------------------------------------
-
-end_section(
-    CONDITION TRUE
-    PASS "done."
-    FAIL "failed."
-)
+end_section()

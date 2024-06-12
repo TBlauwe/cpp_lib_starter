@@ -2,23 +2,15 @@
 #           File : docs/CMakeList.txt
 #         Author : TBlauwe
 #    Description : CMake file to build docs using doxygen and doxygen awesome
-#
-#                  Version of each dependency can be set through options :
-#                  * CPM_DOXYGEN_AWESOME_CSS_VERSION
-#
-#                  CPM noteworthy options :
-#                  * CPM_SOURCE_CACHE : download location.
-#                  * CPM_USE_LOCAL_PACKAGES : search for locally installed dependencies first.
-#                  * CPM_LOCAL_PACKAGES_ONLY : error if dependecy not found locally.
-# ------------------------------------------------------------------------------ 
-section(CHECK_START "Documentation")
+# ------------------------------------------------------------------------------
+section("Documentation")
+
 
 # ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
-
 # Doxygen is a documentation generator and static analysis tool for software source trees.
-find_library(Doxygen)
+find_package(Doxygen)
 if(NOT Doxygen_FOUND)
     message(STATUS "Skipping docs.")
 	return()
@@ -27,9 +19,9 @@ endif()
 space()
 
 # Doxygen awesome CSS is a custom CSS theme for doxygen html-documentation with lots of customization parameters.
-use_version(NAME DOXYGEN_AWESOME_CSS VERSION "v2.3.1")
-download_library(
+CPMAddPackage(
         NAME DOXYGEN_AWESOME_CSS
+		GIT_TAG "v2.3.2"
         GITHUB_REPOSITORY jothepro/doxygen-awesome-css
 )
 if(NOT DOXYGEN_AWESOME_CSS_ADDED)
@@ -39,7 +31,7 @@ endif()
 
 
 # ------------------------------------------------------------------------------
-# --- Target : my_lib_docs & my_lib_open_docs
+# --- Targets
 # ------------------------------------------------------------------------------
 set(DOXYGEN_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
 set(DOXYGEN_HTML_DIR "${DOXYGEN_OUTPUT_DIR}/html")
@@ -94,8 +86,4 @@ add_custom_target(
 )
 add_dependencies(open_docs docs)
 
-end_section(
-	CONDITION TARGET docs
-	PASS "done."
-	FAIL "failed."
-)
+end_section()

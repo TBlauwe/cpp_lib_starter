@@ -2,34 +2,27 @@
 #           File : benchmarks/CMakeList.txt
 #         author : TBlauwe
 #    Description : CMake file to build benchmarks using GoogleBenchmark. 
-#
-#                  Version of each dependency can be set through options :
-#                  * CPM_GOOGLE_BENCHMARK_VERSION
-#
-#                  CPM noteworthy options :
-#                  * CPM_SOURCE_CACHE : download location.
-#                  * CPM_USE_LOCAL_PACKAGES : search for locally installed dependencies first.
-#                  * CPM_LOCAL_PACKAGES_ONLY : error if dependecy not found locally.
-# ------------------------------------------------------------------------------ 
-section(CHECK_START "Benchmarks")
+# ------------------------------------------------------------------------------
+section("Benchmarks")
 
 
 # ------------------------------------------------------------------------------
 # --- Dependencies
 # ------------------------------------------------------------------------------
-
-# A microbenchmark support library 
-use_version(NAME benchmark VERSION "v1.8.2")
-download_library(
-        NAME benchmark 
-        TARGETS benchmark
-        GITHUB_REPOSITORY google/benchmark
-        OPTIONS
-            "BENCHMARK_ENABLE_TESTING OFF"
-)
-if(benchmark_ADDED)
-    set_target_properties(benchmark PROPERTIES CXX_STANDARD 11) # enable c++11 to avoid compilation errors
-    #target_compile_options(benchmark PUBLIC -D_CRT_USE_BUILTIN_OFFSETOF)
+# A microbenchmark support library
+if(NOT TARGET benchmark::benchmark)
+	CPMAddPackage(
+			NAME gbench
+			GIT_TAG "v1.8.3"
+			GITHUB_REPOSITORY google/benchmark
+			OPTIONS
+			"BENCHMARK_ENABLE_TESTING OFF"
+	)
+	if(gbench)
+		set_target_properties(gbench PROPERTIES CXX_STANDARD 11) # enable c++11 to avoid compilation errors
+	endif ()
+else()
+	MESSAGE(FATAL_ERROR "Google benchmark not found and ${PROJECT_NAME}_DOWNLOAD_DEPENDENCIES is off.")
 endif ()
 
 

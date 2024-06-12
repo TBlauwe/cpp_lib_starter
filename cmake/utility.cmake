@@ -20,8 +20,16 @@ endmacro()
 # Print a space
 function(space)
 	if(${PROJECT_IS_TOP_LEVEL})
-		message(STATUS "")
+		message("")
 	endif()
+endfunction()
+
+
+# Define "-D${_option}" only when _option is ON.
+function(option_define _target _option)
+	if (${_option})
+		target_compile_definitions(${_target} PUBLIC "${_option}")
+	endif ()
 endfunction()
 
 
@@ -29,10 +37,9 @@ endfunction()
 function(section)
 	if(${PROJECT_IS_TOP_LEVEL})
 		space()
-		message(STATUS "-----------------------------------------------")
-		message(${ARGN})
-		message(STATUS "-----------------------------------------------")
-		space()
+		message("-----------------------------------------------")
+		message(CHECK_START "[${PROJECT_NAME}] " ${ARGN})
+		message("-----------------------------------------------")
 	else()
 		message(${ARGN})
 	endif()
@@ -47,97 +54,14 @@ function(end_section)
 	set(multi_value_args PASS FAIL CONDITION)
 	cmake_parse_arguments(END_SECTION "${opts}" "${one_value_args}" "${multi_value_args}" ${ARGN})
 
-	space()
 	outdent()
-	if(${END_SECTION_CONDITION})
-		message(CHECK_PASS ${END_SECTION_PASS})
-	else()
-		message(CHECK_FAIL ${END_SECTION_FAIL})
-	endif()
-endfunction()
-
-
-# CPM Wrapper to play nicely with formatting and the use_version call. 
-# Name should match with the name given in use_version.
-function(download_library)
-	set(opts NO_SUPPRESS_WARNINGS)
-	set(one_value_args NAME GITHUB_REPOSITORY VERSION)
-	set(multi_value_args OPTIONS TARGETS)
-	cmake_parse_arguments(DOWNLOAD_LIBRARY "${opts}" "${one_value_args}" "${multi_value_args}" ${ARGN})
-
-	unset(_VERSION)
-	if(${DOWNLOAD_LIBRARY_VERSION})
-		set(_VERSION ${DOWNLOAD_LIBRARY_VERSION})
-	else()
-		set(_VERSION ${CPM_${DOWNLOAD_LIBRARY_NAME}_VERSION})
-	endif()
-
-	message(CHECK_START "Finding ${DOWNLOAD_LIBRARY_NAME} [${_VERSION}] ")
-
-	indent("(${DOWNLOAD_LIBRARY_NAME}) ")
-	CPMAddPackage(
-		NAME ${DOWNLOAD_LIBRARY_NAME}
-		GITHUB_REPOSITORY ${DOWNLOAD_LIBRARY_GITHUB_REPOSITORY}
-		GIT_TAG ${_VERSION}
-		OPTIONS ${DOWNLOAD_LIBRARY_OPTIONS}
-	)
-
-	if(NOT ${${name}_ADDED})
-		outdent()
-		message(CHECK_FAIL "not found.")
-		list(APPEND ${PROJECT_NAME}_MISSING_DEPENDENCIES "${DOWNLOAD_LIBRARY_NAME} [${_VERSION}]")
-	else()
-		if(NOT ${DOWNLOAD_LIBRARY_NO_SUPPRESS_WARNINGS})
-			if(DOWNLOAD_LIBRARY_TARGETS)
-				foreach(target ${DOWNLOAD_LIBRARY_TARGETS})
-					suppress_warnings(${target})
-				endforeach()
-			elseif()
-				suppress_warnings(${DOWNLOAD_LIBRARY_NAME})
-			endif()
+	if(ARGN)
+		if(${END_SECTION_CONDITION})
+			message(CHECK_PASS ${END_SECTION_PASS})
+		else(})
+			message(CHECK_FAIL ${END_SECTION_FAIL})
 		endif()
-		outdent()
-		message(CHECK_PASS "found.")
 	endif()
-endfunction()
-
-
-# Find package to play nicely with formatting and the use_version call. 
-# Name should match with the name given in use_version.
-function(find_library _NAME)
-	message(CHECK_START "Finding " ${_NAME})
-
-	indent("(${_NAME}) ")
-	find_package(${_NAME})
-
-	if(NOT ${${_NAME}_FOUND})
-		outdent()
-		message(CHECK_FAIL "not found.")
-		list(APPEND ${PROJECT_NAME}_MISSING_DEPENDENCIES ${DOWNLOAD_LIBRARY_NAME})
-	else()
-		outdent()
-		message(CHECK_PASS "found.")
-	endif()
-endfunction()
-
-
-# Handy function going hand to hand with download_library. Set an option to specify
-# library's version, that will be used by default by download_library
-function(use_version)
-	set(opts APPEND REPLACE)
-	set(one_value_args NAME VERSION DESCRIPTION)
-	cmake_parse_arguments(use_version "${opts}" "${one_value_args}" "" ${ARGN})
-
-	if(${use_version_APPEND})
-		set(CPM_${use_version_NAME}_VERSION ${use_version_VERSION} CACHE STRING "Git tag used to retrieve ${use_version_NAME}, if using CPM. ${use_version_DESCRIPTION}")
-	elseif(${use_version_REPLACE})
-		set(CPM_${use_version_NAME}_VERSION ${use_version_VERSION} CACHE STRING "${use_version_DESCRIPTION}")
-	else()
-		set(CPM_${use_version_NAME}_VERSION ${use_version_VERSION} CACHE STRING "Git tag used to retrieve ${use_version_NAME}, if using CPM.")
-	endif()
-
-	LIST(APPEND ${PROJECT_NAME}_CURRENT_OPTIONS CPM_${use_version_NAME}_VERSION)
-	list(APPEND ${PROJECT_NAME}_DEPENDENCIES "${use_version_NAME} [${CPM_${use_version_NAME}_VERSION}]")
 endfunction()
 
 

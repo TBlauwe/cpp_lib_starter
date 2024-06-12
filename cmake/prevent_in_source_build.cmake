@@ -1,10 +1,12 @@
-# From : https://github.com/friendlyanon/cmake-init-shared-static/blob/master/cmake/prelude.cmake
+# From: https://github.com/cpp-best-practices/cmake_template/blob/main/cmake/PreventInSourceBuilds.cmake
+get_filename_component(srcdir "${CMAKE_SOURCE_DIR}" REALPATH)
+get_filename_component(bindir "${CMAKE_BINARY_DIR}" REALPATH)
 
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
-  message(
-      FATAL_ERROR
-      "In-source builds are not supported. "
-      "The README provides more information on how build this project. "
-      "You may need to delete 'CMakeCache.txt' and 'CMakeFiles/' first."
-  )
+# disallow in-source builds
+if("${srcdir}" STREQUAL "${bindir}")
+  message("######################################################")
+  message("Warning: in-source builds are disabled")
+  message("Please create a separate build directory and run cmake from there")
+  message("######################################################")
+  message(FATAL_ERROR "Quitting configuration")
 endif()

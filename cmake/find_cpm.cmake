@@ -1,4 +1,7 @@
-# From : https://github.com/TheLartians/ModernCppStarter/blob/master/cmake/CPM.cmake
+# Adapted from : https://github.com/TheLartians/ModernCppStarter/blob/master/cmake/CPM.cmake
+if(NOT DEFINED CPM_DOWNLOAD_VERSION)
+  set(CPM_DOWNLOAD_VERSION 0.39.0)
+endif()
 
 if(CPM_SOURCE_CACHE)
   set(CPM_DOWNLOAD_LOCATION "${CPM_SOURCE_CACHE}/cpm/CPM_${CPM_DOWNLOAD_VERSION}.cmake")

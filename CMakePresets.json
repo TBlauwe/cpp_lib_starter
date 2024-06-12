@@ -1,5 +1,6 @@
 {
   "version": 3,
+  "cmakeMinimumRequired": {"major": 3, "minor": 21, "patch": 0},
   "configurePresets": [
     {
       "name": "Base",
@@ -31,6 +32,14 @@
       "displayName": "Release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "RelWithDebInfo",
+      "hidden": true,
+      "displayName": "Release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
       }
     },
     {
@@ -68,9 +77,12 @@
         "CMAKE_C_COMPILER": "cl",
         "CMAKE_CXX_COMPILER": "cl"
       },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "external"
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ]
+        }
       },
       "condition": {
         "type": "equals",
@@ -85,13 +97,11 @@
         "CMAKE_C_COMPILER": "clang-cl",
         "CMAKE_CXX_COMPILER": "clang-cl"
       },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "external"
-      },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "intelliSenseMode": "windows-clang-x64"
+          "hostOS": [
+            "Windows"
+          ]
         }
       },
       "condition": {
@@ -106,10 +116,6 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++"
-      },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "external"
       }
     },
     {
@@ -118,129 +124,33 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc",
         "CMAKE_CXX_COMPILER": "g++"
-      },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "external"
       }
     },
-    {
-      "name": "x64-debug-msvc",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "MSVC",
-        "Debug"
-      ]
-    },
-    {
-      "name": "x64-release-msvc",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "MSVC",
-        "Release"
-      ]
-    },
-    {
-      "name": "x64-debug-clang-cl",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "Clang-cl",
-        "Debug"
-      ]
-    },
-    {
-      "name": "x64-release-clang-cl",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "Clang-cl",
-        "Release"
-      ]
-    },
-    {
-      "name": "x64-debug-gcc",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "GCC",
-        "Debug"
-      ]
-    },
-    {
-      "name": "x64-release-gcc",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "GCC",
-        "Release"
-      ]
-    },
+
+    { "name": "x64-msvc-debug", "inherits": [ "Base", "Ninja", "x64", "MSVC", "Debug" ], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-msvc-x64" } } },
+    { "name": "x64-msvc-release", "inherits": [ "Base", "Ninja", "x64", "MSVC", "Release" ], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-msvc-x64" } } },
+    { "name": "x64-clang-cl-debug", "inherits": [ "Base", "Ninja", "x64", "Clang-cl", "Debug" ], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-clang-x64" } } },
+    { "name": "x64-clang-cl-release", "inherits": [ "Base", "Ninja", "x64", "Clang-cl", "Release"], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-clang-x64" } } },
+    { "name": "x64-gcc-debug", "inherits": [ "Base", "Ninja", "x64", "GCC", "Debug" ] },
+    { "name": "x64-gcc-release", "inherits": [ "Base", "Ninja", "x64", "GCC", "Release" ] },
+
     {
       "name": "wsl",
       "hidden": true,
       "condition": {
         "type": "notEquals",
         "lhs": "${hostSystemName}",
-        "rhs": "Windows" 
+        "rhs": "Windows"
       },
       "vendor": {
-        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-        }
+        "microsoft.com/VisualStudioSettings/CMake/1.0": { "hostOS": [ "Linux" ] },
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" }
       }
     },
-    {
-      "name": "x64-debug-clang",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "Clang",
-        "Debug",
-        "wsl"
-      ]
-    },
-    {
-      "name": "x64-release-clang",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "Clang",
-        "Release",
-        "wsl"
-      ]
-    },
-    {
-      "name": "x64-debug-gnu",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "GCC",
-        "Debug",
-        "wsl"
-      ]
-    },
-    {
-      "name": "x64-release-gnu",
-      "inherits": [
-        "Base",
-        "Ninja",
-        "x64",
-        "GCC",
-        "Release",
-        "wsl"
-      ]
-    }
+
+    { "name": "x64-clang-debug", "inherits": [ "Base", "Ninja", "x64", "Clang", "Debug", "wsl" ] },
+    { "name": "x64-clang-release", "inherits": [ "Base", "Ninja", "x64", "Clang", "Release", "wsl" ] },
+    { "name": "x64-gnu-debug", "inherits": [ "Base", "Ninja", "x64", "GCC", "Debug", "wsl" ] },
+    { "name": "x64-gnu-release", "inherits": [ "Base", "Ninja", "x64", "GCC", "Release", "wsl" ] }
   ]
- }
+}

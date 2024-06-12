@@ -1,6 +1,6 @@
 /*****************************************************************//**
 @file   version.hpp
-@brief  Contains informations related to current version
+@brief  Contains information related to current version
 
 @author {{ tmplr.owner_name }}
 @date   {{ tmplr.now }}
@@ -9,7 +9,7 @@
 
 /**
     @namespace {{tmplr.namespace}}::version
-    @brief Contains informations related to current version
+    @brief Contains information related to current version
 **/
 namespace {{tmplr.namespace}}::version
 {
