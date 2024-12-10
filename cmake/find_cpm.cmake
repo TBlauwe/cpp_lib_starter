@@ -1,6 +1,6 @@
 # Adapted from : https://github.com/TheLartians/ModernCppStarter/blob/master/cmake/CPM.cmake
 if(NOT DEFINED CPM_DOWNLOAD_VERSION)
-  set(CPM_DOWNLOAD_VERSION 0.39.0)
+  set(CPM_DOWNLOAD_VERSION 0.40.2)
 endif()
 
 if(CPM_SOURCE_CACHE)
