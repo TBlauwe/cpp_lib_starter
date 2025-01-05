@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "cmakeMinimumRequired": {"major": 3, "minor": 21, "patch": 0},
+  "cmakeMinimumRequired": {"major": 3, "minor": 26, "patch": 0},
   "configurePresets": [
     {
       "name": "Base",
@@ -71,8 +71,37 @@
       }
     },
     {
+      "name": "flags-gcc-clang",
+      "description": "These flags are supported by both GCC and Clang",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -D_GLIBCXX_ASSERTIONS=1 -fstack-protector-strong -fcf-protection=full -fstack-clash-protection -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wcast-qual -Wformat=2 -Wundef -Werror=float-equal -Wshadow -Wcast-align -Wunused -Wnull-dereference -Wdouble-promotion -Wimplicit-fallthrough -Wextra-semi -Woverloaded-virtual -Wnon-virtual-dtor -Wold-style-cast",
+        "CMAKE_EXE_LINKER_FLAGS": "-Wl,--allow-shlib-undefined,--as-needed,-z,noexecstack,-z,relro,-z,now,-z,nodlopen",
+        "CMAKE_SHARED_LINKER_FLAGS": "-Wl,--allow-shlib-undefined,--as-needed,-z,noexecstack,-z,relro,-z,now,-z,nodlopen"
+      }
+    },
+    {
+      "name": "flags-appleclang",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fstack-protector-strong -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wcast-qual -Wformat=2 -Wundef -Werror=float-equal -Wshadow -Wcast-align -Wunused -Wnull-dereference -Wdouble-promotion -Wimplicit-fallthrough -Wextra-semi -Woverloaded-virtual -Wnon-virtual-dtor -Wold-style-cast"
+      }
+    },
+    {
+      "name": "flags-msvc",
+      "description": "Note that all the flags after /W4 are required for MSVC to conform to the language standard",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/sdl /guard:cf /utf-8 /diagnostics:caret /w14165 /w44242 /w44254 /w44263 /w34265 /w34287 /w44296 /w44365 /w44388 /w44464 /w14545 /w14546 /w14547 /w14549 /w14555 /w34619 /w34640 /w24826 /w14905 /w14906 /w14928 /w45038 /W4 /permissive- /volatile:iso /Zc:inline /Zc:preprocessor /Zc:enumTypes /Zc:lambda /Zc:__cplusplus /Zc:externConstexpr /Zc:throwingNew /EHsc",
+        "CMAKE_EXE_LINKER_FLAGS": "/machine:x64 /guard:cf",
+        "CMAKE_SHARED_LINKER_FLAGS": "/machine:x64 /guard:cf"
+      }
+    },
+
+    {
       "name": "MSVC",
       "hidden": true,
+      "inherits": ["flags-msvc"],
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl",
         "CMAKE_CXX_COMPILER": "cl"
@@ -92,6 +121,7 @@
     },
     {
       "name": "Clang-cl",
+      "inherits": ["flags-gcc-clang"],
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-cl",
@@ -112,6 +142,7 @@
     },
     {
       "name": "Clang",
+      "inherits": ["flags-gcc-clang"],
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
@@ -120,13 +151,13 @@
     },
     {
       "name": "GCC",
+      "inherits": ["flags-gcc-clang"],
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc",
         "CMAKE_CXX_COMPILER": "g++"
       }
     },
-
     { "name": "x64-msvc-debug", "inherits": [ "Base", "Ninja", "x64", "MSVC", "Debug" ], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-msvc-x64" } } },
     { "name": "x64-msvc-release", "inherits": [ "Base", "Ninja", "x64", "MSVC", "Release" ], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-msvc-x64" } } },
     { "name": "x64-clang-cl-debug", "inherits": [ "Base", "Ninja", "x64", "Clang-cl", "Debug" ], "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "intelliSenseMode": "windows-clang-x64" } } },
