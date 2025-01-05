@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     if: github.repository != 'TBlauwe/cpp_lib_starter'
-
     runs-on: ubuntu-latest
 
     permissions:
@@ -17,7 +16,7 @@ jobs:
 
     steps:
         - name: "Checkout"
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
 
         - name: Check file existence
           id: check_files
@@ -42,12 +41,10 @@ jobs:
 
         - name: Build
           if: steps.check_files.outputs.files_exists == 'true'
-          run: |
-            cmake --preset x64-clang-debug
+          run: cmake --preset x64-clang-debug
 
             
         - uses: stefanzweifel/git-auto-commit-action@v5
           if: steps.check_files.outputs.files_exists == 'true'
           with:
             commit_message: "Generate project from template"
-

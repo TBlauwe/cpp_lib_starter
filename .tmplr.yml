@@ -1,6 +1,5 @@
 steps:
-
-    # --- IGNORE 
+    # --- IGNORE
   - remove: .vs/
 
     # --- SET VARIABLES
@@ -8,7 +7,6 @@ steps:
     from: env.owner_name
     fallback:
       from: git.author_name
-
 
   - read: owner_email
     from: env.owner_email
@@ -48,9 +46,6 @@ steps:
   - copy: template/cpp/CMakeLists.txt
     to: './CMakeLists.txt'
 
-  - copy: template/cpp/cmake/version_header.cmake
-    to: 'cmake/version_header.cmake'
-
     # For benchmarks
   - copy: template/cpp/benchmarks/**/*
     to: benchmarks/
@@ -63,9 +58,7 @@ steps:
   - copy: template/cpp/examples/**/*
     to: examples/
 
-   
     # --- CLEAN
   - remove: docs/pages/reference.md
   - remove: template/
-  - remove: LICENSE.txt
   - remove: .tmplr.yml

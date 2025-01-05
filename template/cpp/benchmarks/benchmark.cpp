@@ -7,5 +7,3 @@ static void BM_Success(benchmark::State& state) {
 		{{tmplr.namespace}}::success();
 }
 BENCHMARK(BM_Success);
-
-BENCHMARK_MAIN();

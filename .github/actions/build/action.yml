@@ -1,0 +1,63 @@
+name: 'Build'
+description: 'Composite action to build this cmake project'
+inputs:
+  architecture:
+    description: 'System architecture'
+    required: true
+    type: string
+    default: 'x64'
+  configuration:
+    description: 'Build configuration'
+    required: true
+    type: string
+    default: 'release'
+  toolchain:
+    description: 'Compiler toolchain'
+    required: true
+    type: string
+  target:
+    description: 'CMake target'
+    required: false
+    type: string
+    default: all
+outputs:
+  build_directory:
+    description: 'CMake build directory'
+    value: ${{ steps.variables.outputs.build_directory }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Set up variables"
+      id: variables
+      shell: bash
+      run: |
+        echo "preset_name=${{ inputs.architecture }}-${{ inputs.toolchain }}-${{ inputs.configuration }}" >> $GITHUB_OUTPUT
+        echo "build_directory=./out/build/${{ inputs.architecture }}-${{ inputs.toolchain }}-${{ inputs.configuration }}" >> $GITHUB_OUTPUT
+
+    - name: "Set up CCache"
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: ${{ steps.variables.outputs.preset_name }}
+
+    - name: "Set up CPM's dependencies cache"
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.CPM_SOURCE_CACHE }}
+        key: cpm-${{ hashFiles('**/*.cmake', '**/CMakeLists.txt') }}
+        enableCrossOsArchive: true
+
+    - name: "Install msvc"
+      if: ${{inputs.toolchain == 'msvc'}}
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: "Install CMake and Ninja"
+      uses: lukka/get-cmake@latest
+
+    - name: "Configure"
+      shell: bash
+      run: cmake --preset ${{ steps.variables.outputs.preset_name }}
+
+    - name: "Build target ${{inputs.target}}"
+      shell: bash
+      run: cmake --build ${{ steps.variables.outputs.build_directory }} --target ${{ inputs.target }}

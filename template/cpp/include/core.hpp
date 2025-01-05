@@ -18,7 +18,7 @@ This is an example of how to get started with the library.
 @date   {{ tmplr.now }}
  *********************************************************************/
 #pragma once
-#include <{{tmplr.repo_name | lowercase}}/export.hpp>
+#include <{{tmplr.repo_name | lowercase}}/export.h>
 
 
 /**
@@ -31,6 +31,5 @@ namespace {{tmplr.namespace}}
 		@brief A simple function returning an int.
 		@return Always 1;
 	**/
-	{{tmplr.repo_name | CONSTANT_CASE}}_EXPORT
-    int success();
+	{{tmplr.repo_name | CONSTANT_CASE}}_API int success();
 }
