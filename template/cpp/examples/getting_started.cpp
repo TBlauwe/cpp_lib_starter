@@ -2,5 +2,5 @@
 
 int main()
 {
-    {{ tmplr.namespace }}::success();
+    return {{ tmplr.namespace }}::success();
 }
