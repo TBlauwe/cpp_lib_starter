@@ -17,7 +17,7 @@ project({{ tmplr.repo_name | CONSTANT_CASE }}
 # ------------------------------------------------------------------------------
 # --- CMake Modules
 # ------------------------------------------------------------------------------
-set(TCM_DOWNLOAD_VERSION "1.0.0")
+set(TCM_DOWNLOAD_VERSION "1.1.0")
 include(cmake/get_tcm.cmake)
 
 
@@ -49,7 +49,7 @@ tcm_target_enable_warning_flags({{tmplr.repo_name | lowercase }})
 tcm_target_export_header({{tmplr.repo_name | lowercase }})
 
 # Only if top project
-tcm_benchmarks(FILES benchmarks/benchmark.cpp)
-tcm_tests(FILES tests/core.cpp)
-tcm_examples(FILES examples WITH_BENCHMARK)
+tcm_benchmarks(FILES benchmarks/benchmark.cpp LIBRARIES {{tmplr.repo_name | lowercase }})
+tcm_tests(FILES tests/core.cpp LIBRARIES {{tmplr.repo_name | lowercase }})
+tcm_examples(FILES examples WITH_BENCHMARK LIBRARIES {{tmplr.repo_name | lowercase }})
 tcm_documentation(FILES docs/pages)
