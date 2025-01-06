@@ -9,13 +9,8 @@
 ![Ubuntu GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/{{tmplr.owner_name}}/{{tmplr.repo_name}}/ubuntu.yaml?style=flat-square&logo=ubuntu&logoColor=white&label=Ubuntu%20(Clang%2C%20GCC))
 ![MacOS GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/{{tmplr.owner_name}}/{{tmplr.repo_name}}/ubuntu.yaml?style=flat-square&logo=apple&logoColor=white&label=MacOS%20(Clang%2C%20GCC))
 
-</br>
-
-<div align="center">
 
 {{ tmplr.repo_desc }}
-
-</div>
 
 
 ## Features
@@ -36,16 +31,6 @@ CPMAddPackage(
 
 target_link_libraries(your_target PUBLIC {{tmplr.repo_name}})
 ```
-
-<details>
-<summary> CMake options </summary>
-
-| Options | Default | Description |
-| ---: | :---: | :--- |
-| `{{ tmplr.repo_name | CONSTANT_CASE }}_SKIP_DEPENDENCIES` | `true` in consumer mode, `false` otherwise | Disable automatic dependencies downloading with **[CPM](https://github.com/cpm-cmake/)** |
-| `CPM_MY_DEPENDENCY_VERSION` | `true` in consumer mode, `false` otherwise | Override a dependency's version. Value must be a git tag, e.g `master`, `v3.12`, `1.0` |
-
-</details>
 
 ### Minimal example
 
